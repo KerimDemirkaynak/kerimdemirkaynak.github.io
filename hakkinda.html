@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerim Demirkaynak - Tasarımcı ve Anime Sever">
+    <title>Kerim Demirkaynak | Biyografi</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/anasayfa/images/favicon.png">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+            filter: brightness(0) invert(1); /* Beyaz logo efekti */
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #1f1f1f;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-icon {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo img {
+                width: 80px;
+            }
+        }
+        .content {
+            padding: 20px 20px; /* Üst padding'i 20px'e düşürdük */
+            text-align: center;
+            max-width: 800px; /* İçerik genişliğini ayarlayın */
+            margin: auto; /* Merkeze hizalayın */
+        }
+        h1 {
+            color: #ffffff;
+            margin: 10px 0; /* Başlık margin'ini ayarlayın */
+        }
+        h2 {
+            margin: 5px 0; /* Alt başlık margin'ini ayarlayın */
+        }
+        p {
+            margin: 5px 0; /* Paragraf margin'ini ayarlayın */
+        }
+        .bio-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            margin: 20px 0;
+        }
+        .social-icons a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+        footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+        }
+        footer p {
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .language-switch {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-switch a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü ve Logo -->
+    <header>
+        <div class="logo">
+            <img src="https://kerimdemirkaynak.github.io/anasayfa/images/logo.webp" alt="Site Logo">
+        </div>
+        <nav>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Ana Sayfa</a></li>
+                <li><a href="#">Hakkında</a></li>
+                <li><a href="#">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Hakkında</h1>
+        <p>Ben, Düzce’de yaşayan bir blog yazarıyım ve altyazı, fotoğraf ve video işleriyle ilgileniyorum. Ayrıca Türkçe Vikipedi’de devriye görevi yapıyorum.</p>
+
+        <h2>Altyazılar</h2>
+        <p>Teen Titans (2003-2006) ve Sherwood (YouTube) gibi birçok yapımın yanı sıra, Bakugan serisinin ön gösterim bölümleri ve Ben 10 serisinin sahne ve fragmanlarını çevirdim.</p>
+
+        <h2>Görseller</h2>
+        <p>Cartoon Network gibi birçok TV serisinin Türkçeye uyarlanmış logolarını ve hazır şablon paketlerini oluşturdum.</p>
+
+        <h2>Video Kurgusu</h2>
+        <p>Yıllar önce başladığım video kurgusu çalışmalarına halen devam etmekteyim.</p>
+
+        <h2>Web</h2>
+        <p>Bloglarım arasında <a href="http://www.ben10turkiye.ml">Ben 10 Türkiye</a> ve arama motoru olarak kullanılan <a href="http://www.cagle.tk">Cagle</a> bulunmaktadır.</p>
+
+        <h2>Vikipedi</h2>
+        <p>Türkçe Vikipedi’de yüzlerce değişiklik yaparak sayfalar oluşturdum. Bakugan makaleleri benim için önemli bir yer tutmaktadır.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+            <span class="footer-links">
+            <a href="#">Ana Sayfa</a> | 
+            <a href="#">Hakkında</a> | 
+            <a href="#">İletişim</a>
+           </span>
+<p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. Tüm Hakları Saklıdır.</p>
+
+<script>
+  // Geçerli yılı al
+  const currentYear = new Date().getFullYear();
+  // Yılı span içine yerleştir
+  document.getElementById('currentYear').textContent = currentYear;
+</script>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>
