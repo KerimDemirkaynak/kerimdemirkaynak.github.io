@@ -23,7 +23,6 @@ Bu repo, kişisel biyografi ve iletişim amaçlı oluşturulmuş bir web sitesi 
 ├── index.html       # Ana sayfa HTML dosyası
 ├── hakkinda.html    # Hakkında sayfası HTML dosyası
 ├── iletisim.html    # İletişim formu HTML dosyası
-├── README.md        # Bu dosya
 └── resimler/        # Site için kullanılan logo ve favicon resimleri
 ```
 ## Yayın
