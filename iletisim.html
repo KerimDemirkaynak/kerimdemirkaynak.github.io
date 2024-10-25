@@ -202,7 +202,7 @@
         <!-- İletişim Formu -->
         <form class="contact-form" onsubmit="sendEmail(event)">
             <input type="text" id="name" placeholder="Adınız" required>
-            <input type="email" id="email" placeholder="Email Adresiniz" required>
+            <input type="email" id="email" placeholder="E-posta Adresiniz" required>
             <textarea id="message" placeholder="Mesajınız" rows="5" required></textarea>
             <button type="submit">Gönder</button>
         </form>
@@ -236,7 +236,7 @@
             const message = document.getElementById('message').value;
 
             // mailto ile e-posta gönderme
-            window.location.href = `mailto:aschannel111@gmail.com?subject=İletişim Formu: ${name}&body=Mesaj: ${message}%0D%0AEmail: ${email}`;
+            window.location.href = `mailto:aschannel111@gmail.com?subject=İletişim Formu: ${name}&body=Mesaj: ${message}%0D%0AE-posta: ${email}`;
         }
     </script>
 
