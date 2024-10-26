@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerim Demirkaynak - Tasarımcı ve Anime Sever">
+    <title>Kerim Demirkaynak | Sayfa Bulunamadı</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="resimler/favicon.png">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+            filter: brightness(0) invert(1); /* Beyaz logo efekti */
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #1f1f1f;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-icon {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo img {
+                width: 80px;
+            }
+        }
+        .content {
+            padding: 20px 20px; /* Üst padding'i 20px'e düşürdük */
+            text-align: center;
+            max-width: 800px; /* İçerik genişliğini ayarlayın */
+            margin: auto; /* Merkeze hizalayın */
+        }
+        h1 {
+            color: #ffffff;
+            margin: 10px 0; /* Başlık margin'ini ayarlayın */
+        }
+        h2 {
+            margin: 5px 0; /* Alt başlık margin'ini ayarlayın */
+        }
+        p {
+            margin: 5px 0; /* Paragraf margin'ini ayarlayın */
+        }
+        .bio-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            margin: 20px 0;
+        }
+        .social-icons a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+        footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+        }
+        footer p {
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .language-switch {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-switch a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü ve Logo -->
+    <header>
+    <a href="/">
+        <div class="logo">
+            <img src="resimler/logo.webp" alt="Site Logo">
+        </div>
+     </a>
+        <nav>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Ana Sayfa</a></li>
+                <li><a href="hakkinda">Hakkında</a></li>
+                <li><a href="iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+   <!-- 404 Content -->
+    <div class="content">
+    <h1>Sayfa Bulunamadı</h1>
+    <img src="resimler/404.gif" alt="404 Image" style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 20px;">
+    <p>Üzgünüz, aradığınız sayfa mevcut değil. <br>Ana sayfaya dönmek için aşağıdaki bağlantıyı kullanabilirsiniz.</p>
+    
+    <br><br> <!-- Butonu aşağıya kaydırmak için boşluk -->
+    
+    <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #333333; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+        Ana Sayfa
+    </a>
+</div>
+
+    <!-- Footer -->
+    <footer>
+            <span class="footer-links">
+            <a href="/">Ana Sayfa</a> | 
+            <a href="hakkinda">Hakkında</a> | 
+            <a href="iletisim">İletişim</a>
+           </span>
+<p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. Tüm Hakları Saklıdır.</p>
+
+<script>
+  // Geçerli yılı al
+  const currentYear = new Date().getFullYear();
+  // Yılı span içine yerleştir
+  document.getElementById('currentYear').textContent = currentYear;
+</script>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>
