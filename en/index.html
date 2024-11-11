@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerim Demirkaynak - Designer and Anime Lover">
+    <title>Kerim Demirkaynak | Biography</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh; /* Sayfanın tamamını kapsaması için */
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+            filter: brightness(0) invert(1); /* Beyaz logo efekti */
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #1f1f1f;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-icon {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo img {
+                width: 80px;
+            }
+        }
+        .content {
+            flex-grow: 1; /* İçeriğin esneyerek footer'ı aşağıya itmesini sağlar */
+            padding: 50px 20px 20px; /* Üstten boşluk 50px, alttan 20px */
+            text-align: center;
+        }
+        h1 {
+            color: #ffffff;
+            margin: 20px 0 10px; /* Yukarıda 20px, altta 10px boşluk */
+        }
+        p {
+            margin: 0 auto; /* Kenar boşluğunu otomatik ayarla */
+            max-width: 600px; /* Metnin genişliğini sınırlayın */
+            line-height: 1.5; /* Satır yüksekliğini artırarak okunabilirliği artırın */
+        }
+        .bio-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px; /* Resmin üstü boşluksuz, altta 20px boşluk */
+            display: block; /* Resmi ortalamak için block */
+        }
+        .social-icons {
+            margin: 20px 0;
+        }
+        .social-icons a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+        footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto; /* Footer'ı en alta sabitler */
+        }
+        footer p {
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .language-switch {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-switch a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü ve Logo -->
+    <header>
+        <div class="logo">
+            <img src="https://kerimdemirkaynak.github.io/resimler/logo.webp" alt="Site Logo">
+        </div>
+        <nav>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li><a href="about">About</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        <!-- Biyografi Resmi -->
+        <img src="https://kerimdemirkaynak.github.io/resimler/nao.jpg" alt="Kerim Demirkaynak" class="bio-img">
+
+        <h1>Kerim Demirkaynak</h1>
+        <p>Hello! I'm a designer living in Düzce. When I'm not posting on Instagram, you can find me watching anime.</p>
+
+        <div class="social-icons">
+            <!-- Sosyal Medya İkonları -->
+            <a href="https://instagram.com/kerimdemirkaynak" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="http://x.com/KDxOFFICIAL" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://youtube.com/@KerimDemirkaynak?sub_confirmation=1" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/xDemirkaynak" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://mastodon.social/@Kerm" target="_blank"><i class="fab fa-mastodon"></i></a>
+            <a href="https://github.com/KerimDemirkaynak" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <span class="footer-links">
+            <a href="/">Home</a> | 
+            <a href="about">About</a> | 
+            <a href="contact">Contact</a>
+        </span>
+        <p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. All Rights Reserved.</p>
+
+        <script>
+            // Geçerli yılı al
+            const currentYear = new Date().getFullYear();
+            // Yılı span içine yerleştir
+            document.getElementById('currentYear').textContent = currentYear;
+        </script>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>

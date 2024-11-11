@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerim Demirkaynak - Designer and Anime Lover">
+    <title>Kerim Demirkaynak | Contact</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh; /* Sayfanın tamamını kapsaması için */
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+            filter: brightness(0) invert(1); /* Beyaz logo efekti */
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .nav-links li {
+            margin: 0 15px;
+        }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #1f1f1f;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 300px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-icon {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo img {
+                width: 80px;
+            }
+        }
+        .content {
+            flex-grow: 1; /* İçeriğin esneyerek footer'ı aşağıya itmesini sağlar */
+            padding: 50px 20px 20px; /* Üstten boşluk 50px, alttan 20px */
+            text-align: center;
+        }
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px; /* Başlık ile diğer içerik arasındaki boşluğu ayarla */
+        }
+        p {
+            margin: 10px 0;
+        }
+        .bio-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            margin: 20px 0;
+        }
+        .social-icons a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+        footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto; /* Footer'ı en alta sabitler */
+        }
+        footer p {
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .language-switch {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .language-switch a {
+            color: #ffffff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        /* Form Styles */
+        .contact-form {
+            max-width: 400px;
+            margin: 0 auto; /* Formu ortalar */
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column; /* Form elemanlarını dikey hizalar */
+        }
+        .contact-form input, 
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000;
+        }
+        .contact-form button {
+            padding: 10px 15px;
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü ve Logo -->
+    <header>
+    <a href="/">
+        <div class="logo">
+            <img src="https://kerimdemirkaynak.github.io/resimler/logo.webp" alt="Site Logo">
+        </div>
+     </a>
+        <nav>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li><a href="about">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Contact</h1>
+        <p>Please get in contact if you have any questions or suggestions!</p>
+        
+        <!-- Contact Form -->
+        <form class="contact-form" onsubmit="sendEmail(event)">
+            <input type="text" id="name" placeholder="Your name" required>
+            <input type="email" id="email" placeholder="Your email address" required>
+            <textarea id="message" placeholder="Your message" rows="5" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <span class="footer-links">
+            <a href="/">Home</a> | 
+            <a href="about">About</a> | 
+            <a href="#">Contact</a>
+        </span>
+        <p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Geçerli yılı al
+        const currentYear = new Date().getFullYear();
+        // Yılı span içine yerleştir
+        document.getElementById('currentYear').textContent = currentYear;
+
+        function toggleMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("active");
+        }
+
+        function sendEmail(event) {
+            event.preventDefault(); // Formun varsayılan gönderimini durdur
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // mailto ile e-posta gönderme
+            window.location.href = `mailto:aschannel111@gmail.com?subject=Contact Form: ${name}&body=Message: ${message}%0D%0AEmail: ${email}`;
+        }
+    </script>
+
+</body>
+</html>
