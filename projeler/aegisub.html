@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aegisub için Türkçe Yama">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aegisub için Türkçe Yama">
+    <meta name="twitter:description" content="Türkçe Yama">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
+    <link rel="icon" href="https://aegisub.org/favicon.ico">
+    <link rel="apple-touch-icon" href="https://aegisub.org/apple-touch-icon.png">
+    <title>Aegisub Türkçe Yama</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1f1f1f, #3d3d3d);
+            color: #eee;
+        }
+        header {
+            background: linear-gradient(135deg, #0078d7, #0053a6);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header img {
+            width: 120px;
+            display: block;
+            margin: 10px auto;
+        }
+        nav {
+            background: #292929;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #f0f0f0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #80bfff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #2e2e2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        section h2 {
+            color: #80bfff;
+            border-bottom: 2px solid #80bfff;
+            padding-bottom: 5px;
+        }
+        a {
+            color: #80bfff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background: #292929;
+            color: #ddd;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+        footer a {
+            color: #80bfff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2e2e2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+        .popup.active {
+            display: block;
+        }
+        .popup img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .popup p {
+            margin: 10px 0;
+            color: #ddd;
+        }
+        .popup button {
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background: #0053a6;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub Logo">
+        <h1>Aegisub Türkçe Yama</h1>
+    </header>
+    <nav>
+<a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
+<a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
+<a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
+<a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
+<a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
+<a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>    </nav>
+    <div class="container">
+        <section>
+            <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Yama Uygulanmış Aegisub Görüntüsü" style="max-width: 100%; height: auto;">
+        </section>
+        <section id="kurulum">
+            <h2>Kurulum</h2>
+            <ol>
+                <li><a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases" target="_blank">Yayınlanan zip dosyasını indirin.</a>
+</li>
+                <li>Windows için Aegisub dosya konumunu açın:
+                    <ul>
+                        <li>Masaüstündeki Aegisub kısayoluna sağ tıklayın ve "Dosya konumunu aç" seçeneğini seçin.</li>
+                    </ul>
+                </li>
+                <li>İndirdiğiniz zip dosyasının içindeki <code>locale</code> ve <code>dictionaries</code> klasörlerini Aegisub'un yüklü olduğu dizine sürükleyin.</li>
+                <li>Windows sizden dosyaların üzerine yazmak için yönetici izni isteyecek. Devam etmek için onaylayın.</li>
+            </ol>
+            <p>Bu kadar! Artık Aegisub'u Türkçe olarak kullanabilirsiniz.</p>
+        </section>
+
+        <section id="katkida-bulunma">
+            <h2>Katkıda Bulunma</h2>
+            <p>Katkıda bulunmak isterseniz, lütfen bir <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/pulls" target="_blank">pull request</a> gönderin veya bir <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/issues" target="_blank">sorun (issue)</a> açın. Her türlü katkı ve geri bildirim memnuniyetle karşılanır.</p>
+        </section>
+
+        <section id="lisans">
+            <h2>Lisans</h2>
+            <p>Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için <code onclick="showPopup('lisansPopup')">LICENSE</code> dosyasına bakın.</p>
+        </section>
+    </div>
+
+<div class="overlay" id="overlay" onclick="hidePopup()"></div>
+
+<div class="popup" id="aegisubPopup">
+    <h1>Aegisub İndir</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub">
+    <p>Aegisub'u indirmek için aşağıdaki butona tıklayın.</p>
+    <a href="https://aegisub.org/downloads/">
+        <button><i class="fas fa-download"></i> İndir</button>
+    </a>
+</div>
+
+<div class="popup" id="patchPopup">
+    <h1>Yamayı İndir</h1>
+    <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Yama Uygulanmış Hali">
+    <p>Türkçe Yama'nın son sürümünü indirmek için aşağıdaki butona tıklayın.</p>
+    <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.0.0/Aegisub.Turkce.Yama.zip">
+        <button><i class="fas fa-download"></i> İndir</button>
+    </a>
+</div>
+
+<div class="popup" id="lisansPopup">
+    <h1>Lisans</h1>
+    <p style="font-size: 12px;">MIT License</p>
+    <p style="font-size: 12px;">Copyright (c) 2024 Kerim Demirkaynak</p>
+    <p style="font-size: 12px;">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+    <p style="font-size: 12px;">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+    <p style="font-size: 12px;">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</div>
+
+<div class="popup" id="emailPopup">
+    <h1>İletişim</h1>
+    <p>Herhangi bir soru veya öneriniz varsa lütfen iletişime geçin!</p>
+
+    <!-- İletişim Formu -->
+    <form class="contact-form" action="mailto:aschannel111@gmail.com" method="post" enctype="text/plain">
+        <input type="text" id="name" name="name" placeholder="Adınız" required>
+        <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+        <textarea id="message" name="message" placeholder="Mesajınız" rows="5" required></textarea>
+        <br><button type="submit">Gönder</button>
+    </form>
+</div>
+    <footer>
+        <p>Proje deposu için <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch">GitHub</a>'u ziyaret edin. <i class="fab fa-github"></i></p>
+    </footer>
+
+    <script>
+        function showPopup(id) {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+        function hidePopup() {
+            document.getElementById('overlay').classList.remove('active');
+            document.querySelectorAll('.popup').forEach(popup => popup.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>
