@@ -8,7 +8,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Aegisub için Türkçe Yama">
+    <meta name="twitter:title" content="Aegisub Türkçe Yama">
     <meta name="twitter:description" content="Türkçe Yama">
     <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
     <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
@@ -39,11 +39,15 @@
             display: block;
             margin: 10px auto;
         }
+        /* Normal Menü (PC için) */
         nav {
             background: #292929;
             color: #fff;
             padding: 10px;
             text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         nav a {
             color: #f0f0f0;
@@ -51,10 +55,72 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
+            padding: 10px;
         }
         nav a:hover {
             color: #80bfff;
         }
+
+        /* Yandan kayan menü ve mobil düzen */
+        @media (max-width: 768px) {
+            /* Mobilde normal menü gizlensin */
+            nav {
+                display: none;
+            }
+            /* Yandan kayan menü stili */
+            #sideMenu {
+                position: fixed;
+                top: 0;
+                left: -250px; /* Başlangıçta gizli */
+                width: 250px;
+                height: 100%;
+                background-color: #292929;
+                transition: left 0.3s ease;
+                z-index: 1000;
+                padding-top: 60px;
+            }
+            #sideMenu a {
+                display: block;
+                color: white;
+                padding: 16px;
+                text-decoration: none;
+                font-size: 18px;
+                text-align: left; /* Sola hizalama */
+            }
+            #sideMenu a:hover {
+                background-color: #575757;
+            }
+            .menu-button {
+                display: block;
+                background-color: #292929;
+                color: #fff;
+                padding: 10px 15px;
+                font-size: 20px;
+                border: none;
+                cursor: pointer;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 1200;
+            }
+            .menu-button:hover {
+                background-color: #0053a6;
+            }
+        }
+
+        /* PC versiyonunda menü düzeni */
+        @media (min-width: 769px) {
+            nav {
+                display: flex; /* Menü yatay gösterilecektir */
+            }
+            .menu-button {
+                display: none; /* PC'de hamburger menü gizlenecek */
+            }
+            #sideMenu {
+                display: none; /* PC'de yan menü gizlenecek */
+            }
+        }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -92,43 +158,37 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        /* Pop-up stilini ayarlayalım */
         .popup {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #2e2e2e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            width: 300px;
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            color: #fff;
+            width: 80%;
+            max-width: 600px;
             text-align: center;
+            overflow-y: auto;
         }
+
         .popup.active {
             display: block;
         }
+
         .popup img {
             width: 100%;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            max-width: 300px; /* Resim boyutunu sınırla */
+            height: auto;
+            margin: 20px 0;
         }
-        .popup p {
-            margin: 10px 0;
-            color: #ddd;
-        }
-        .popup button {
-            background: #0078d7;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .popup button:hover {
-            background: #0053a6;
-        }
+
         .overlay {
             display: none;
             position: fixed;
@@ -136,11 +196,50 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
         }
+
         .overlay.active {
             display: block;
+        }
+
+        button {
+            background-color: #0078d7;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0053a6;
+        }
+
+        /* İletişim Formu */
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .contact-form button {
+            background-color: #80bfff;
+            color: #fff;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .contact-form button:hover {
+            background-color: #0053a6;
         }
     </style>
 </head>
@@ -149,13 +248,32 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub Logo">
         <h1>Aegisub Türkçe Yama</h1>
     </header>
+
+    <!-- Mobilde Görünen Üç Nokta Butonu -->
+    <button class="menu-button" onclick="toggleSideMenu()">
+        <i class="fa-solid fa-bars"></i> <!-- Menü simgesi -->
+    </button>
+
+    <!-- Yandan kayan menü -->
+    <div id="sideMenu">
+        <a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
+        <a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
+        <a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
+        <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
+        <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
+        <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>
+    </div>
+
+    <!-- Normal Menü (PC için) -->
     <nav>
-<a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
-<a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
-<a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
-<a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
-<a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
-<a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>    </nav>
+        <a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
+        <a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
+        <a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
+        <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
+        <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
+        <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>
+    </nav>
+
     <div class="container">
         <section>
             <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Yama Uygulanmış Aegisub Görüntüsü" style="max-width: 100%; height: auto;">
@@ -187,62 +305,72 @@
         </section>
     </div>
 
-<div class="overlay" id="overlay" onclick="hidePopup()"></div>
+    <!-- Pop-up'lar ve Overlay -->
+    <div class="overlay" id="overlay" onclick="hidePopup()"></div>
 
-<div class="popup" id="aegisubPopup">
-    <h1>Aegisub İndir</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub">
-    <p>Aegisub'u indirmek için aşağıdaki butona tıklayın.</p>
-    <a href="https://aegisub.org/downloads/">
-        <button><i class="fas fa-download"></i> İndir</button>
-    </a>
-</div>
+    <div class="popup" id="aegisubPopup">
+        <h1>Aegisub İndir</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub">
+        <p>Aegisub'u indirmek için aşağıdaki butona tıklayın.</p>
+        <a href="https://aegisub.org/downloads/">
+            <button><i class="fas fa-download"></i> İndir</button>
+        </a>
+    </div>
 
-<div class="popup" id="patchPopup">
-    <h1>Yamayı İndir</h1>
-    <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Yama Uygulanmış Hali">
-    <p>Türkçe Yama'nın son sürümünü indirmek için aşağıdaki butona tıklayın.</p>
-    <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.0.0/Aegisub.Turkce.Yama.zip">
-        <button><i class="fas fa-download"></i> İndir</button>
-    </a>
-</div>
+    <div class="popup" id="patchPopup">
+        <h1>Yamayı İndir</h1>
+        <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Yama Uygulanmış Hali">
+        <p>Türkçe Yama'nın son sürümünü indirmek için aşağıdaki butona tıklayın.</p>
+        <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.0.0/Aegisub.Turkce.Yama.zip">
+            <button><i class="fas fa-download"></i> İndir</button>
+        </a>
+    </div>
 
-<div class="popup" id="lisansPopup">
-    <h1>Lisans</h1>
-    <p style="font-size: 12px;">MIT License</p>
-    <p style="font-size: 12px;">Copyright (c) 2024 Kerim Demirkaynak</p>
-    <p style="font-size: 12px;">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+    <div class="popup" id="lisansPopup">
+        <h1>Lisans</h1>
+        <p style="font-size: 12px;">MIT License</p>
+        <p style="font-size: 12px;">Copyright (c) 2024 Kerim Demirkaynak</p>
+        <p style="font-size: 12px;">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 
-    <p style="font-size: 12px;">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+        <p style="font-size: 12px;">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 
-    <p style="font-size: 12px;">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-</div>
+        <p style="font-size: 12px;">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+    </div>
 
-<div class="popup" id="emailPopup">
-    <h1>İletişim</h1>
-    <p>Herhangi bir soru veya öneriniz varsa lütfen iletişime geçin!</p>
+    <div class="popup" id="emailPopup">
+        <h1>İletişim</h1>
+        <form class="contact-form" action="mailto:aschannel111@gmail.com" method="post" enctype="text/plain">
+            <input type="text" id="name" name="name" placeholder="Adınız" required>
+            <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+            <textarea id="message" name="message" placeholder="Mesajınız" rows="5" required></textarea>
+            <br><button type="submit">Gönder</button>
+        </form>
+    </div>
 
-    <!-- İletişim Formu -->
-    <form class="contact-form" action="mailto:aschannel111@gmail.com" method="post" enctype="text/plain">
-        <input type="text" id="name" name="name" placeholder="Adınız" required>
-        <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
-        <textarea id="message" name="message" placeholder="Mesajınız" rows="5" required></textarea>
-        <br><button type="submit">Gönder</button>
-    </form>
-</div>
     <footer>
         <p>Proje deposu için <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch">GitHub</a>'u ziyaret edin. <i class="fab fa-github"></i></p>
     </footer>
 
     <script>
-        function showPopup(id) {
-            document.getElementById('overlay').classList.add('active');
-            document.getElementById(id).classList.add('active');
+        // Menü açma/kapama işlevi
+        function toggleSideMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            const currentLeft = sideMenu.style.left;
+            sideMenu.style.left = (currentLeft === '0px') ? '-250px' : '0px';
         }
+
+        // Pop-up açma işlevi
+        function showPopup(popupId) {
+            document.getElementById(popupId).classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        // Pop-up kapama işlevi
         function hidePopup() {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => popup.classList.remove('active'));
             document.getElementById('overlay').classList.remove('active');
-            document.querySelectorAll('.popup').forEach(popup => popup.classList.remove('active'));
         }
     </script>
 </body>
