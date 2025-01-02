@@ -39,7 +39,7 @@
                 font-size: 20px;
                 border: none;
                 cursor: pointer;
-                position: fixed;  /* fixed olarak güncellendi */
+                position: fixed;
                 top: 15px;
                 left: 15px;
                 z-index: 1200;
@@ -107,6 +107,17 @@
             .container .sidebar { /* Eklendi */
               display: none;
             }
+             #menuOverlay {
+                display: none;
+                 position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                 background: rgba(0, 0, 0, 0.5);
+                 z-index: 900;
+
+            }
         }
 
         @media (min-width: 769px) {
@@ -122,6 +133,9 @@
             }
               .container .sidebar { /* Eklendi */
               display: block;
+            }
+             #menuOverlay {
+                 display: none;
             }
         }
 
@@ -325,10 +339,11 @@
         <a href="#">Ana Sayfa</a>
         <a href="https://kerimdemirkaynak.github.io/hakkinda">Hakkımda</a>
         <a href="https://kerimdemirkaynak.github.io/iletisim">İletişim</a>
-        <a href="#" id="showPopup">Oyun Projeleri</a>
+        <a href="#" class="menu-show-popup">Oyun Projeleri</a>
         <a href="#web-projeleri">Web Projeleri</a>
         <a href="#dil-çevirileri">Dil Çevirileri</a>
     </div>
+     <div id="menuOverlay" ></div>
     <nav>
         <a href="#">Ana Sayfa</a>
         <a href="https://kerimdemirkaynak.github.io/hakkinda">Hakkımda</a>
@@ -338,7 +353,7 @@
         <aside class="sidebar">
             <h3>Kategoriler</h3>
             <ul>
-                <li><a href="#" id="showPopup">Oyun Projeleri</a></li>
+                <li><a href="#" class="sidebar-show-popup">Oyun Projeleri</a></li>
                 <li><a href="#web-projeleri">Web Projeleri</a></li>
                 <li><a href="#dil-çevirileri">Dil Çevirileri</a></li>
             </ul>
@@ -372,45 +387,61 @@
         </section>
     </div>
     <footer>
-        <p>&copy; 2025 Kerim Demirkaynak. Tüm hakları saklıdır.</p>
+        <p>© 2025 Kerim Demirkaynak. Tüm hakları saklıdır.</p>
     </footer>
 
     <!-- Popup Görüntüleme -->
     <div id="overlay" onclick="hidePopup()"></div>
-    <div class="popup">
+    <div class="popup" id="popup">
         <h2>Oyun Projeleri</h2>
-        <ul>
-            <li>
-                <strong>Proje Adı:</strong> Proje 1
-                <p>Açıklama 1</p>
-            </li>
-            <li>
-                <strong>Proje Adı:</strong> Proje 2
-                <p>Açıklama 2</p>
-            </li>
-        </ul>
-        <button onclick="hidePopup()">Kapat</button>
+        <p>Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi.:</p>
+        <h3>Gameplay</h3>
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Gameplay Screenshot">
+        <h3>Ayarlar Menüsü</h3>
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Settings Screenshot">
+        <button id="closePopup">Kapat</button>
     </div>
 
     <script>
         // Menü Toggle
+         const menu = document.getElementById('sideMenu');
+         const menuOverlay = document.getElementById('menuOverlay');
+
         function toggleSideMenu() {
-            const menu = document.getElementById('sideMenu');
-            const currentLeft = menu.style.left;
-            menu.style.left = currentLeft === '0px' ? '-250px' : '0px';
+           const currentLeft = menu.style.left;
+            if (currentLeft === '0px') {
+                menu.style.left = '-250px';
+                menuOverlay.style.display = 'none';
+            } else {
+                menu.style.left = '0px';
+                menuOverlay.style.display = 'block';
+            }
         }
+        // Menü overlay kapanınca kapansın
+        menuOverlay.addEventListener('click', () => {
+              menu.style.left = '-250px';
+            menuOverlay.style.display = 'none';
+        });
+
 
         // Popup Görüntüle
-        document.getElementById('showPopup').addEventListener('click', function() {
-            document.getElementById('overlay').style.display = 'block';
-            document.querySelector('.popup').style.display = 'block';
+        document.querySelectorAll('.sidebar-show-popup, .menu-show-popup').forEach(item => {
+            item.addEventListener('click', function() {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('popup').style.display = 'block';
+            });
         });
 
         // Popup Kapat
         function hidePopup() {
             document.getElementById('overlay').style.display = 'none';
-            document.querySelector('.popup').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
         }
+
+        // Kapatma butonuna tıklayınca hidePopup çalışsın
+        document.getElementById('closePopup').addEventListener('click', hidePopup);
+
+
     </script>
 </body>
 </html>
