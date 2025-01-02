@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projelerim">
+    <meta name="twitter:description" content="Projeler">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
+    <title>Projelerim</title>
+    <link rel="icon" href="https://kerimdemirkaynak.github.io/resimler/favicon.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        header {
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #1f1f1f;
+            padding: 0.5rem 0;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: #4b6cb7;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .sidebar {
+            width: 25%;
+            background: #1e1e1e;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            margin-right: 1.5rem;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            color: #4b6cb7;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #4b6cb7;
+        }
+
+        .content {
+            width: 75%;
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .content h1 {
+            color: #4b6cb7;
+            margin: 0;
+            padding: 0;
+            font-size: 1.75rem;  /* Boyut küçültüldü */
+        }
+
+        .content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content ul li {
+            background: #2a2a2a;
+            margin: 1rem 0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .content ul li strong {
+            color: #e0e0e0;
+        }
+
+        .content ul li p {
+            margin: 0.5rem 0 0;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .popup h2 {
+            color: #4b6cb7;
+        }
+
+        .popup img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .popup button {
+            display: block;
+            margin: 1rem auto 0;
+            padding: 0.5rem 2rem;
+            background: #4b6cb7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background: #182848;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #1f1f1f;
+            color: #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        a {
+            color: #4b6cb7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Medya Sorgusu */
+        @media (max-width: 600px) {
+            .popup {
+                width: 90%;
+                max-width: 400px;
+                padding: 1.5rem;
+            }
+
+            .content h1 {
+                font-size: 1.25rem;  /* Mobilde daha da küçültüldü */
+            }
+
+            .content ul li {
+                padding: 1rem;
+            }
+        }
+
+        /* Yeni düzenlemeler - section ve h1 margin ve padding sıfırlama */
+        section {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Projelerim</h1>
+    </header>
+    <nav>
+        <a href="#">Ana Sayfa</a>
+        <a href="https://kerimdemirkaynak.github.io/hakkinda">Hakkımda</a>
+        <a href="https://kerimdemirkaynak.github.io/iletisim">İletişim</a>
+    </nav>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Kategoriler</h3>
+            <ul>
+                <li><a href="#" id="showPopup">Oyun Projeleri</a></li>
+                <li><a href="#web-projeleri">Web Projeleri</a></li>
+                <li><a href="#dil-çevirileri">Dil Çevirileri</a></li>
+            </ul>
+        </aside>
+        <section class="content">
+            <section id="dil-çevirileri">
+                <h1>Dil Çevirileri</h1>
+                <ul>
+                    <li>
+                        <strong>Proje Adı:</strong> Quetta Browser Türkçe Çevirisi
+                        <p>Quetta Browser'ın resmi Türkçe çevirisi.</p>
+                    </li>
+                    <li>
+                        <strong>Proje Adı:</strong> Infinity for Reddit Türkçe Çevirisi
+                        <p>Infinity for Reddit uygulamasının resmi Türkçe çevirisi.</p>
+                    </li>
+                    <li>
+                        <strong>Proje Adı:</strong> Aegisub Türkçe Çevirisi
+                        <p>Aegisub uygulamasının resmi Türkçe çevirisi. Detaylar için <a href="https://kerimdemirkaynak.github.io/projeler/aegisub">buraya tıklayın</a>.</p>
+                    </li>
+                </ul>
+            </section>
+            <section id="web-projeleri">
+                <h1>Web Projeleri</h1>
+                <ul>
+                    <li>
+                        <strong>Proje Adı:</strong> PeerTube Türkçe Çevirisi
+                        <p>PeerTube platformunun resmi Türkçe çevirisi.</p>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </div>
+    <div id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Oyun Projeleri</h2>
+        <p>Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi.:</p>
+        <h3>Gameplay</h3>
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Gameplay Screenshot">
+        <h3>Ayarlar Menüsü</h3>
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Settings Screenshot">
+        <button id="closePopup">Kapat</button>
+    </div>
+<footer>
+    <p>&copy; <span id="current-year"></span> Kerim Demirkaynak. Tüm hakları saklıdır.</p>
+</footer>
+
+<script>
+    // Yıl bilgisini otomatik olarak al
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Popup açma ve kapama işlemleri
+    const showPopup = document.getElementById('showPopup');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+    const overlay = document.getElementById('overlay');
+
+    showPopup.addEventListener('click', (e) => {
+        e.preventDefault();
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+    });
+
+    closePopup.addEventListener('click', () => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', () => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+</script>
+</body>
+</html>
