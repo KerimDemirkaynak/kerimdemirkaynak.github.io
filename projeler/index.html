@@ -21,7 +21,7 @@
             padding: 0;
             background-color: #121212;
             color: #e0e0e0;
-             overflow-x: hidden;
+            overflow-x: hidden;
         }
 
         header {
@@ -288,6 +288,17 @@
             .content ul li {
                 padding: 1rem;
             }
+
+            /* Mobilde İçeriğin Ortalanması */
+            .content {
+                width: 100%;
+                margin: 0;
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
 
         /* Yeni düzenlemeler - section ve h1 margin ve padding sıfırlama */
@@ -305,12 +316,12 @@
     <header>
         <h1>Projelerim</h1>
     </header>
-     <!-- Mobilde Görünen Üç Nokta Butonu -->
-     <button class="menu-button" onclick="toggleSideMenu()">
+    <!-- Mobilde Görünen Üç Nokta Butonu -->
+    <button class="menu-button" onclick="toggleSideMenu()">
         <i class="fa-solid fa-bars"></i> <!-- Menü simgesi -->
     </button>
-      <!-- Yandan kayan menü -->
-      <div id="sideMenu">
+    <!-- Yandan kayan menü -->
+    <div id="sideMenu">
         <a href="#">Ana Sayfa</a>
         <a href="https://kerimdemirkaynak.github.io/hakkinda">Hakkımda</a>
         <a href="https://kerimdemirkaynak.github.io/iletisim">İletişim</a>
@@ -355,58 +366,51 @@
                 <ul>
                     <li>
                         <strong>Proje Adı:</strong> PeerTube Türkçe Çevirisi
-                        <p>PeerTube platformunun resmi Türkçe çevirisi.</p>
-                    </li>
-                </ul>
+                        <p>PeerTube platformunun Türkçe çevirisi.</p>
+                    </li>                </ul>
             </section>
         </section>
     </div>
-    <div id="overlay"></div>
-    <div class="popup" id="popup">
+    <footer>
+        <p>&copy; 2025 Kerim Demirkaynak. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- Popup Görüntüleme -->
+    <div id="overlay" onclick="hidePopup()"></div>
+    <div class="popup">
         <h2>Oyun Projeleri</h2>
-        <p>Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi.:</p>
-        <h3>Gameplay</h3>
-        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Gameplay Screenshot">
-        <h3>Ayarlar Menüsü</h3>
-        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Settings Screenshot">
-        <button id="closePopup">Kapat</button>
+        <ul>
+            <li>
+                <strong>Proje Adı:</strong> Proje 1
+                <p>Açıklama 1</p>
+            </li>
+            <li>
+                <strong>Proje Adı:</strong> Proje 2
+                <p>Açıklama 2</p>
+            </li>
+        </ul>
+        <button onclick="hidePopup()">Kapat</button>
     </div>
-<footer>
-    <p>© <span id="current-year"></span> Kerim Demirkaynak. Tüm hakları saklıdır.</p>
-</footer>
 
-<script>
-    // Yıl bilgisini otomatik olarak al
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-
-    // Popup açma ve kapama işlemleri
-    const showPopup = document.getElementById('showPopup');
-    const popup = document.getElementById('popup');
-    const closePopup = document.getElementById('closePopup');
-    const overlay = document.getElementById('overlay');
-
-    showPopup.addEventListener('click', (e) => {
-        e.preventDefault();
-        popup.style.display = 'block';
-        overlay.style.display = 'block';
-    });
-
-    closePopup.addEventListener('click', () => {
-        popup.style.display = 'none';
-        overlay.style.display = 'none';
-    });
-
-    overlay.addEventListener('click', () => {
-        popup.style.display = 'none';
-        overlay.style.display = 'none';
-    });
-
-      // Menü açma/kapama işlevi
-    function toggleSideMenu() {
-            const sideMenu = document.getElementById('sideMenu');
-            const currentLeft = sideMenu.style.left;
-            sideMenu.style.left = (currentLeft === '0px') ? '-250px' : '0px';
+    <script>
+        // Menü Toggle
+        function toggleSideMenu() {
+            const menu = document.getElementById('sideMenu');
+            const currentLeft = menu.style.left;
+            menu.style.left = currentLeft === '0px' ? '-250px' : '0px';
         }
-</script>
+
+        // Popup Görüntüle
+        document.getElementById('showPopup').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'block';
+            document.querySelector('.popup').style.display = 'block';
+        });
+
+        // Popup Kapat
+        function hidePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.querySelector('.popup').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
