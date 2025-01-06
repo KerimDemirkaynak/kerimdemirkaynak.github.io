@@ -1,5 +1,9 @@
 # Kerim Demirkaynak | Biyografi Web Sitesi
 
+[![Licence](https://img.shields.io/github/license/RVC-Project/Retrieval-based-Voice-Conversion-WebUI?style=for-the-badge)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/blob/main/LICENSE)
+
+[**English**](../../en/README.en.md) | [**Türkçe**](../../README.md)
+
 Bu repo, kişisel biyografi ve iletişim amaçlı oluşturulmuş bir web sitesi projesini içerir. Web sitesi HTML, CSS ve JavaScript kullanılarak oluşturulmuş olup GitHub Pages üzerinden yayınlanmaktadır.
 
 ## Özellikler
