@@ -20,11 +20,18 @@ Bu repo, kişisel biyografi ve iletişim amaçlı oluşturulmuş bir web sitesi 
 ## Dosya Yapısı
 
 ```bash
-├── index.html       # Ana sayfa HTML dosyası
-├── hakkinda.html    # Hakkında sayfası HTML dosyası
-├── iletisim.html    # İletişim formu HTML dosyası
-├── 404.html         # 404 hata sayfası HTML dosyası
-└── resimler/        # Site için kullanılan logo ve favicon resimleri
+├── index.html           # Ana sayfa HTML dosyası
+├── hakkinda.html        # Hakkında sayfasının HTML dosyası
+├── iletisim.html        # İletişim formunun HTML dosyası
+├── 404.html             # 404 hata sayfasının HTML dosyası
+├── resimler/            # Sitede kullanılan resimler için bir klasör
+├── projeler/            # Proje dosyaları için bir klasör
+│   ├── index.html      # Proje ana sayfasının HTML dosyası
+│   └── aegisub.html    # Aegisub proje sayfasının HTML dosyası
+└── en/                  # İngilizce sayfalar için klasör
+    ├── index.html       # Ana sayfanın İngilizce versiyonu
+    ├── about.html       # Hakkında sayfasının İngilizce versiyonu
+    └── contact.html     # İletişim sayfasının İngilizce versiyonu
 ```
 ## Yayın
 
