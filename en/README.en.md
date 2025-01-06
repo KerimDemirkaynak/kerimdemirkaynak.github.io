@@ -2,7 +2,7 @@
 
 [![Licence](https://img.shields.io/github/license/RVC-Project/Retrieval-based-Voice-Conversion-WebUI?style=for-the-badge)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/blob/main/LICENSE)
 
-[**English**](en/README.en.md) | [**Türkçe**](README.md)
+[**English**](en/README.en.md) | [**Türkçe**](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/blob/main/README.md)
 
 This repository contains a website project created for personal biography and communication purposes. The website is built using HTML, CSS, and JavaScript and is published via GitHub Pages.
 
