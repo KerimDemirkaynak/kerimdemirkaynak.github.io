@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özel Video Oynatıcı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 30px auto;
+            background: #000;
+            border: 5px solid;
+            border-image: linear-gradient(to right, #00bfff, #32cd32);
+            border-image-slice: 1;
+            box-shadow: 0px 0px 15px rgba(50, 205, 50, 0.5);
+            overflow: hidden;
+            border-radius: 10px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        .video-container.fullscreen {
+            border: none;
+            box-shadow: none;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+        }
+        .video-container.fullscreen .logo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            max-width: 200px;
+            height: auto;
+            transform: translate(0, 0);
+            z-index: 10;
+        }
+        .video-container.fullscreen .gradient {
+            display: none;
+        }
+        .video-container.fullscreen video {
+             object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+         .controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        .controls i {
+            color: #fff;
+            font-size: 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Gölge efekti */
+        }
+         .controls i:hover {
+            color: #00bfff;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            height: 5px;
+            background: #ddd;
+            margin: 0 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .progress-bar div {
+            height: 100%;
+            background: #00bfff;
+        }
+        .volume-container {
+            position: relative;
+        }
+       .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+             max-width: 100px;
+            height: auto;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .video-container.fullscreen .controls {
+           position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .center-controls {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        .center-controls.visible {
+            opacity: 1;
+        }
+        .center-controls i {
+             color: #fff;
+            font-size: 30px;
+            margin: 0 15px;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Gölge efekti */
+        }
+          .center-controls i:hover {
+            color: #00bfff;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Logo_Diputados_TV.png" alt="TV Logo" class="logo">
+        <video id="videoPlayer" autoplay muted poster="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Big.Buck.Bunny.-.Frank.Rinky.Gimera.png/640px-Big.Buck.Bunny.-.Frank.Rinky.Gimera.png">
+            <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+         <div class="center-controls" id="centerControls">
+            <i class="fas fa-undo" id="rewindBtn"></i>
+            <i id="centerPlayPauseBtn" class="fas fa-pause"></i>
+             <i class="fas fa-redo" id="forwardBtn"></i>
+        </div>
+        <div class="controls">
+            <i id="playPauseBtn" class="fas fa-pause"></i>
+            <div class="progress-bar" id="progressBar"><div id="progress" style="width: 0%;"></div></div>
+            <i id="muteBtn" class="fas fa-volume-up"></i>
+            <i id="downloadBtn" class="fas fa-download"></i>
+            <i id="fullScreenBtn" class="fas fa-expand"></i>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var video = document.getElementById("videoPlayer");
+            var playPauseBtn = document.getElementById("playPauseBtn");
+            var muteBtn = document.getElementById("muteBtn");
+            var fullScreenBtn = document.getElementById("fullScreenBtn");
+            var centerPlayPauseBtn = document.getElementById("centerPlayPauseBtn");
+            var downloadBtn = document.getElementById("downloadBtn");
+            var progress = document.getElementById("progress");
+            var progressBar = document.getElementById("progressBar");
+            var rewindBtn = document.getElementById("rewindBtn");
+            var forwardBtn = document.getElementById("forwardBtn");
+            var videoContainer = document.querySelector('.video-container');
+            var controls = document.querySelector('.controls');
+              var centerControls = document.getElementById('centerControls');
+            var logo = document.querySelector('.logo');
+            var isFullScreen = false;
+            var hideControlsTimeout;
+            var hideCenterControlsTimeout;
+
+             // Başlangıçta video ses açık olmalı
+            video.muted = false;
+
+             function togglePlayPause() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.classList.replace("fa-play", "fa-pause");
+                       centerPlayPauseBtn.classList.replace("fa-play", "fa-pause");
+                } else {
+                    video.pause();
+                    playPauseBtn.classList.replace("fa-pause", "fa-play");
+                       centerPlayPauseBtn.classList.replace("fa-pause", "fa-play");
+                }
+            }
+
+             playPauseBtn.addEventListener("click",togglePlayPause);
+              centerPlayPauseBtn.addEventListener("click",togglePlayPause);
+
+            muteBtn.addEventListener("click", function() {
+                video.muted = !video.muted;
+                if (video.muted) {
+                    muteBtn.classList.replace("fa-volume-up", "fa-volume-mute");
+                } else {
+                    muteBtn.classList.replace("fa-volume-mute", "fa-volume-up");
+                }
+            });
+
+            fullScreenBtn.addEventListener("click", function() {
+                if (!isFullScreen) {
+                    if (videoContainer.requestFullscreen) {
+                        videoContainer.requestFullscreen();
+                    } else if (videoContainer.mozRequestFullScreen) {
+                        videoContainer.mozRequestFullScreen();
+                    } else if (videoContainer.webkitRequestFullscreen) {
+                        videoContainer.webkitRequestFullscreen();
+                    } else if (videoContainer.msRequestFullscreen) {
+                        videoContainer.msRequestFullscreen();
+                    }
+                    isFullScreen = true;
+                    fullScreenBtn.classList.replace("fa-expand", "fa-compress");
+                     videoContainer.classList.add('fullscreen');
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                    isFullScreen = false;
+                    fullScreenBtn.classList.replace("fa-compress", "fa-expand");
+                      videoContainer.classList.remove('fullscreen');
+                }
+            });
+
+             downloadBtn.addEventListener("click", function() {
+                var link = document.createElement('a');
+                link.href = video.querySelector('source').src;
+                link.download = 'video.mp4';
+                link.click();
+            });
+
+            video.addEventListener("timeupdate", function() {
+                var progressPercentage = (video.currentTime / video.duration) * 100;
+                progress.style.width = progressPercentage + "%";
+            });
+
+            video.addEventListener("ended", function() {
+                playPauseBtn.classList.replace("fa-pause", "fa-play");
+                 centerPlayPauseBtn.classList.replace("fa-pause", "fa-play");
+            });
+
+            progressBar.addEventListener("click", function(e) {
+                var rect = progressBar.getBoundingClientRect();
+                var posX = e.clientX - rect.left;
+                video.currentTime = (posX / progressBar.offsetWidth) * video.duration;
+            });
+
+            rewindBtn.addEventListener("click", function(){
+                video.currentTime -= 10;
+            });
+
+            forwardBtn.addEventListener("click", function(){
+                 video.currentTime += 10;
+            });
+
+             videoContainer.addEventListener("mousemove", function() {
+                controls.classList.remove("hidden");
+                   centerControls.classList.add('visible');
+                document.body.style.cursor = "default";
+                clearTimeout(hideControlsTimeout);
+                clearTimeout(hideCenterControlsTimeout);
+
+                  hideCenterControlsTimeout = setTimeout(function() {
+                    centerControls.classList.remove('visible');
+                }, 3000);
+                hideControlsTimeout = setTimeout(function() {
+                    controls.classList.add("hidden");
+                    document.body.style.cursor = "none";
+                }, 3000);
+            });
+
+            videoContainer.addEventListener("mouseleave", function() {
+                controls.classList.add("hidden");
+                centerControls.classList.remove('visible');
+                  document.body.style.cursor = "none";
+            });
+
+            document.addEventListener("fullscreenchange", function() {
+                if (!document.fullscreenElement) {
+                     isFullScreen = false;
+                      fullScreenBtn.classList.replace("fa-compress", "fa-expand");
+                       videoContainer.classList.remove('fullscreen');
+                }
+            });
+             // Klavye Kısayolları
+            document.addEventListener('keydown', function(event) {
+                switch (event.code) {
+                    case 'Space':
+                        togglePlayPause();
+                        break;
+                   case 'KeyM':
+                         video.muted = !video.muted;
+                            if (video.muted) {
+                                muteBtn.classList.replace("fa-volume-up", "fa-volume-mute");
+                            } else {
+                                muteBtn.classList.replace("fa-volume-mute", "fa-volume-up");
+                            }
+                        break;
+                    case 'ArrowLeft':
+                        video.currentTime -= 5;
+                        break;
+                     case 'ArrowRight':
+                        video.currentTime += 5;
+                        break;
+                   case 'KeyF':
+                      if (!isFullScreen) {
+                           if (videoContainer.requestFullscreen) {
+                            videoContainer.requestFullscreen();
+                            } else if (videoContainer.mozRequestFullScreen) {
+                                videoContainer.mozRequestFullScreen();
+                            } else if (videoContainer.webkitRequestFullscreen) {
+                            videoContainer.webkitRequestFullscreen();
+                                 } else if (videoContainer.msRequestFullscreen) {
+                                    videoContainer.msRequestFullscreen();
+                                }
+                           isFullScreen = true;
+                            fullScreenBtn.classList.replace("fa-expand", "fa-compress");
+                                 videoContainer.classList.add('fullscreen');
+                           } else {
+                                if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                                }
+                             isFullScreen = false;
+                            fullScreenBtn.classList.replace("fa-compress", "fa-expand");
+                                videoContainer.classList.remove('fullscreen');
+                            }
+                           break;
+                    // Ek kısayolları buraya ekleyebilirsiniz
+                }
+            });
+        });
+    </script>
+</body>
+</html>
