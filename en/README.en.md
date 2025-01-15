@@ -1,6 +1,8 @@
 # Kerim Demirkaynak | Biography Website    
 
-[![Licence](https://img.shields.io/github/license/RVC-Project/Retrieval-based-Voice-Conversion-WebUI?style=for-the-badge)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?color=97CA01&logoColor=blue&style=for-the-badge)](https://opensource.org/license/mit/)
+[![GitHub Release](https://img.shields.io/github/v/release/KerimDemirkaynak/kerimdemirkaynak.github.io?style=for-the-badge&color=8DDFCB&label=Release)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/releases)
+[![Website](https://img.shields.io/badge/Website-kerimdemirkaynak.github.io-00215E?style=flat-square)](https://kerimdemirkaynak.github.io)
 
 [**English**](en/README.en.md) | [**Türkçe**](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/blob/main/README.md)
 
