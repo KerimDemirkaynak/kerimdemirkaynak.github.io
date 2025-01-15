@@ -1,8 +1,8 @@
 # Kerim Demirkaynak | Biyografi Web Sitesi    
 
-[![Lisans](https://img.shields.io/badge/Lisans-MIT-blue.svg?color=97CA01&logoColor=blue&style=for-the-badge)](https://opensource.org/license/mit/)
+[![Lisans](https://img.shields.io/badge/LİSANS-MIT-blue.svg?color=97CA01&logoColor=blue&style=for-the-badge)](https://opensource.org/license/mit/)
 [![GitHub Sürümü](https://img.shields.io/github/v/release/KerimDemirkaynak/kerimdemirkaynak.github.io?style=for-the-badge&color=8DDFCB&label=Sürüm)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/releases)
-[![Website](https://img.shields.io/badge/Website-kerimdemirkaynak.github.io-00215E?style=flat-square)](https://kerimdemirkaynak.github.io)
+[![Website](https://img.shields.io/badge/Website-kerimdemirkaynak.github.io-00215E?style=for-the-badge)](https://kerimdemirkaynak.github.io)
 
 [**English**](en/README.en.md) | [**Türkçe**](README.md)
 
