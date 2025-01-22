@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çevirmen Kılavuzu</title>
+    <link rel="icon" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Çeviri yaparken nelere dikkat etmeniz gerektiğini ve profesyonel çevirmenlik ipuçlarını içeren kapsamlı bir kılavuz. Altyazı oluşturma, terminoloji, kültürel uyarlama ve daha fazlası.">
+    <meta name="keywords" content="çeviri, çevirmen, altyazı, altyazı çevirisi, anime çeviri, dizi çeviri, film çeviri, çeviri ipuçları, çeviri kılavuzu, çevirmen rehberi, aegisub rehberi">
+    <meta name="author" content="Kerim Demirkaynak">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Çevirmen Kılavuzu">
+    <meta property="og:description" content="Çeviri yaparken nelere dikkat etmeniz gerektiğini ve profesyonel çevirmenlik ipuçlarını içeren kapsamlı bir kılavuz. Altyazı oluşturma, terminoloji, kültürel uyarlama ve daha fazlası.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://kerimdemirkaynak.github.io/blog/cevirmen-kilavuzu">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta property="og:site_name" content="Kerim Demirkaynak">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Çevirmen Kılavuzu - Kerim Demirkaynak">
+    <meta name="twitter:description" content="Çeviri yaparken nelere dikkat etmeniz gerektiğini ve profesyonel çevirmenlik ipuçlarını içeren kapsamlı bir kılavuz. Altyazı oluşturma, terminoloji, kültürel uyarlama ve daha fazlası.">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:site" content="@KDxOFFICIAL">
+   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>    
+   <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2b2b2b;
+            padding: 1em 0;
+            text-align: center;
+            border-bottom: 2px solid #f5bb00;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+            filter: invert(1);
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #444;
+            color: #ffcc29;
+        }
+        
+        h1 {
+            color: #f5bb00;
+            border-bottom: 2px solid #f5bb00;
+            padding-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+             font-size: 16px;
+        }
+        
+        a {
+            color: #f5bb00;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #ffcc29;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-bottom: 1em;
+        }
+        li::before {
+            content: "\2022";
+            color: #f5bb00;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+        .content {
+            background-color: #2b2b2b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+         .comments-section{
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .comments-title {
+            color: #f5bb00;
+             display: flex;
+           align-items: center;
+            border-bottom: 2px solid #f5bb00;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+         .comments-title i {
+            margin-right: 10px; /* İkon ile başlık arasındaki boşluk */
+        }
+         #disqus_thread {
+          background-color: #2b2b2b;
+           padding: 20px;
+           border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+           }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+        }
+        blockquote {
+            font-style: italic;
+            padding: 10px;
+            border-left: 3px solid #f5bb00;
+            margin-left: 20px;
+        }
+        pre {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: keep-all;
+        }
+        code {
+            font-family: monospace;
+            background-color: #333;
+            color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+          
+        }
+        footer {
+            background-color: #333;
+            color: #f0f0f0;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+          
+        }
+
+        .social-icons a {
+            color: #f0f0f0;
+            margin: 0 10px;
+            font-size: 20px;
+            text-decoration: none;
+            transition: color 0.3s ease; /* Yumuşak geçiş efekti */
+        }
+        .social-icons a.instagram:hover {
+            color: #e1306c;
+        }
+
+        .social-icons a.x-twitter:hover {
+          color: #000;
+        }
+
+        .social-icons a.youtube:hover {
+            color: #ff0000;
+        }
+          .social-icons a.facebook:hover {
+            color: #1877f2;
+        }
+
+        .social-icons a.mastodon:hover {
+            color: #6364ff;
+        }
+
+       .social-icons a.github:hover {
+          color: #6e5494;
+       }
+       
+    </style>
+</head>
+<body>
+    <header>
+         <a href="https://kerimdemirkaynak.github.io/">
+        <img src="https://kerimdemirkaynak.github.io/resimler/logo.webp" alt="Kerim Demirkaynak Logo" class="logo">
+        </a>
+        </header>
+     <nav>
+          <a href="https://kerimdemirkaynak.github.io/blog">Blog</a>
+          <a href="https://kerimdemirkaynak.github.io/projeler/">Projeler</a>
+        <a href="https://kerimdemirkaynak.github.io/hakkinda">Hakkında</a>
+        <a href="https://kerimdemirkaynak.github.io/iletisim">İletişim</a>
+    </nav>
+    <div class="container">
+        <div class="content">
+    <div id="content">Markdown içeriği burada yüklenecek...</div>
+
+    <script>
+        // Markdown dosyasının URL'si
+        const markdownURL = "https://kerimdemirkaynak.github.io/blog/markdown/ornek.markdown";
+
+        // Markdown dosyasını fetch ile çek ve içeriği işleyerek göster
+        fetch(markdownURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP Hatası! Durum: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(markdown => {
+                // Markdown içeriğini HTML'e çevir ve sayfaya yerleştir
+                document.getElementById('content').innerHTML = marked.parse(markdown);
+            })
+            .catch(error => {
+                console.error('Markdown içeriği yüklenirken bir hata oluştu:', error);
+                document.getElementById('content').innerText = 'Markdown içeriği yüklenemedi.';
+            });
+    </script>
+        </div>
+       <div class="comments-section">
+            <h2 class="comments-title"> <i class="fas fa-comments"></i> Yorumlar</h2>
+           <div id="disqus_thread"></div>
+        </div>
+    </div>
+    <footer>
+        <p>© <span id="currentYear"></span> Kerim Demirkaynak. Tüm hakları saklıdır.</p>
+        
+         <!-- sosyal medya butonları -->
+        <div class="social-icons">
+            <a href="https://instagram.com/kerimdemirkaynak" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+            <a href="http://x.com/KDxOFFICIAL" target="_blank" class="x-twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://youtube.com/@KerimDemirkaynak?sub_confirmation=1" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/xDemirkaynak" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://mastodon.social/@Kerm" target="_blank" class="mastodon"><i class="fab fa-mastodon"></i></a>
+            <a href="https://github.com/KerimDemirkaynak" target="_blank" class="github"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://kerimdemirkaynak.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</body>
+</html>
