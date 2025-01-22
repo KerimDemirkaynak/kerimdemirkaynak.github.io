@@ -31,9 +31,13 @@ Bu repo, kişisel biyografi ve iletişim amaçlı oluşturulmuş bir web sitesi 
 ├── iletisim.html        # İletişim formunun HTML dosyası
 ├── 404.html             # 404 hata sayfasının HTML dosyası
 ├── resimler/            # Sitede kullanılan resimler için bir klasör
+├── blog/                # Blog gönderileri için bir klasör
+│   ├── index.html       # Blog ana sayfasının HTML dosyası
+│   ├── ornek.html       # Blog gönderisi sayfası için örnek HTML dosyası
+│   └── markdown/        # Blog için markdown metin dosyalarının klasörü
 ├── projeler/            # Proje dosyaları için bir klasör
-│   ├── index.html      # Proje ana sayfasının HTML dosyası
-│   └── aegisub.html    # Aegisub proje sayfasının HTML dosyası
+│   ├── index.html       # Proje ana sayfasının HTML dosyası
+│   └── aegisub.html     # Aegisub proje sayfasının HTML dosyası
 └── en/                  # İngilizce sayfalar için klasör
     ├── index.html       # Ana sayfanın İngilizce versiyonu
     ├── about.html       # Hakkında sayfasının İngilizce versiyonu
