@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Turkish Patch for Aegisub">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aegisub Turkish Patch">
+    <meta name="twitter:description" content="Turkish Patch">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
+   <link rel="icon" href="https://aegisub.org/favicon.ico">
+    <link rel="apple-touch-icon" href="https://aegisub.org/apple-touch-icon.png">
+    <title>Aegisub Turkish Patch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1f1f1f, #3d3d3d);
+            color: #eee;
+        }
+        header {
+            background: linear-gradient(135deg, #0078d7, #0053a6);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+         header img {
+            width: 120px;
+            display: block;
+            margin: 10px auto;
+        }
+        /* Normal Menu (for PC) */
+        nav {
+            background: #292929;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            color: #f0f0f0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            padding: 10px;
+        }
+        nav a:hover {
+            color: #80bfff;
+        }
+
+        /* Side sliding menu and mobile layout */
+        @media (max-width: 768px) {
+             /* Hide normal menu on mobile */
+            nav {
+                display: none;
+            }
+            /* Side sliding menu style */
+            #sideMenu {
+                position: fixed;
+                top: 0;
+                left: -250px; /* Initially hidden */
+                width: 250px;
+                height: 100%;
+                background-color: #292929;
+                transition: left 0.3s ease;
+                z-index: 1000;
+                padding-top: 60px;
+            }
+            #sideMenu a {
+                display: block;
+                color: white;
+                padding: 16px;
+                text-decoration: none;
+                font-size: 18px;
+                text-align: left; /* Align to the left */
+            }
+            #sideMenu a:hover {
+                background-color: #575757;
+            }
+             .menu-button {
+                display: block;
+                background-color: #292929;
+                color: #fff;
+                padding: 10px 15px;
+                font-size: 20px;
+                border: none;
+                cursor: pointer;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 1200;
+            }
+             .menu-button:hover {
+                background-color: #0053a6;
+            }
+        }
+
+       /* Menu layout on PC version */
+        @media (min-width: 769px) {
+            nav {
+                display: flex; /* Menu will be displayed horizontally */
+            }
+            .menu-button {
+                display: none; /* Hide hamburger menu on PC */
+            }
+             #sideMenu {
+                display: none; /* Hide side menu on PC */
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #2e2e2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        section h2 {
+            color: #80bfff;
+            border-bottom: 2px solid #80bfff;
+            padding-bottom: 5px;
+        }
+        a {
+            color: #80bfff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+         footer {
+            background: #292929;
+            color: #ddd;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+         footer a {
+            color: #80bfff;
+            text-decoration: none;
+        }
+         footer a:hover {
+            text-decoration: underline;
+        }
+
+         /* Let's set the pop-up style */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            color: #fff;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+         .popup img {
+            width: 100%;
+            max-width: 300px; /* Limit the image size */
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+         .overlay.active {
+            display: block;
+        }
+
+        button {
+            background-color: #0078d7;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0053a6;
+        }
+
+          /* Contact Form */
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+         .contact-form button {
+            background-color: #80bfff;
+            color: #fff;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+         .contact-form button:hover {
+            background-color: #0053a6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub Logo">
+        <h1>Aegisub Turkish Patch</h1>
+    </header>
+
+    <!-- Hamburger Menu Button for Mobile -->
+    <button class="menu-button" onclick="toggleSideMenu()">
+        <i class="fa-solid fa-bars"></i> <!-- Menu icon -->
+    </button>
+
+     <!-- Side sliding menu -->
+   <div id="sideMenu">
+        <a href="#installation"><i class="fas fa-cogs"></i> Installation</a>
+        <a href="#contribute"><i class="fas fa-users"></i> Contribute</a>
+        <a href="#" onclick="showPopup('licensePopup')"><i class="fas fa-file-contract"></i> License</a>
+         <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Download Aegisub</a>
+          <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Download Patch</a>
+         <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+
+
+     <!-- Normal Menu (for PC) -->
+    <nav>
+      <a href="#installation"><i class="fas fa-cogs"></i> Installation</a>
+        <a href="#contribute"><i class="fas fa-users"></i> Contribute</a>
+       <a href="#" onclick="showPopup('licensePopup')"><i class="fas fa-file-contract"></i> License</a>
+         <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Download Aegisub</a>
+          <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Download Patch</a>
+           <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="container">
+         <section>
+             <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Aegisub with Turkish Patch Applied" style="max-width: 100%; height: auto;">
+        </section>
+        <section id="installation">
+            <h2>Installation</h2>
+            <ol>
+                <li><a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases" target="_blank">Download the released zip file.</a>
+</li>
+                <li>Open the Aegisub file location for Windows:
+                    <ul>
+                        <li>Right-click on the Aegisub shortcut on your desktop and select "Open file location."</li>
+                    </ul>
+                </li>
+                <li>Drag the <code>locale</code> and <code>dictionaries</code> folders from the downloaded zip file into the directory where Aegisub is installed.</li>
+                 <li>Windows will ask for administrator permission to overwrite the files. Confirm to continue.</li>
+            </ol>
+            <p>That's it! You can now use Aegisub in Turkish.</p>
+        </section>
+
+         <section id="contribute">
+            <h2>Contribute</h2>
+            <p>If you want to contribute, please submit a <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/pulls" target="_blank">pull request</a> or open an <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/issues" target="_blank">issue</a>. Any contribution and feedback are welcome.</p>
+        </section>
+
+         <section id="license">
+            <h2>License</h2>
+            <p>This project is licensed under the MIT License. See the <code onclick="showPopup('licensePopup')">LICENSE</code> file for more information.</p>
+        </section>
+    </div>
+
+    <!-- Pop-ups and Overlay -->
+     <div class="overlay" id="overlay" onclick="hidePopup()"></div>
+
+     <div class="popup" id="aegisubPopup">
+        <h1>Download Aegisub</h1>
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub">
+         <p>Click the button below to download Aegisub.</p>
+        <a href="https://aegisub.org/downloads/">
+           <button><i class="fas fa-download"></i> Download</button>
+        </a>
+    </div>
+
+     <div class="popup" id="patchPopup">
+        <h1>Download Patch</h1>
+      <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.png" alt="Patched Aegisub">
+        <p>Click the button below to download the latest version of the Turkish patch.</p>
+        <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.1.0/Aegisub.Turkce.Yama.zip">
+           <button><i class="fas fa-download"></i> Download</button>
+        </a>
+    </div>
+
+    <div class="popup" id="licensePopup">
+        <h1>License</h1>
+         <p style="font-size: 12px;">MIT License</p>
+        <p style="font-size: 12px;">Copyright (c) 2024 Kerim Demirkaynak</p>
+         <p style="font-size: 12px;">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+        <p style="font-size: 12px;">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+       <p style="font-size: 12px;">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+    </div>
+
+      <div class="popup" id="emailPopup">
+         <h1>Contact</h1>
+        <form class="contact-form" action="mailto:aschannel111@gmail.com" method="post" enctype="text/plain">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+           <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+           <br><button type="submit">Submit</button>
+       </form>
+    </div>
+
+   <footer>
+        <p>Visit the project repository on <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch">GitHub</a>. <i class="fab fa-github"></i></p>
+    </footer>
+
+    <script>
+         // Menu toggle function
+        function toggleSideMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+             const currentLeft = sideMenu.style.left;
+             sideMenu.style.left = (currentLeft === '0px') ? '-250px' : '0px';
+        }
+
+         // Pop-up opening function
+        function showPopup(popupId) {
+            document.getElementById(popupId).classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+         // Pop-up closing function
+         function hidePopup() {
+            const popups = document.querySelectorAll('.popup');
+             popups.forEach(popup => popup.classList.remove('active'));
+            document.getElementById('overlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
