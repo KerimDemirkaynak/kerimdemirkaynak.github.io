@@ -31,10 +31,6 @@ This repository contains a website project created for personal biography and co
 ├── iletisim.html        # Contact form HTML file
 ├── 404.html             # 404 error page HTML file
 ├── resimler/            # Folder for images used on the site
-├── blog/                # Folder for blog posts
-│   ├── index.html       # HTML file for the blog homepage
-│   ├── ornek.html       # Example HTML file for a blog post page
-│   └── markdown/        # Folder for markdown text files for blog
 ├── projeler/            # Folder for project files
 │   ├── index.html       # Project main page HTML file
 │   └── aegisub.html     # Aegisub project page HTML file
