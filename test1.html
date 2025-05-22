@@ -1,7 +1,8 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
+  <meta charset="UTF-8">
   <title>Anime Geri Sayım</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
   <style>
     body {
@@ -10,139 +11,131 @@
       color: white;
       margin: 0;
       padding: 20px;
-    }h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .anime-card {
+      display: flex;
+      flex-direction: column;
+      background: #1e1e1e;
+      border-radius: 12px;
+      margin: 12px 0;
+      padding: 12px;
+      gap: 12px;
+      transition: background 0.3s;
+    }
+    .anime-card:hover {
+      background: #2a2a2a;
+    }
+    .anime-top {
+      display: flex;
+      gap: 16px;
+    }
+    .anime-image img {
+      width: 120px;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .anime-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .anime-title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+    .episode-number {
+      font-size: 16px;
+      font-weight: bold;
+      color: #e0e0e0;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+    .airing-time {
+      font-size: 14px;
+      color: #b0b0b0;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+    .platform-links {
+      margin-top: 6px;
+    }
+    .platform-links a {
+      display: inline-block;
+      margin-right: 6px;
+      height: 22px;
+    }
+    .platform-links img {
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      transition: transform 0.2s ease;
+    }
+    .platform-links a:hover img {
+      transform: scale(1.1);
+    }
+    .info-button {
+      margin-top: 10px;
+      background: #333;
+      border: none;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
 
-.anime-card {
-  display: flex;
-  flex-direction: column;
-  background: #1e1e1e;
-  border-radius: 12px;
-  margin: 12px 0;
-  padding: 12px;
-  gap: 12px;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-
-.anime-card:hover {
-  background: #2a2a2a;
-}
-
-.anime-top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.anime-image img {
-  width: 120px;
-  height: 170px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.anime-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 200px;
-}
-
-.anime-title {
-  font-family: 'Russo One', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  word-break: break-word;
-}
-
-.episode-number {
-  font-size: 16px;
-  font-weight: bold;
-  color: #e0e0e0;
-  margin-bottom: 6px;
-  word-break: break-word;
-}
-
-.airing-time {
-  font-size: 14px;
-  color: #b0b0b0;
-  margin-bottom: 6px;
-  word-break: break-word;
-}
-
-.platform-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-
-.platform-links a {
-  display: inline-block;
-  height: 20px;
-}
-
-.platform-links img {
-  height: 100%;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  transition: transform 0.2s ease;
-}
-
-.platform-links a:hover img {
-  transform: scale(1.1);
-}
-
-.more-button {
-  background: #333;
-  color: #fff;
-  border: none;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #222;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
-  z-index: 1000;
-  display: none;
-  max-width: 90%;
-}
-
-.popup-close {
-  background: #555;
-  border: none;
-  color: white;
-  padding: 4px 8px;
-  float: right;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
+    /* Modal Stil */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #1e1e1e;
+      margin: 12% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 380px;
+      border-radius: 10px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: white;
+    }
   </style>
 </head>
 <body>
   <h1>Yeni Anime Bölümleri</h1>
   <div id="animeList"></div>
-  <div id="popup" class="popup">
-    <button class="popup-close" onclick="document.getElementById('popup').style.display='none'">Kapat</button>
-    <div id="popupContent"></div>
-  </div>  <script>
+
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('infoModal').style.display='none'">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
     const platformLogos = {
       "Crunchyroll": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Crunchyroll_2024.svg",
       "HIDIVE": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Hidive_text_logo.svg",
@@ -162,7 +155,6 @@
               startDate { year month day }
               nextAiringEpisode {
                 airingAt
-                timeUntilAiring
                 episode
               }
               isAdult
@@ -184,30 +176,24 @@
       const data = await response.json();
       const container = document.getElementById('animeList');
       container.innerHTML = '';
-      const now = Math.floor(Date.now() / 1000);
 
       data.data.Page.media.forEach(anime => {
-        if (anime.isAdult || !anime.nextAiringEpisode || !anime.startDate.month || !anime.startDate.year) return;
+        if (anime.isAdult || !anime.nextAiringEpisode) return;
 
         const ep = anime.nextAiringEpisode;
-        const link = `https://anilist.co/anime/${anime.id}`;
-        const diff = ep.airingAt - now;
+        const airingDate = new Date(ep.airingAt * 1000);
+        const now = new Date();
+        const diff = airingDate - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
-        let airingText = '';
-        const days = Math.floor(diff / 86400);
-        const hours = Math.floor((diff % 86400) / 3600);
-        const minutes = Math.floor((diff % 3600) / 60);
-
-        if (diff > 0) {
-          airingText = `${days > 0 ? days + ' gün ' : ''}${hours} saat ${minutes} dakika sonra çıkacak`;
-        } else {
-          const ago = Math.abs(diff);
-          const hoursAgo = Math.floor(ago / 3600);
-          const minutesAgo = Math.floor((ago % 3600) / 60);
-          airingText = `${hoursAgo > 0 ? hoursAgo + ' saat ' : ''}${minutesAgo} dakika önce yayınlandı`;
-        }
+        const airingText = diff > 0
+          ? `${days} gün ${hours} saat ${minutes} dakika sonra çıkacak`
+          : 'Yayınlandı';
 
         const episodeText = `${ep.episode}. Bölüm`;
+        const link = `https://anilist.co/anime/${anime.id}`;
 
         let platformHTML = '';
         anime.externalLinks.forEach(link => {
@@ -219,20 +205,11 @@
         const genres = anime.genres.join(', ');
         const tags = anime.tags.slice(0, 3).map(t => t.name).join(', ');
         const score = anime.averageScore ? `${(anime.averageScore / 10).toFixed(1)} / 10` : 'Puan yok';
-        const monthText = monthNames[anime.startDate.month - 1];
-        const startDate = `${anime.startDate.day ? anime.startDate.day + ' ' : ''}${monthText}, ${anime.startDate.year}`;
-
-        const moreInfo = `
-          <strong>Başlangıç:</strong> ${startDate}<br>
-          <strong>Tür:</strong> ${genres}<br>
-          <strong>Temalar:</strong> ${tags}<br>
-          <strong>Puan:</strong> ${score}<br>
-        `;
+        const monthText = anime.startDate?.month ? monthNames[anime.startDate.month - 1] : '';
+        const startDate = anime.startDate?.year && monthText ? `${anime.startDate.day ? anime.startDate.day + ' ' : ''}${monthText}, ${anime.startDate.year}` : 'Bilinmiyor';
 
         const card = document.createElement('div');
         card.className = 'anime-card';
-        card.onclick = () => window.open(link, '_blank');
-
         card.innerHTML = `
           <div class="anime-top">
             <div class="anime-image">
@@ -242,8 +219,8 @@
               <div class="anime-title">${anime.title.romaji}</div>
               <div class="episode-number">${episodeText}</div>
               <div class="airing-time">${airingText}</div>
-              <button class="more-button" onclick="event.stopPropagation(); document.getElementById('popupContent').innerHTML='${moreInfo}'; document.getElementById('popup').style.display='block';">Daha Fazla Bilgi</button>
               <div class="platform-links">${platformHTML}</div>
+              <button class="info-button" onclick="showInfo(event, \`${startDate}\`, \`${genres}\`, \`${tags}\`, \`${score}\`)">Daha fazla bilgi</button>
             </div>
           </div>
         `;
@@ -252,6 +229,27 @@
       });
     }
 
+    function showInfo(event, date, genres, tags, score) {
+      event.stopPropagation();
+      const modal = document.getElementById('infoModal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <p><strong>Başlangıç:</strong> ${date}</p>
+        <p><strong>Tür:</strong> ${genres}</p>
+        <p><strong>Temalar:</strong> ${tags}</p>
+        <p><strong>Puan:</strong> ${score}</p>
+      `;
+      modal.style.display = 'block';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('infoModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+
     getAnimeList();
-  </script></body>
-  </html>
+  </script>
+</body>
+</html>
