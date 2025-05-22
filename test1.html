@@ -1,6 +1,7 @@
 <!DOCTYPE html><html>
 <head>
   <title>Anime Geri Sayım</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
   <style>
     body {
@@ -32,6 +33,7 @@
 
 .anime-top {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
@@ -47,6 +49,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 200px;
 }
 
 .anime-title {
@@ -73,13 +76,16 @@
 }
 
 .platform-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
   margin-top: 6px;
 }
 
 .platform-links a {
   display: inline-block;
-  margin-right: 6px;
-  height: 22px;
+  height: 20px;
 }
 
 .platform-links img {
@@ -93,20 +99,50 @@
   transform: scale(1.1);
 }
 
-.extra-info {
-  display: flex;
-  flex-direction: column;
+.more-button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
   font-size: 12px;
-  color: #aaa;
-  margin-top: 8px;
-  word-break: break-word;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: none;
+  max-width: 90%;
+}
+
+.popup-close {
+  background: #555;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  float: right;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
   </style>
 </head>
 <body>
   <h1>Yeni Anime Bölümleri</h1>
-  <div id="animeList"></div>  <script>
+  <div id="animeList"></div>
+  <div id="popup" class="popup">
+    <button class="popup-close" onclick="document.getElementById('popup').style.display='none'">Kapat</button>
+    <div id="popupContent"></div>
+  </div>  <script>
     const platformLogos = {
       "Crunchyroll": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Crunchyroll_2024.svg",
       "HIDIVE": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Hidive_text_logo.svg",
@@ -123,7 +159,7 @@
               id
               title { romaji }
               coverImage { medium }
-              startDate { year month }
+              startDate { year month day }
               nextAiringEpisode {
                 airingAt
                 timeUntilAiring
@@ -151,7 +187,7 @@
       const now = Math.floor(Date.now() / 1000);
 
       data.data.Page.media.forEach(anime => {
-        if (anime.isAdult || !anime.nextAiringEpisode) return;
+        if (anime.isAdult || !anime.nextAiringEpisode || !anime.startDate.month || !anime.startDate.year) return;
 
         const ep = anime.nextAiringEpisode;
         const link = `https://anilist.co/anime/${anime.id}`;
@@ -183,9 +219,15 @@
         const genres = anime.genres.join(', ');
         const tags = anime.tags.slice(0, 3).map(t => t.name).join(', ');
         const score = anime.averageScore ? `${(anime.averageScore / 10).toFixed(1)} / 10` : 'Puan yok';
-        const monthText = anime.startDate?.month ? monthNames[anime.startDate.month - 1] : null;
-        const startDate = anime.startDate?.year && monthText ? `${anime.startDate.day ? anime.startDate.day + ' ' : ''}${monthText}, ${anime.startDate.year}` : null;
-        if (!startDate) return;
+        const monthText = monthNames[anime.startDate.month - 1];
+        const startDate = `${anime.startDate.day ? anime.startDate.day + ' ' : ''}${monthText}, ${anime.startDate.year}`;
+
+        const moreInfo = `
+          <strong>Başlangıç:</strong> ${startDate}<br>
+          <strong>Tür:</strong> ${genres}<br>
+          <strong>Temalar:</strong> ${tags}<br>
+          <strong>Puan:</strong> ${score}<br>
+        `;
 
         const card = document.createElement('div');
         card.className = 'anime-card';
@@ -200,14 +242,9 @@
               <div class="anime-title">${anime.title.romaji}</div>
               <div class="episode-number">${episodeText}</div>
               <div class="airing-time">${airingText}</div>
+              <button class="more-button" onclick="event.stopPropagation(); document.getElementById('popupContent').innerHTML='${moreInfo}'; document.getElementById('popup').style.display='block';">Daha Fazla Bilgi</button>
               <div class="platform-links">${platformHTML}</div>
             </div>
-          </div>
-          <div class="extra-info">
-            <strong>Başlangıç:</strong> ${startDate}
-            <strong>Tür:</strong> ${genres}
-            <strong>Temalar:</strong> ${tags}
-            <strong>Puan:</strong> ${score}
           </div>
         `;
 
@@ -217,4 +254,4 @@
 
     getAnimeList();
   </script></body>
-    </html>
+</html>
