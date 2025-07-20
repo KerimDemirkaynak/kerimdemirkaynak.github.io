@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turkish Ice-Cream - Bir Görsel Roman Deneyimi</title>
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome (Ikonlar için) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* 1. TEMA VE RENK DEĞİŞKENLERİ */
+    :root {
+      /* Varsayılan: Koyu Tema */
+      --primary-color: #4db6ac;
+      --dark-bg: #1e2a38;
+      --light-bg: #2b3e50;
+      --card-bg: #2b3e50;
+      --card-comment-bg: #161b22;
+      --text-color: #e0e0e0;
+      --light-text: #b0bec5;
+      --border-color: #3c5168;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      --header-overlay: rgba(30, 42, 56, 0.85); 
+    }
+
+    body[data-theme='light'] {
+      /* Açık Tema Renkleri */
+      --dark-bg: #f4f7f6;
+      --light-bg: #ffffff;
+      --card-bg: #ffffff;
+      --card-comment-bg: #f0f2f5;
+      --text-color: #2c3e50;
+      --light-text: #5a7184;
+      --border-color: #e0e0e0;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-color);
+      line-height: 1.8;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ana Başlık (Header) */
+    header {
+      background-blend-mode: multiply;
+      background-color: var(--header-overlay);
+      background-image: url('https://kerimdemirkaynak.github.io/resimler/screenshot0003.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--primary-color);
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-top: 10px;
+      color: inherit; /* DÜZELTME: Rengin her zaman header'dan miras alınmasını sağlar */
+    }
+
+    /* Ana İçerik Alanı */
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* Kart Yapısı */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+    }
+    
+    body[data-theme='light'] .card:hover {
+       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    #comments-card {
+        background-color: var(--card-comment-bg);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      transition: border-color 0.3s ease;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    ul { list-style-type: none; padding-left: 0; }
+    ul li { margin-bottom: 10px; color: var(--light-text); }
+    ul li strong { color: var(--text-color); font-weight: 600; }
+    p { color: var(--light-text); } /* Bu genel kural diğer paragraflar için geçerli olmaya devam edecek */
+    strong { color: var(--text-color); }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    a:hover { color: #f0f0f0; }
+    body[data-theme='light'] a:hover { color: #000; }
+
+    .icon-list { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 10px; }
+    .icon-list .icon-item { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; color: var(--light-text); }
+    .icon-list i { font-size: 2rem; color: var(--text-color); transition: color 0.3s, transform 0.3s; }
+    .icon-list a:hover i { color: var(--primary-color); transform: scale(1.1); }
+
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .gallery img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); transition: box-shadow 0.3s ease, filter 0.3s ease; }
+    .gallery img:hover { box-shadow: 0 0 20px rgba(77, 182, 172, 0.6); filter: brightness(1.1); }
+
+    footer {
+      background: #15202b;
+      color: var(--light-text);
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+      border-top: 3px solid var(--light-bg);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    body[data-theme='light'] footer {
+        background: #e9ecef;
+        border-top-color: #ffffff;
+    }
+
+    .settings-controls {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        display: flex;
+        gap: 15px;
+        background-color: rgba(0,0,0,0.2);
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+    .control-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.3s, transform 0.3s;
+    }
+    .control-button:hover {
+        color: var(--primary-color);
+        transform: scale(1.1);
+    }
+    #lang-switcher {
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 0 5px;
+    }
+    
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      header { padding: 60px 20px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <header>
+    <div class="settings-controls">
+        <button id="theme-switcher" class="control-button" title="Temayı Değiştir"><i class="fa-solid fa-sun"></i></button>
+        <button id="lang-switcher" class="control-button" title="Change Language">EN</button>
+    </div>
+
+    <h1>🎮 Turkish Ice-Cream</h1>
+    <p data-lang-key="headerSubtitle">Bir indie görsel roman deneyimi - Ren'Py tabanlı</p>
+  </header>
+
+  <main class="container">
+    
+    <section class="card">
+      <h2 data-lang-key="aboutTitle">Hakkında</h2>
+      <p data-lang-key="aboutText">
+        "Turkish Ice-Cream", 2022’den beri bağımsız olarak geliştirilen bir görsel roman projesidir. Romantizm ve bulmaca ögelerini harmanlayan bu hikâye; hem gerçek hayatın tatlı sert yanlarını hem de oyuncunun seçimlerinin önemini öne çıkarıyor. Geliştirme süreci halen devam etmektedir ve zamanla daha fazla içerik, platform ve dil desteğiyle genişlemesi planlanmaktadır.
+      </p>
+    </section>
+
+    <div class="info-grid">
+      <div class="card">
+        <h2 data-lang-key="infoTitle">Genel Bilgiler</h2>
+        <strong data-lang-key="platforms">Platformlar:</strong>
+        <div class="icon-list">
+            <span class="icon-item" title="Windows (Kesin / Definite)"><i class="fa-brands fa-windows"></i></span>
+            <span class="icon-item" title="Android (Muhtemel / Likely)"><i class="fa-brands fa-android"></i></span>
+            <span class="icon-item" title="Linux (Belirsiz / Uncertain)"><i class="fa-brands fa-linux"></i></span>
+        </div>
+        <strong style="display: block; margin-top: 20px;" data-lang-key="stores">Mağazalar:</strong>
+         <div class="icon-list">
+            <a href="https://kerimdemirkaynak.itch.io/turkish-ice-cream" target="_blank" rel="noopener" class="icon-item" title="itch.io"><i class="fa-brands fa-itch-io"></i></a>
+            <a href="https://apkpure.com/tr/turkish-ice-cream/com.kerimdemirkaynak.turkishicecream" target="_blank" rel="noopener" class="icon-item" title="APKPure"><i class="fa-solid fa-download"></i></a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h2 data-lang-key="langTitle">Dil Desteği & Tür</h2>
+        <ul>
+          <li><strong data-lang-key="interface">Arayüz:</strong> Türkçe, İngilizce</li>
+          <li><strong data-lang-key="subtitles">Altyazı:</strong> Türkçe, İngilizce</li>
+          <li><strong data-lang-key="voiceover">Dublaj:</strong> <span data-lang-key="voiceoverStatus">Türkçe (belirsiz)</span></li>
+        </ul>
+        <p style="margin-top: 20px;">
+          <strong data-lang-key="genres">Türler:</strong> <span data-lang-key="genreList">Romantik, Macera, Puzzle, Hayattan Kesitler</span>
+        </p>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2 data-lang-key="galleryTitle">Ekran Görüntüleri</h2>
+      <div class="gallery">
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Oynanış Görüntüsü">
+        <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Ayarlar Menüsü">
+      </div>
+    </section>
+
+    <section class="card" id="comments-card">
+      <h2 data-lang-key="commentsTitle">Yorumlar</h2>
+      <div id="giscus-container"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2022–<span id="current-year"></span> | <span data-lang-key="developer">Geliştirici</span>: Kerim Demirkaynak</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const translations = {
+            tr: {
+                headerSubtitle: "Bir indie görsel roman deneyimi - Ren'Py tabanlı",
+                aboutTitle: "Hakkında",
+                aboutText: `"Turkish Ice-Cream", 2022’den beri bağımsız olarak geliştirilen bir görsel roman projesidir. Romantizm ve bulmaca ögelerini harmanlayan bu hikâye; hem gerçek hayatın tatlı sert yanlarını hem de oyuncunun seçimlerinin önemini öne çıkarıyor. Geliştirme süreci halen devam etmektedir ve zamanla daha fazla içerik, platform ve dil desteğiyle genişlemesi planlanmaktadır.`,
+                infoTitle: "Genel Bilgiler",
+                platforms: "Platformlar:",
+                stores: "Mağazalar:",
+                langTitle: "Dil Desteği & Tür",
+                interface: "Arayüz:",
+                subtitles: "Altyazı:",
+                voiceover: "Dublaj:",
+                voiceoverStatus: "Türkçe (belirsiz)",
+                genres: "Türler:",
+                genreList: "Romantik, Macera, Puzzle, Hayattan Kesitler",
+                galleryTitle: "Ekran Görüntüleri",
+                commentsTitle: "Yorumlar",
+                developer: "Geliştirici",
+                themeSwitcherTitle: "Temayı Değiştir",
+                langSwitcherTitle: "Change Language"
+            },
+            en: {
+                headerSubtitle: "An indie visual novel experience - Based on Ren'Py",
+                aboutTitle: "About",
+                aboutText: `"Turkish Ice-Cream" is a visual novel project that has been independently developed since 2022. Blending elements of romance and puzzles, this story highlights both the bittersweet aspects of real life and the importance of player choices. The development is ongoing, with plans to expand with more content, platforms, and language support over time.`,
+                infoTitle: "General Information",
+                platforms: "Platforms:",
+                stores: "Stores:",
+                langTitle: "Language Support & Genre",
+                interface: "Interface:",
+                subtitles: "Subtitles:",
+                voiceover: "Voiceover:",
+                voiceoverStatus: "Turkish (uncertain)",
+                genres: "Genres:",
+                genreList: "Romance, Adventure, Puzzle, Slice of Life",
+                galleryTitle: "Screenshots",
+                commentsTitle: "Comments",
+                developer: "Developer",
+                themeSwitcherTitle: "Switch Theme",
+                langSwitcherTitle: "Dili Değiştir"
+            }
+        };
+
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const langSwitcher = document.getElementById('lang-switcher');
+        const body = document.body;
+        const icon = themeSwitcher.querySelector('i');
+
+        const applyTheme = (theme) => {
+            body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            icon.className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+            loadGiscus();
+        };
+
+        themeSwitcher.addEventListener('click', () => {
+            const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+
+        const applyLanguage = (lang) => {
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if(translations[lang][key]) {
+                   el.innerHTML = translations[lang][key];
+                }
+            });
+
+            langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
+            langSwitcher.title = translations[lang].langSwitcherTitle;
+            themeSwitcher.title = translations[lang].themeSwitcherTitle;
+            loadGiscus();
+        };
+        
+        langSwitcher.addEventListener('click', () => {
+            const newLang = localStorage.getItem('language') === 'tr' ? 'en' : 'tr';
+            applyLanguage(newLang);
+        });
+
+        const loadGiscus = () => {
+            const container = document.getElementById('giscus-container');
+            if (!container) return;
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            const giscusScript = document.createElement('script');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            const currentLang = localStorage.getItem('language') || 'tr';
+            const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed';
+
+            giscusScript.src = "https://giscus.app/client.js";
+            giscusScript.setAttribute('data-repo', "KerimDemirkaynak/Yorumlar");
+            giscusScript.setAttribute('data-repo-id', "R_kgDOPPm0QA");
+            giscusScript.setAttribute('data-category', "Yorumlar");
+            giscusScript.setAttribute('data-category-id', "DIC_kwDOPPm0QM4CtM73");
+            giscusScript.setAttribute('data-mapping', "pathname");
+            giscusScript.setAttribute('data-strict', "0");
+            giscusScript.setAttribute('data-reactions-enabled', "1");
+            giscusScript.setAttribute('data-emit-metadata', "0");
+            giscusScript.setAttribute('data-input-position', "top");
+            giscusScript.setAttribute('data-theme', giscusTheme);
+            giscusScript.setAttribute('data-lang', currentLang);
+            giscusScript.setAttribute('crossorigin', "anonymous");
+            giscusScript.async = true;
+
+            container.appendChild(giscusScript);
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        const savedLang = localStorage.getItem('language') || 'tr';
+
+        applyTheme(savedTheme);
+        applyLanguage(savedLang);
+    });
+  </script>
+
+</body>
+</html>
