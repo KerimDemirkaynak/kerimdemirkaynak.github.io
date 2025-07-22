@@ -32,8 +32,8 @@
             --border-radius: 16px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             --aurora-animation: gradientAnimation 20s ease infinite;
-            /* === DÜZELTME: OPAK KART ARKA PLANI İÇİN YENİ DEĞİŞKEN === */
-            --card-solid-bg: #1f2937; 
+            /* === ÇÖZÜM ADIM 1: YORUM KARTI İÇİN ÖZEL ARKA PLAN DEĞİŞKENİ === */
+            --giscus-card-bg: #161b22; 
         }
 
         body[data-theme='light'] {
@@ -48,8 +48,8 @@
             --text-secondary: #5a7184;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --aurora-animation: none;
-            /* === DÜZELTME: AÇIK TEMA İÇİN OPAK KART ARKA PLANI === */
-            --card-solid-bg: #ffffff;
+            /* === ÇÖZÜM ADIM 2: AÇIK TEMA İÇİN YORUM KARTI ARKA PLANI === */
+            --giscus-card-bg: #f0f2f5;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -124,16 +124,17 @@
         .card p, .card ol { color: var(--text-secondary); line-height: 1.7; }
         .card ol { padding-left: 1.2rem; } .card ol li { margin-bottom: 0.5rem; }
         
-        /* === DÜZELTME: YORUM KARTINI ÖZELLEŞTİRME === */
+        /* === ÇÖZÜM ADIM 3: YORUM KARTINA ÖZEL KURALLARI UYGULAMA === */
         #comments-card {
-            background: var(--card-solid-bg); /* Şeffaf yerine opak arka plan kullan */
-            backdrop-filter: none; /* Bulanıklaştırma efektini kaldır */
+            background: var(--giscus-card-bg); /* Değişkenden opak rengi al */
+            backdrop-filter: none; /* Şeffaflık/Bulanıklık efektini kaldır */
+            -webkit-backdrop-filter: none;
+            border: 1px solid var(--glass-border); /* Kenarlığı koru */
             padding-bottom: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s; /* Geçişi koru */
         }
-        #comments-card h3 {
-             display: flex; align-items: center; justify-content: center; gap: 15px;
-             text-align: center; margin-bottom: 2rem;
+        #comments-card h3 { 
+            display: flex; align-items: center; justify-content: center; gap: 15px; 
+            text-align: center; margin-bottom: 2rem;
         }
         
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
@@ -376,14 +377,12 @@
             function loadGiscus() {
                 const container = document.getElementById('giscus-container');
                 if (!container) return;
-                // Mevcut giscus iframe'ini temizle
                 while (container.firstChild) { container.removeChild(container.firstChild); }
                 
                 const giscusScript = document.createElement('script');
                 const currentTheme = localStorage.getItem('theme') || 'dark';
                 const currentLang = localStorage.getItem('language') || 'tr';
-                // Giscus'un tema adlandırmasıyla eşleştirme
-                const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed'; 
+                const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed';
                 
                 Object.assign(giscusScript, {
                     src: "https://giscus.app/client.js", async: true, crossorigin: "anonymous",
