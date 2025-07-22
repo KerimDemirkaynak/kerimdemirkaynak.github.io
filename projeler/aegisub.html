@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aegisub Türkçe Yama</title>
+    <title>Aegisub Türkçe Yama - Gelişmiş Deneyim</title>
     
     <meta name="description" content="Aegisub için en güncel ve dinamik Türkçe Yama deneyimi. Tema değiştirme ve yorum özelliğiyle.">
     <meta property="og:title" content="Aegisub Türkçe Yama - Yeni Nesil">
@@ -110,6 +110,10 @@
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
             backdrop-filter: blur(12px); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s;
         }
+        #comments-card {
+            background-color: var(--comment-card-bg); /* OPAK ARKA PLAN */
+            backdrop-filter: none; /* CAM EFEKTİ İPTAL */
+        }
         a.card { text-decoration: none; }
         .image-container { padding: 1.5rem; box-shadow: var(--shadow); }
         .image-container img { width: 100%; height: auto; border-radius: 8px; }
@@ -120,11 +124,6 @@
         .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
         .card p, .card ol { color: var(--text-secondary); line-height: 1.7; }
         .card ol { padding-left: 1.2rem; } .card ol li { margin-bottom: 0.5rem; }
-        
-        #comments-card {
-            background-color: var(--comment-card-bg); /* OPAK ARKA PLAN */
-            backdrop-filter: none; /* CAM EFEKTİ İPTAL */
-        }
         #comments-card h3 { display: flex; align-items: center; justify-content: center; gap: 15px; }
         
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
@@ -167,7 +166,6 @@
         body[data-theme='light'] .contact-form input, body[data-theme='light'] .contact-form textarea { background: rgba(255, 255, 255, 0.5); }
         .contact-form button { cursor: pointer; }
 
-        /* Mobil Menü Stilleri */
         .hamburger-menu {
             background: none; border: none; color: var(--text-primary);
             font-size: 1.5rem; cursor: pointer; z-index: 1101; display: none; /* Varsayılan olarak gizli */
@@ -224,6 +222,7 @@
     </nav>
 
     <main class="container">
+        <!-- Main content -->
         <section class="hero">
             <h1 class="fade-in" data-lang-key="heroTitle">Altyazı Dünyasına<br>Türkçe Adım Atın</h1>
             <p class="fade-in" data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.</p>
