@@ -25,6 +25,7 @@
             --background-end: #0c0d24;
             --header-bg: rgba(17, 24, 39, 0.5);
             --glass-bg: rgba(30, 41, 59, 0.5);
+            --comment-card-bg: #161b22; /* Giscus için özel solid arkaplan */
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-primary: #f0f0f0;
             --text-secondary: #a0a0a0;
@@ -41,6 +42,7 @@
             --background-end: #e9f2ff;
             --header-bg: rgba(249, 250, 251, 0.85);
             --glass-bg: rgba(255, 255, 255, 0.7);
+            --comment-card-bg: #f0f2f5; /* Giscus için açık tema solid arkaplan */
             --glass-border: rgba(0, 0, 0, 0.1);
             --text-primary: #1c2a38;
             --text-secondary: #5a7184;
@@ -118,6 +120,11 @@
         .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
         .card p, .card ol { color: var(--text-secondary); line-height: 1.7; }
         .card ol { padding-left: 1.2rem; } .card ol li { margin-bottom: 0.5rem; }
+        
+        #comments-card {
+            background-color: var(--comment-card-bg); /* OPAK ARKA PLAN */
+            backdrop-filter: none; /* CAM EFEKTİ İPTAL */
+        }
         #comments-card h3 { display: flex; align-items: center; justify-content: center; gap: 15px; }
         
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
@@ -183,7 +190,6 @@
         .mobile-nav ul a:hover { color: var(--accent-color); }
         .mobile-nav ul a i { width: 20px; }
         
-        /* Ekran Genişliğine Göre Header Kontrolü */
         @media (max-width: 700px) {
             .header-right .cta-button { display: none; }
             .hamburger-menu { display: block; }
@@ -218,7 +224,6 @@
     </nav>
 
     <main class="container">
-        <!-- Main content (hero, etc.) -->
         <section class="hero">
             <h1 class="fade-in" data-lang-key="heroTitle">Altyazı Dünyasına<br>Türkçe Adım Atın</h1>
             <p class="fade-in" data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.</p>
@@ -263,7 +268,7 @@
         </section>
         
         <section class="section-container fade-in">
-            <div id="comments-card" class="card" style="padding-bottom: 2rem;">
+            <div id="comments-card" class="card">
                  <h3 style="text-align: center; margin-bottom: 2rem;"><i class="fas fa-comments"></i> <span data-lang-key="commentsTitle">Yorumlar</span></h3>
                  <div id="giscus-container"></div>
             </div>
@@ -364,6 +369,7 @@
                 const giscusScript = document.createElement('script');
                 const currentTheme = localStorage.getItem('theme') || 'dark';
                 const currentLang = localStorage.getItem('language') || 'tr';
+                // Giscus'a kendi tema isimlerini gönderiyoruz
                 const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed';
                 Object.assign(giscusScript, {
                     src: "https://giscus.app/client.js", async: true, crossorigin: "anonymous",
@@ -371,7 +377,8 @@
                     "data-category": "Yorumlar", "data-category-id": "DIC_kwDOPPm0QM4CtM73",
                     "data-mapping": "pathname", "data-strict": "0", "data-reactions-enabled": "1",
                     "data-emit-metadata": "0", "data-input-position": "top",
-                    "data-theme": giscusTheme, "data-lang": currentLang
+                    "data-theme": giscusTheme, // Giscus'un beklediği tema
+                    "data-lang": currentLang // Giscus'un beklediği dil
                 });
                 container.appendChild(giscusScript);
             };
