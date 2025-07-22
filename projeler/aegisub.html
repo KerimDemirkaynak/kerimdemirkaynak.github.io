@@ -106,13 +106,17 @@
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 35px var(--accent-glow); }
         
         .section-container { padding: 2rem 1rem; }
+        .card, .image-container, #comments-card {
+            border-radius: var(--border-radius);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s;
+        }
         .card, .image-container {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
-            backdrop-filter: blur(12px); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
         }
         #comments-card {
-            background-color: var(--comment-card-bg); /* OPAK ARKA PLAN */
-            backdrop-filter: none; /* CAM EFEKTİ İPTAL */
+            background-color: var(--comment-card-bg);
+            padding: 2.5rem;
         }
         a.card { text-decoration: none; }
         .image-container { padding: 1.5rem; box-shadow: var(--shadow); }
@@ -168,7 +172,7 @@
 
         .hamburger-menu {
             background: none; border: none; color: var(--text-primary);
-            font-size: 1.5rem; cursor: pointer; z-index: 1101; display: none; /* Varsayılan olarak gizli */
+            font-size: 1.5rem; cursor: pointer; z-index: 1101; display: none;
         }
         .mobile-nav {
             position: fixed; top: 0; right: 0; width: 280px; height: 100%;
@@ -222,7 +226,6 @@
     </nav>
 
     <main class="container">
-        <!-- Main content -->
         <section class="hero">
             <h1 class="fade-in" data-lang-key="heroTitle">Altyazı Dünyasına<br>Türkçe Adım Atın</h1>
             <p class="fade-in" data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.</p>
@@ -267,7 +270,7 @@
         </section>
         
         <section class="section-container fade-in">
-            <div id="comments-card" class="card">
+            <div id="comments-card">
                  <h3 style="text-align: center; margin-bottom: 2rem;"><i class="fas fa-comments"></i> <span data-lang-key="commentsTitle">Yorumlar</span></h3>
                  <div id="giscus-container"></div>
             </div>
