@@ -3,375 +3,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aegisub için Türkçe Yama">
-    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Aegisub Türkçe Yama">
-    <meta name="twitter:description" content="Türkçe Yama">
-    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
-    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
-    <link rel="icon" href="https://aegisub.org/favicon.ico">
-    <link rel="apple-touch-icon" href="https://aegisub.org/apple-touch-icon.png">
     <title>Aegisub Türkçe Yama</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <meta name="description" content="Aegisub için en güncel ve dinamik Türkçe Yama deneyimi. Tema değiştirme ve yorum özelliğiyle.">
+    <meta property="og:title" content="Aegisub Türkçe Yama - Yeni Nesil">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="https://aegisub.org/favicon.ico">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
+        :root {
+            --accent-color: #00A3FF;
+            --accent-glow: rgba(0, 163, 255, 0.5);
+            --background-start: #111827;
+            --background-end: #0c0d24;
+            --header-bg: rgba(17, 24, 39, 0.5);
+            --glass-bg: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --font-family: 'Inter', sans-serif;
+            --border-radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --aurora-animation: gradientAnimation 20s ease infinite;
+        }
+
+        body[data-theme='light'] {
+            --accent-color: #007BFF;
+            --accent-glow: rgba(0, 123, 255, 0.4);
+            --background-start: #f4f7f9;
+            --background-end: #e9f2ff;
+            --header-bg: rgba(249, 250, 251, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-primary: #1c2a38;
+            --text-secondary: #5a7184;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --aurora-animation: none;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1f1f1f, #3d3d3d);
-            color: #eee;
+            font-family: var(--font-family); background-color: var(--background-start); color: var(--text-primary);
+            overflow-x: hidden; background: linear-gradient(125deg, var(--background-start), var(--background-end));
+            background-size: 400% 400%; animation: var(--aurora-animation);
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        
         header {
-            background: linear-gradient(135deg, #0078d7, #0053a6);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+            background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border); transition: background-color 0.4s, border-color 0.4s;
         }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
+        
+        .header-left { display: flex; align-items: center; gap: 20px; }
+        .logo { font-size: 1.5rem; font-weight: 800; }
+        .settings-group {
+            display: flex; background: rgba(0,0,0,0.1); border: 1px solid var(--glass-border);
+            border-radius: 20px; overflow: hidden;
         }
-        header img {
-            width: 120px;
-            display: block;
-            margin: 10px auto;
+        body[data-theme='light'] .settings-group { background: rgba(255,255,255,0.2); }
+        .control-button {
+            background: none; border: none; color: var(--text-secondary); font-size: 0.9rem;
+            cursor: pointer; width: 45px; height: 38px; display: flex; justify-content: center;
+            align-items: center; transition: background-color 0.3s, color 0.3s;
         }
-        /* Normal Menü (PC için) */
-        nav {
-            background: #292929;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        .control-button:hover { background-color: rgba(255,255,255,0.1); color: var(--text-primary); }
+        .control-button:first-child { border-right: 1px solid var(--glass-border); }
+        #lang-switcher { font-weight: 700; font-size: 0.9rem; }
+        
+        .hero { text-align: center; padding: 12rem 1rem 6rem; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--text-primary), var(--accent-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        nav a {
-            color: #f0f0f0;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-            padding: 10px;
+        .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 2.5rem; }
+        
+        .cta-button { 
+            background: var(--accent-color); color: #fff; padding: 1rem 3rem; border: none;
+            border-radius: 50px; font-weight: 600; font-size: 1rem; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 0 20px var(--accent-glow);
         }
-        nav a:hover {
-            color: #80bfff;
+        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 35px var(--accent-glow); }
+        
+        .section-container { padding: 2rem 1rem; }
+        .card, .image-container {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
+            backdrop-filter: blur(12px); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s;
         }
-
-        /* Yandan kayan menü ve mobil düzen */
-        @media (max-width: 768px) {
-            /* Mobilde normal menü gizlensin */
-            nav {
-                display: none;
-            }
-            /* Yandan kayan menü stili */
-            #sideMenu {
-                position: fixed;
-                top: 0;
-                left: -250px; /* Başlangıçta gizli */
-                width: 250px;
-                height: 100%;
-                background-color: #292929;
-                transition: left 0.3s ease;
-                z-index: 1000;
-                padding-top: 60px;
-            }
-            #sideMenu a {
-                display: block;
-                color: white;
-                padding: 16px;
-                text-decoration: none;
-                font-size: 18px;
-                text-align: left; /* Sola hizalama */
-            }
-            #sideMenu a:hover {
-                background-color: #575757;
-            }
-            .menu-button {
-                display: block;
-                background-color: #292929;
-                color: #fff;
-                padding: 10px 15px;
-                font-size: 20px;
-                border: none;
-                cursor: pointer;
-                position: fixed;
-                top: 15px;
-                left: 15px;
-                z-index: 1200;
-            }
-            .menu-button:hover {
-                background-color: #0053a6;
-            }
-        }
-
-        /* PC versiyonunda menü düzeni */
-        @media (min-width: 769px) {
-            nav {
-                display: flex; /* Menü yatay gösterilecektir */
-            }
-            .menu-button {
-                display: none; /* PC'de hamburger menü gizlenecek */
-            }
-            #sideMenu {
-                display: none; /* PC'de yan menü gizlenecek */
-            }
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #2e2e2e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        section h2 {
-            color: #80bfff;
-            border-bottom: 2px solid #80bfff;
-            padding-bottom: 5px;
-        }
-        a {
-            color: #80bfff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        a.card { text-decoration: none; }
+        .image-container { padding: 1.5rem; box-shadow: var(--shadow); }
+        .image-container img { width: 100%; height: auto; border-radius: 8px; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .card { padding: 2.5rem; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); border-color: var(--accent-color); }
+        .card .icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .card p, .card ol { color: var(--text-secondary); line-height: 1.7; }
+        .card ol { padding-left: 1.2rem; } .card ol li { margin-bottom: 0.5rem; }
+        #comments-card h3 { display: flex; align-items: center; justify-content: center; gap: 15px; }
+        
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        
         footer {
-            background: #292929;
-            color: #ddd;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
+            text-align: center; padding: 3rem 1rem; margin-top: 2rem; color: var(--text-secondary);
+            border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 1.5rem;
+            transition: border-color 0.4s;
         }
-        footer a {
-            color: #80bfff;
-            text-decoration: none;
+        footer .footer-links a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; transition: color 0.3s ease; }
+        footer .footer-links a:hover { color: var(--accent-color); }
+        footer .copyright-text { color: var(--text-secondary); }
+        
+        .popup-overlay, .mobile-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7);
+            z-index: 1001; backdrop-filter: blur(5px); opacity: 0; visibility: hidden; transition: opacity 0.4s, visibility 0.4s;
         }
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Pop-up stilini ayarlayalım */
+        .popup-overlay.active, .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
         .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #1f1f1f;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            color: #fff;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-            overflow-y: auto;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
+            box-shadow: var(--shadow); padding: 2.5rem; z-index: 1002; width: 90%; max-width: 500px;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
         }
-
-        .popup.active {
-            display: block;
+        .popup.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .popup-close {
+            position: absolute; top: 15px; right: 20px; background: none; border: none;
+            font-size: 2rem; color: var(--text-secondary); cursor: pointer; transition: color 0.3s, transform 0.3s;
         }
-
-        .popup img {
-            width: 100%;
-            max-width: 300px; /* Resim boyutunu sınırla */
-            height: auto;
-            margin: 20px 0;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        button {
-            background-color: #0078d7;
-            color: white;
-            padding: 12px 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0053a6;
-        }
-
-        /* İletişim Formu */
+        .popup-close:hover { color: var(--text-primary); transform: rotate(90deg); }
+        .contact-form { text-align: center; }
+        .contact-form h3 { margin-bottom: 1.5rem; font-size: 1.8rem; }
         .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background: #2a2a2a;
-            color: #fff;
+            width: 100%; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.2); color: var(--text-primary); font-family: var(--font-family); font-size: 1rem;
+            transition: background-color 0.4s, border-color 0.4s; text-align: left;
         }
+        body[data-theme='light'] .contact-form input, body[data-theme='light'] .contact-form textarea { background: rgba(255, 255, 255, 0.5); }
+        .contact-form button { cursor: pointer; }
 
-        .contact-form button {
-            background-color: #80bfff;
-            color: #fff;
-            padding: 12px 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        /* Mobil Menü Stilleri */
+        .hamburger-menu {
+            background: none; border: none; color: var(--text-primary);
+            font-size: 1.5rem; cursor: pointer; z-index: 1101; display: none; /* Varsayılan olarak gizli */
         }
-
-        .contact-form button:hover {
-            background-color: #0053a6;
+        .mobile-nav {
+            position: fixed; top: 0; right: 0; width: 280px; height: 100%;
+            background: var(--header-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-left: 1px solid var(--glass-border); z-index: 1100;
+            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 6rem 2rem 2rem;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav ul { list-style: none; }
+        .mobile-nav ul li { margin-bottom: 1.5rem; }
+        .mobile-nav ul a {
+            color: var(--text-primary); text-decoration: none; font-size: 1.2rem;
+            font-weight: 600; display: flex; align-items: center; gap: 15px;
+            transition: color 0.3s;
+        }
+        .mobile-nav ul a:hover { color: var(--accent-color); }
+        .mobile-nav ul a i { width: 20px; }
+        
+        /* Ekran Genişliğine Göre Header Kontrolü */
+        @media (max-width: 700px) {
+            .header-right .cta-button { display: none; }
+            .hamburger-menu { display: block; }
         }
     </style>
 </head>
-<body>
+<body data-theme="dark">
+
     <header>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub Logo">
-        <h1>Aegisub Türkçe Yama</h1>
+        <div class="header-left">
+            <div class="logo">Aegisub TR</div>
+            <div class="settings-group">
+                <button id="theme-switcher" class="control-button" title="Temayı Değiştir"><i class="fa-solid fa-sun"></i></button>
+                <button id="lang-switcher" class="control-button" title="Change Language">EN</button>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/latest" target="_blank" class="cta-button" data-lang-key="latestVersionBtn" style="padding: 0.8rem 1.5rem; box-shadow: none;"><i class="fas fa-download"></i> Son Sürüm</a>
+            <button class="hamburger-menu" id="hamburger-menu-toggle" aria-label="Menüyü aç">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </header>
 
-    <!-- Mobilde Görünen Üç Nokta Butonu -->
-    <button class="menu-button" onclick="toggleSideMenu()">
-        <i class="fa-solid fa-bars"></i> <!-- Menü simgesi -->
-    </button>
-
-    <!-- Yandan kayan menü -->
-    <div id="sideMenu">
-        <a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
-        <a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
-        <a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
-        <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
-        <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
-        <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>
-    </div>
-
-    <!-- Normal Menü (PC için) -->
-    <nav>
-        <a href="#kurulum"><i class="fas fa-cogs"></i> Kurulum</a>
-        <a href="#katkida-bulunma"><i class="fas fa-users"></i> Katkıda Bulun</a>
-        <a href="#" onclick="showPopup('lisansPopup')"><i class="fas fa-file-contract"></i> Lisans</a>
-        <a href="#" onclick="showPopup('aegisubPopup')"><i class="fas fa-download"></i> Aegisub İndir</a>
-        <a href="#" onclick="showPopup('patchPopup')"><i class="fas fa-download"></i> Yamayı İndir</a>
-        <a href="#" onclick="showPopup('emailPopup')"><i class="fas fa-envelope"></i> İletişim</a>
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/latest" target="_blank" data-lang-key="mobileMenuDownload"><i class="fas fa-download"></i>Son Sürüm</a></li>
+            <li><a href="#" id="mobile-contact-trigger" data-lang-key="mobileMenuContact"><i class="fas fa-envelope"></i>İletişim</a></li>
+            <li><a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch" target="_blank" data-lang-key="mobileMenuGithub"><i class="fab fa-github"></i>GitHub Projesi</a></li>
+        </ul>
     </nav>
 
-    <div class="container">
-        <section>
-            <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.webp" alt="Yama Uygulanmış Aegisub Görüntüsü" style="max-width: 100%; height: auto;">
+    <main class="container">
+        <!-- Main content (hero, etc.) -->
+        <section class="hero">
+            <h1 class="fade-in" data-lang-key="heroTitle">Altyazı Dünyasına<br>Türkçe Adım Atın</h1>
+            <p class="fade-in" data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.</p>
+            <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.3.0/Aegisub.Turkce.Yama.zip" class="cta-button fade-in" style="transition-delay: 300ms;" data-lang-key="downloadBtn"><i class="fas fa-bolt"></i> Hızlı İndir</a>
         </section>
-        <section id="kurulum">
-            <h2>Kurulum</h2>
-            <ol>
-                <li><a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases" target="_blank">Yayınlanan zip dosyasını indirin.</a>
-</li>
-                <li>Windows için Aegisub dosya konumunu açın:
-                    <ul>
-                        <li>Masaüstündeki Aegisub kısayoluna sağ tıklayın ve "Dosya konumunu aç" seçeneğini seçin.</li>
-                    </ul>
-                </li>
-                <li>İndirdiğiniz zip dosyasının içindeki <code>locale</code> ve <code>dictionaries</code> klasörlerini Aegisub'ın yüklü olduğu dizine sürükleyin.</li>
-                <li>Windows sizden dosyaların üzerine yazmak için yönetici izni isteyecek. Devam etmek için onaylayın.</li>
-            </ol>
-            <p>Bu kadar! Artık Aegisub'ı Türkçe olarak kullanabilirsiniz.</p>
+        
+        <section class="section-container fade-in" style="transition-delay: 450ms; padding-top: 0;">
+            <div class="image-container">
+                <img src="https://kerimdemirkaynak.github.io/resimler/399423161-f7c28d92-4331-4834-b5aa-5c0325468c08.webp" alt="Aegisub Türkçe Yama Uygulanmış Hali">
+            </div>
         </section>
 
-        <section id="katkida-bulunma">
-            <h2>Katkıda Bulunma</h2>
-            <p>Katkıda bulunmak isterseniz, lütfen bir <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/pulls" target="_blank">pull request</a> gönderin veya bir <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/issues" target="_blank">sorun (issue)</a> açın. Her türlü katkı ve geri bildirim memnuniyetle karşılanır.</p>
+        <section class="section-container">
+            <div class="content-grid">
+                <div class="card fade-in" style="transition-delay: 100ms;">
+                    <div class="icon"><i class="fas fa-rocket"></i></div>
+                    <h3 data-lang-key="installTitle">Yıldırım Hızında Kurulum</h3>
+                    <ol data-lang-key="installSteps">
+                        <li>GitHub'dan <strong>.zip</strong> dosyasını indirin.</li>
+                        <li>Aegisub kısayoluna sağ tık > "Dosya konumunu aç".</li>
+                        <li>İndirdiğiniz klasörleri ana dizine sürükleyin.</li>
+                        <li>Değiştirme uyarısını onaylayın. Hazır!</li>
+                    </ol>
+                </div>
+                <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch" target="_blank" class="card fade-in" style="transition-delay: 200ms;">
+                    <div class="icon"><i class="fab fa-github"></i></div>
+                    <h3 data-lang-key="githubTitle">Açık Kaynak Gücü</h3>
+                    <p data-lang-key="githubDesc">Proje tamamen açık kaynak kodludur. Geliştirmelere katkıda bulunmak, hata bildirmek veya öneri sunmak için GitHub sayfamızı ziyaret edebilirsiniz.</p>
+                </a>
+                <div class="card fade-in" style="transition-delay: 300ms;">
+                    <div class="icon"><i class="fas fa-file-contract"></i></div>
+                    <h3 data-lang-key="licenseTitle">MIT Lisansı</h3>
+                    <p data-lang-key="licenseDesc">Bu proje, özgür ve esnek kullanım sunan MIT Lisansı altında dağıtılmaktadır. Yazılımı dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz.</p>
+                </div>
+                <div class="card fade-in" style="transition-delay: 400ms;">
+                    <div class="icon"><i class="fas fa-check-circle" style="color: #4CAF50;"></i></div>
+                    <h3 data-lang-key="officialSupportTitle">Resmi Destek</h3>
+                    <p data-lang-key="officialSupportDesc">Bu Türkçe yama, 3.4.1 sürümünden itibaren Aegisub tarafından resmi olarak desteklenmektedir. Artık yamayı manuel kurmanıza gerek kalmadan doğrudan resmi sürümü indirebilirsiniz.</p>
+                    <a href="https://aegisub.org/tr-tr/downloads/" target="_blank" class="cta-button" style="margin-top: 1.5rem;" data-lang-key="officialDownloadBtn"><i class="fas fa-check-circle"></i> Resmi Sürümü İndir</a>
+                </div>
+            </div>
         </section>
-
-        <section id="lisans">
-            <h2>Lisans</h2>
-            <p>Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için <code onclick="showPopup('lisansPopup')">LICENSE</code> dosyasına bakın.</p>
+        
+        <section class="section-container fade-in">
+            <div id="comments-card" class="card" style="padding-bottom: 2rem;">
+                 <h3 style="text-align: center; margin-bottom: 2rem;"><i class="fas fa-comments"></i> <span data-lang-key="commentsTitle">Yorumlar</span></h3>
+                 <div id="giscus-container"></div>
+            </div>
         </section>
-    </div>
+    </main>
 
-    <!-- Pop-up'lar ve Overlay -->
-    <div class="overlay" id="overlay" onclick="hidePopup()"></div>
-
-    <div class="popup" id="aegisubPopup">
-        <h1>Aegisub İndir</h1>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Aegisub-logo.svg" alt="Aegisub">
-        <p>Aegisub'ı indirmek için aşağıdaki butona tıklayın.</p>
-        <a href="https://aegisub.org/tr-tr/downloads/">
-            <button><i class="fas fa-download"></i> İndir</button>
-        </a>
-    </div>
-
-    <div class="popup" id="patchPopup">
-        <h1>Yamayı İndir</h1>
-        <img src="https://kerimdemirkaynak.github.io/resimler/413752546-1a69629d-4418-4937-92c0-d81065dbaf36.webp" alt="Yama Uygulanmış Hali">
-        <p>Türkçe Yama'nın son sürümünü indirmek için aşağıdaki butona tıklayın.</p>
-        <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.3.0/Aegisub.Turkce.Yama.zip">
-            <button><i class="fas fa-download"></i> İndir</button>
-        </a>
-    </div>
-
-    <div class="popup" id="lisansPopup">
-        <h1>Lisans</h1>
-        <p style="font-size: 12px;">MIT License</p>
-        <p style="font-size: 12px;">Copyright (c) 2024 Kerim Demirkaynak</p>
-        <p style="font-size: 12px;">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-
-        <p style="font-size: 12px;">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-
-        <p style="font-size: 12px;">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-    </div>
-
-    <div class="popup" id="emailPopup">
-        <h1>İletişim</h1>
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/KerimDemirkaynak" target="_blank" data-lang-key="footerDev">Geliştirici</a>
+            <a href="#" id="contact-trigger" data-lang-key="footerContact">İletişim</a>
+            <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch" target="_blank" data-lang-key="footerProject">GitHub Projesi</a>
+        </div>
+        <p class="copyright-text">© <span id="current-year"></span> Kerim Demirkaynak. <span data-lang-key="footerRights">Tüm hakları saklıdır.</span></p>
+    </footer>
+    
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="contact-popup">
+        <button class="popup-close">×</button>
         <form class="contact-form" action="mailto:aschannel111@gmail.com" method="post" enctype="text/plain">
-            <input type="text" id="name" name="name" placeholder="Adınız" required>
-            <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
-            <textarea id="message" name="message" placeholder="Mesajınız" rows="5" required></textarea>
-            <br><button type="submit">Gönder</button>
+            <h3 data-lang-key="contactFormTitle">Bize Ulaşın</h3>
+            <input type="text" name="name" placeholder="Adınız" data-lang-placeholder="contactNamePlaceholder" required>
+            <input type="email" name="email" placeholder="E-posta Adresiniz" data-lang-placeholder="contactEmailPlaceholder" required>
+            <textarea name="message" rows="5" placeholder="Mesajınız..." data-lang-placeholder="contactMsgPlaceholder" required></textarea>
+            <button type="submit" class="cta-button" data-lang-key="contactSendBtn">Mesajı Gönder</button>
         </form>
     </div>
 
-    <footer>
-        <p>Proje deposu için <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch">GitHub</a>'u ziyaret edin. <i class="fab fa-github"></i></p>
-    </footer>
-
     <script>
-        // Menü açma/kapama işlevi
-        function toggleSideMenu() {
-            const sideMenu = document.getElementById('sideMenu');
-            const currentLeft = sideMenu.style.left;
-            sideMenu.style.left = (currentLeft === '0px') ? '-250px' : '0px';
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const translations = {
+                tr: {
+                    latestVersionBtn: '<i class="fas fa-download"></i> Son Sürüm', heroTitle: "Altyazı Dünyasına<br>Türkçe Adım Atın",
+                    heroSubtitle: "Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.",
+                    downloadBtn: '<i class="fas fa-bolt"></i> Hızlı İndir', installTitle: "Yıldırım Hızında Kurulum",
+                    installSteps: `<li>GitHub'dan <strong>.zip</strong> dosyasını indirin.</li><li>Aegisub kısayoluna sağ tık > "Dosya konumunu aç".</li><li>İndirdiğiniz klasörleri ana dizine sürükleyin.</li><li>Değiştirme uyarısını onaylayın. Hazır!</li>`,
+                    githubTitle: "Açık Kaynak Gücü", githubDesc: "Proje tamamen açık kaynak kodludur. Geliştirmelere katkıda bulunmak, hata bildirmek veya öneri sunmak için GitHub sayfamızı ziyaret edebilirsiniz.",
+                    licenseTitle: "MIT Lisansı", licenseDesc: "Bu proje, özgür ve esnek kullanım sunan MIT Lisansı altında dağıtılmaktadır. Yazılımı dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz.",
+                    officialSupportTitle: "Resmi Destek", officialSupportDesc: "Bu Türkçe yama, 3.4.1 sürümünden itibaren Aegisub tarafından resmi olarak desteklenmektedir. Artık yamayı manuel kurmanıza gerek kalmadan doğrudan resmi sürümü indirebilirsiniz.",
+                    officialDownloadBtn: '<i class="fas fa-check-circle"></i> Resmi Sürümü İndir', commentsTitle: "Yorumlar",
+                    footerDev: "Geliştirici", footerContact: "İletişim", footerProject: "GitHub Projesi", footerRights: "Tüm hakları saklıdır.",
+                    contactFormTitle: "Bize Ulaşın", contactNamePlaceholder: "Adınız", contactEmailPlaceholder: "E-posta Adresiniz", contactMsgPlaceholder: "Mesajınız...",
+                    contactSendBtn: "Mesajı Gönder", themeSwitcherTitle: "Temayı Değiştir", langSwitcherTitle: "Change Language",
+                    mobileMenuDownload: '<i class="fas fa-download"></i>Son Sürüm', mobileMenuContact: '<i class="fas fa-envelope"></i>İletişim', mobileMenuGithub: '<i class="fab fa-github"></i>GitHub Projesi'
+                },
+                en: {
+                    latestVersionBtn: '<i class="fas fa-download"></i> Latest', heroTitle: "Step into the World of Subtitles<br>in Your Language",
+                    heroSubtitle: "Meet the most up-to-date and comprehensive Turkish language pack, crafted with care for Aegisub. Complete the installation and start editing your subtitles in your native language.",
+                    downloadBtn: '<i class="fas fa-bolt"></i> Quick Download', installTitle: "Lightning-Fast Installation",
+                    installSteps: `<li>Download the <strong>.zip</strong> file from GitHub.</li><li>Right-click Aegisub shortcut > "Open file location".</li><li>Drag the downloaded folders into the main directory.</li><li>Confirm to replace files. Done!</li>`,
+                    githubTitle: "The Power of Open Source", githubDesc: "This project is completely open source. You can visit our GitHub page to contribute, report bugs, or make suggestions.",
+                    licenseTitle: "MIT License", licenseDesc: "This project is distributed under the MIT License, which offers free and flexible use. You can use, modify, and distribute the software as you wish.",
+                    officialSupportTitle: "Official Support", officialSupportDesc: "This Turkish translation is officially supported by Aegisub starting from version 3.4.1. You can now download the official version directly without needing to manually install the patch.",
+                    officialDownloadBtn: '<i class="fas fa-check-circle"></i> Download Official Version', commentsTitle: "Comments",
+                    footerDev: "Developer", footerContact: "Contact", footerProject: "GitHub Project", footerRights: "All rights reserved.",
+                    contactFormTitle: "Get in Touch", contactNamePlaceholder: "Your Name", contactEmailPlaceholder: "Your Email Address", contactMsgPlaceholder: "Your Message...",
+                    contactSendBtn: "Send Message", themeSwitcherTitle: "Switch Theme", langSwitcherTitle: "Dili Değiştir",
+                    mobileMenuDownload: '<i class="fas fa-download"></i>Latest Version', mobileMenuContact: '<i class="fas fa-envelope"></i>Contact', mobileMenuGithub: '<i class="fab fa-github"></i>GitHub Project'
+                }
+            };
+            
+            const themeSwitcher = document.getElementById('theme-switcher');
+            const langSwitcher = document.getElementById('lang-switcher');
+            const body = document.body;
+            const themeIcon = themeSwitcher.querySelector('i');
+            const hamburgerToggle = document.getElementById('hamburger-menu-toggle');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileContactTrigger = document.getElementById('mobile-contact-trigger');
 
-        // Pop-up açma işlevi
-        function showPopup(popupId) {
-            document.getElementById(popupId).classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-        }
+            function applyLanguage(lang) {
+                localStorage.setItem('language', lang);
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if(translations[lang][key]) { el.innerHTML = translations[lang][key]; }
+                });
+                document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                    const key = el.dataset.langPlaceholder;
+                    if(translations[lang][key]) { el.placeholder = translations[lang][key]; }
+                });
+                langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
+                langSwitcher.title = translations[lang].langSwitcherTitle;
+                themeSwitcher.title = translations[lang].themeSwitcherTitle;
+                loadGiscus();
+            };
+            
+            function applyTheme(theme) {
+                body.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeIcon.className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+                loadGiscus();
+            };
 
-        // Pop-up kapama işlevi
-        function hidePopup() {
-            const popups = document.querySelectorAll('.popup');
-            popups.forEach(popup => popup.classList.remove('active'));
-            document.getElementById('overlay').classList.remove('active');
-        }
+            function loadGiscus() {
+                const container = document.getElementById('giscus-container');
+                if (!container) return;
+                while (container.firstChild) { container.removeChild(container.firstChild); }
+                const giscusScript = document.createElement('script');
+                const currentTheme = localStorage.getItem('theme') || 'dark';
+                const currentLang = localStorage.getItem('language') || 'tr';
+                const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed';
+                Object.assign(giscusScript, {
+                    src: "https://giscus.app/client.js", async: true, crossorigin: "anonymous",
+                    "data-repo": "KerimDemirkaynak/Yorumlar", "data-repo-id": "R_kgDOPPm0QA",
+                    "data-category": "Yorumlar", "data-category-id": "DIC_kwDOPPm0QM4CtM73",
+                    "data-mapping": "pathname", "data-strict": "0", "data-reactions-enabled": "1",
+                    "data-emit-metadata": "0", "data-input-position": "top",
+                    "data-theme": giscusTheme, "data-lang": currentLang
+                });
+                container.appendChild(giscusScript);
+            };
+            
+            function toggleMobileMenu(forceClose = false) {
+                const isActive = mobileNav.classList.contains('active');
+                if (forceClose || isActive) {
+                    mobileNav.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                    hamburgerToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                } else {
+                    mobileNav.classList.add('active');
+                    mobileMenuOverlay.classList.add('active');
+                    hamburgerToggle.innerHTML = '<i class="fas fa-times"></i>';
+                }
+            }
+            
+            themeSwitcher.addEventListener('click', () => { applyTheme(body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+            langSwitcher.addEventListener('click', () => { applyLanguage(localStorage.getItem('language') === 'tr' ? 'en' : 'tr'); });
+            hamburgerToggle.addEventListener('click', () => toggleMobileMenu());
+            mobileMenuOverlay.addEventListener('click', () => toggleMobileMenu(true));
+            
+            const overlay = document.getElementById('popup-overlay');
+            const contactTrigger = document.getElementById('contact-trigger');
+            const contactPopup = document.getElementById('contact-popup');
+            const closeButton = contactPopup.querySelector('.popup-close');
+            function showPopup() { overlay.classList.add('active'); contactPopup.classList.add('active'); };
+            function hidePopup() { overlay.classList.remove('active'); contactPopup.classList.remove('active'); };
+            contactTrigger.addEventListener('click', (e) => { e.preventDefault(); showPopup(); });
+            mobileContactTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleMobileMenu(true);
+                setTimeout(showPopup, 300);
+            });
+            closeButton.addEventListener('click', hidePopup);
+            overlay.addEventListener('click', hidePopup);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hidePopup(); toggleMobileMenu(true); } });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            const savedLang = localStorage.getItem('language') || 'tr';
+            applyTheme(savedTheme);
+            applyLanguage(savedLang);
+        });
     </script>
 </body>
 </html>
