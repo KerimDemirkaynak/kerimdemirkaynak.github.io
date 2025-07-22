@@ -32,8 +32,8 @@
             --border-radius: 16px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             --aurora-animation: gradientAnimation 20s ease infinite;
-            /* === ÇÖZÜM ADIM 1: YORUM KARTI İÇİN ÖZEL ARKA PLAN DEĞİŞKENİ === */
-            --giscus-card-bg: #161b22; 
+            /* Yorum kartı için ayrı bir değişken */
+            --giscus-card-bg: #1e293b;
         }
 
         body[data-theme='light'] {
@@ -48,8 +48,8 @@
             --text-secondary: #5a7184;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --aurora-animation: none;
-            /* === ÇÖZÜM ADIM 2: AÇIK TEMA İÇİN YORUM KARTI ARKA PLANI === */
-            --giscus-card-bg: #f0f2f5;
+             /* Yorum kartı için açık tema rengi */
+            --giscus-card-bg: #ffffff;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -124,12 +124,11 @@
         .card p, .card ol { color: var(--text-secondary); line-height: 1.7; }
         .card ol { padding-left: 1.2rem; } .card ol li { margin-bottom: 0.5rem; }
         
-        /* === ÇÖZÜM ADIM 3: YORUM KARTINA ÖZEL KURALLARI UYGULAMA === */
+        /* === CSS DÜZELTMESİ === */
         #comments-card {
-            background: var(--giscus-card-bg); /* Değişkenden opak rengi al */
-            backdrop-filter: none; /* Şeffaflık/Bulanıklık efektini kaldır */
+            background: var(--giscus-card-bg); /* Opak arkaplan */
+            backdrop-filter: none; /* Şeffaflığı kaldır */
             -webkit-backdrop-filter: none;
-            border: 1px solid var(--glass-border); /* Kenarlığı koru */
             padding-bottom: 2rem;
         }
         #comments-card h3 { 
@@ -200,7 +199,6 @@
         .mobile-nav ul a:hover { color: var(--accent-color); }
         .mobile-nav ul a i { width: 20px; }
         
-        /* Ekran Genişliğine Göre Header Kontrolü */
         @media (max-width: 700px) {
             .header-right .cta-button { display: none; }
             .hamburger-menu { display: block; }
@@ -235,7 +233,7 @@
     </nav>
 
     <main class="container">
-        <!-- Main content (hero, etc.) -->
+        <!-- Main content -->
         <section class="hero">
             <h1 class="fade-in" data-lang-key="heroTitle">Altyazı Dünyasına<br>Türkçe Adım Atın</h1>
             <p class="fade-in" data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Aegisub için özenle hazırlanmış, en güncel ve kapsamlı Türkçe dil paketiyle tanışın. Kurulumu tamamlayın ve altyazılarınızı ana dilinizde düzenlemeye başlayın.</p>
@@ -374,6 +372,7 @@
                 loadGiscus();
             };
 
+            // === JAVASCRIPT DÜZELTMESİ ===
             function loadGiscus() {
                 const container = document.getElementById('giscus-container');
                 if (!container) return;
@@ -384,14 +383,22 @@
                 const currentLang = localStorage.getItem('language') || 'tr';
                 const giscusTheme = currentTheme === 'light' ? 'light' : 'dark_dimmed';
                 
-                Object.assign(giscusScript, {
-                    src: "https://giscus.app/client.js", async: true, crossorigin: "anonymous",
-                    "data-repo": "KerimDemirkaynak/Yorumlar", "data-repo-id": "R_kgDOPPm0QA",
-                    "data-category": "Yorumlar", "data-category-id": "DIC_kwDOPPm0QM4CtM73",
-                    "data-mapping": "pathname", "data-strict": "0", "data-reactions-enabled": "1",
-                    "data-emit-metadata": "0", "data-input-position": "top",
-                    "data-theme": giscusTheme, "data-lang": currentLang
-                });
+                // Hatalı Object.assign yerine setAttribute kullanıyoruz.
+                giscusScript.src = "https://giscus.app/client.js";
+                giscusScript.async = true;
+                giscusScript.crossOrigin = "anonymous";
+                giscusScript.setAttribute("data-repo", "KerimDemirkaynak/Yorumlar");
+                giscusScript.setAttribute("data-repo-id", "R_kgDOPPm0QA");
+                giscusScript.setAttribute("data-category", "Yorumlar");
+                giscusScript.setAttribute("data-category-id", "DIC_kwDOPPm0QM4CtM73");
+                giscusScript.setAttribute("data-mapping", "pathname");
+                giscusScript.setAttribute("data-strict", "0");
+                giscusScript.setAttribute("data-reactions-enabled", "1");
+                giscusScript.setAttribute("data-emit-metadata", "0");
+                giscusScript.setAttribute("data-input-position", "top");
+                giscusScript.setAttribute("data-theme", giscusTheme); // Doğru tema
+                giscusScript.setAttribute("data-lang", currentLang);   // Doğru dil
+
                 container.appendChild(giscusScript);
             };
             
