@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canlı Not</title>
+</head>
+<body style="font-family: Arial; max-width: 600px; margin: 40px auto;">
+  <h1>Canlı Not</h1>
+  <textarea id="note" placeholder="Notunu buraya yaz..." style="width:100%;height:200px;font-size:16px;"></textarea>
+  <br><br>
+  <button id="copyBtn">📋 Panoya Kopyala</button>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
+      authDomain: "notlarim-ee58d.firebaseapp.com",
+      databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "notlarim-ee58d",
+      storageBucket: "notlarim-ee58d.firebasestorage.app",
+      messagingSenderId: "104701316276",
+      appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
+      measurementId: "G-L5R3W846YL"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const noteRef = ref(db, "canliNot");
+    const noteBox = document.getElementById("note");
+
+    // Veritabanı değiştikçe güncelle
+    onValue(noteRef, (snapshot) => {
+      if (snapshot.exists()) {
+        noteBox.value = snapshot.val();
+      }
+    });
+
+    // Yazıldığında kaydet
+    noteBox.addEventListener("input", () => {
+      set(noteRef, noteBox.value);
+    });
+
+    // Panoya kopyala
+    document.getElementById("copyBtn").addEventListener("click", () => {
+      navigator.clipboard.writeText(noteBox.value).then(() => {
+        alert("Panoya kopyalandı!");
+      });
+    });
+  </script></body>
+  </html>
