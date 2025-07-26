@@ -1,51 +1,301 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canlı Not</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Meta Etiketleriniz -->
+    <title>Notlarım</title>
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kerim Not">
+    <meta name="twitter:description" content="Notlarım">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
+    <meta name="google-site-verification" content="0TjmUuV639weMDTURj4svFO7cFKj9T2fQ7NoBvc6QPo" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --bg-color: #1a1a1d;
+            --card-bg-color: #252528;
+            --text-color: #e1e1e1;
+            --subtle-text-color: #8f8f8f;
+            --border-color: #3a3a3c;
+            --share-btn-color: #bb86fc; 
+            --share-btn-hover: #a059f7;
+            --copy-btn-color: #6c757d; 
+            --copy-btn-hover: #5a6268;
+            --save-btn-color: #03dac6; 
+            --save-btn-hover: #01bfa9;
+            --clear-btn-color: #e74c3c;
+            --clear-btn-hover: #c0392b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html { background-color: var(--bg-color); }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .app-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 1.8em; color: var(--text-color); }
+
+        main { padding: 30px; flex-grow: 1; }
+
+        #status {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--subtle-text-color);
+            min-height: 20px;
+            transition: color 0.3s ease;
+        }
+
+        #note {
+            width: 100%;
+            height: 350px;
+            font-size: 16px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            resize: vertical;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        #note:focus {
+            outline: none;
+            border-color: var(--share-btn-color);
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
+        }
+
+        /* --- DÜZENLENEN BÖLÜM BURASI --- */
+        .action-buttons {
+            display: grid; /* Flexbox'tan Grid'e geçildi */
+            /* Otomatik olarak sığabilen sayıda sütun oluşturur. Her sütun min 160px olur. */
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px; /* Sütunlar ve satırlar arası boşluk */
+            margin-top: 25px;
+        }
+        /* --- DÜZENLEME SONU --- */
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn i { font-size: 1.1em; }
+
+        #saveBtn { background-color: var(--save-btn-color); color: #000; }
+        #saveBtn:hover { background-color: var(--save-btn-hover); }
+        
+        #copyBtn { background-color: var(--copy-btn-color); color: #fff; }
+        #copyBtn:hover { background-color: var(--copy-btn-hover); }
+
+        #shareBtn { background-color: var(--share-btn-color); color: #000; }
+        #shareBtn:hover { background-color: var(--share-btn-hover); }
+
+        #clearBtn { background-color: var(--clear-btn-color); color: #fff; }
+        #clearBtn:hover { background-color: var(--clear-btn-hover); }
+
+        footer {
+            text-align: center;
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85em;
+            color: var(--subtle-text-color);
+        }
+    </style>
 </head>
-<body style="font-family: Arial; max-width: 600px; margin: 40px auto;">
-  <h1>Canlı Not</h1>
-  <textarea id="note" placeholder="Notunu buraya yaz..." style="width:100%;height:200px;font-size:16px;"></textarea>
-  <br><br>
-  <button id="copyBtn">📋 Panoya Kopyala</button>  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+<body>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
-      authDomain: "notlarim-ee58d.firebaseapp.com",
-      databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "notlarim-ee58d",
-      storageBucket: "notlarim-ee58d.firebasestorage.app",
-      messagingSenderId: "104701316276",
-      appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
-      measurementId: "G-L5R3W846YL"
-    };
+    <div class="app-container">
+        <header>
+            <h1>Notlarım</h1>
+        </header>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+        <main>
+            <p id="status">Yükleniyor...</p>
+            <textarea id="note" placeholder="Notunuzu buraya yazın..."></textarea>
+            <div class="action-buttons">
+                <button id="saveBtn" class="btn">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span class="btn-text">Kaydet</span>
+                </button>
+                <button id="copyBtn" class="btn">
+                    <i class="fa-solid fa-copy"></i>
+                    <span class="btn-text">Kopyala</span>
+                </button>
+                <button id="shareBtn" class="btn">
+                    <i class="fa-solid fa-share-from-square"></i>
+                    <span class="btn-text">Paylaş</span>
+                </button>
+                <button id="clearBtn" class="btn">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span class="btn-text">Temizle</span>
+                </button>
+            </div>
+        </main>
+        
+        <footer>
+            <p id="footer-text"></p>
+        </footer>
+    </div>
 
-    const noteRef = ref(db, "canliNot");
-    const noteBox = document.getElementById("note");
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    // Veritabanı değiştikçe güncelle
-    onValue(noteRef, (snapshot) => {
-      if (snapshot.exists()) {
-        noteBox.value = snapshot.val();
-      }
-    });
+        // DİKKAT: Kendi Firebase proje bilgilerinizi buraya yapıştırın.
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
+            authDomain: "notlarim-ee58d.firebaseapp.com",
+            databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "notlarim-ee58d",
+            storageBucket: "notlarim-ee58d.firebasestorage.app",
+            messagingSenderId: "104701316276",
+            appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
+            measurementId: "G-L5R3W846YL"
+        };
 
-    // Yazıldığında kaydet
-    noteBox.addEventListener("input", () => {
-      set(noteRef, noteBox.value);
-    });
+        const noteBox = document.getElementById("note");
+        const copyBtn = document.getElementById("copyBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const shareBtn = document.getElementById("shareBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const statusEl = document.getElementById("status");
+        const footerTextEl = document.getElementById("footer-text");
 
-    // Panoya kopyala
-    document.getElementById("copyBtn").addEventListener("click", () => {
-      navigator.clipboard.writeText(noteBox.value).then(() => {
-        alert("Panoya kopyalandı!");
-      });
-    });
-  </script></body>
-  </html>
+        document.addEventListener('DOMContentLoaded', () => {
+            footerTextEl.innerHTML = `© ${new Date().getFullYear()} Notlarım. Tüm hakları saklıdır.`;
+        });
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const noteRef = ref(db, "kerimNotData");
+
+        const formatTimestamp = (timestamp) => {
+            if (!timestamp) return "Henüz bir not yok. Yazmaya başlayın!";
+            const date = new Date(timestamp);
+            return `Son kaydetme: ${date.toLocaleDateString('tr-TR')} ${date.toLocaleTimeString('tr-TR')}`;
+        };
+
+        onValue(noteRef, (snapshot) => {
+            const data = snapshot.val();
+            statusEl.textContent = data ? formatTimestamp(data.timestamp) : "Henüz bir not kaydedilmedi.";
+            if (data && document.activeElement !== noteBox) {
+                noteBox.value = data.content;
+            } else if (!data) {
+                noteBox.value = "";
+            }
+        });
+        
+        const saveNote = () => {
+            statusEl.textContent = "Kaydediliyor...";
+            const noteData = { content: noteBox.value, timestamp: Date.now() };
+
+            set(noteRef, noteData)
+                .then(() => {
+                    statusEl.textContent = "Kaydedildi ✅";
+                    setTimeout(() => {
+                        if (statusEl.textContent === "Kaydedildi ✅") {
+                            statusEl.textContent = formatTimestamp(noteData.timestamp);
+                        }
+                    }, 2000);
+                })
+                .catch((error) => {
+                    statusEl.textContent = "Hata: Kaydedilemedi!";
+                    console.error("Firebase yazma hatası:", error);
+                });
+        };
+        saveBtn.addEventListener('click', saveNote);
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Notu tamamen silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
+                noteBox.value = '';
+                saveNote();
+            }
+        });
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(noteBox.value).then(() => {
+                const textSpan = copyBtn.querySelector('.btn-text');
+                const originalText = textSpan.textContent;
+                textSpan.textContent = "Kopyalandı ✅";
+                setTimeout(() => { textSpan.textContent = originalText; }, 2000);
+            }).catch(err => console.error('Kopyalama başarısız oldu: ', err));
+        });
+        
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Notlarım',
+                text: 'Notlarıma bir göz atın!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try { await navigator.share(shareData); } catch (err) { console.error('Paylaşım hatası:', err); }
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    const textSpan = shareBtn.querySelector('.btn-text');
+                    const originalText = textSpan.textContent;
+                    textSpan.textContent = "Link Kopyalandı";
+                    setTimeout(() => { textSpan.textContent = originalText; }, 2000);
+                } catch (err) { alert("Paylaşım desteklenmiyor, link kopyalanamadı."); }
+            }
+        });
+    </script>
+</body>
+</html>
