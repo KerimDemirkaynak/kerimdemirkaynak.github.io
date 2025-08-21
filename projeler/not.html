@@ -47,7 +47,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
-            flex-direction: column; /* İçeriği dikeyde hizalamak için */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -77,14 +77,13 @@
 
         .btn i { font-size: 1.1em; }
         
-        /* --- YENİ EKLENEN KİMLİK DOĞRULAMA STİLLERİ --- */
         #auth-container {
             margin-bottom: 20px;
             text-align: center;
         }
 
         #loginBtn {
-            background-color: #4285F4; /* Google Mavi */
+            background-color: #4285F4;
             color: white;
         }
         #loginBtn:hover {
@@ -102,14 +101,13 @@
         #logoutBtn {
             background-color: var(--copy-btn-color);
             color: white;
-            padding: 8px 16px; /* Daha küçük bir buton */
+            padding: 8px 16px;
             font-size: 14px;
         }
         #logoutBtn:hover {
             background-color: var(--copy-btn-hover);
         }
 
-        /* --- MEVCUT UYGULAMA STİLLERİ --- */
         .app-container {
             max-width: 800px;
             width: 100%;
@@ -117,7 +115,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            display: flex; /* Varsayılan olarak flex kalsın, JS ile değiştirilecek */
+            display: flex;
             flex-direction: column;
             border: 1px solid var(--border-color);
         }
@@ -130,11 +128,13 @@
 
         header h1 { margin: 0; font-size: 1.8em; color: var(--text-color); }
 
-        main { padding: 30px; flex-grow: 1; }
+        /* --- DEĞİŞİKLİK: Main padding azaltıldı --- */
+        main { padding: 20px 30px; flex-grow: 1; }
 
+        /* --- DEĞİŞİKLİK: Status margin-bottom azaltıldı --- */
         #status {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px; 
             font-size: 0.9em;
             color: var(--subtle-text-color);
             min-height: 20px;
@@ -179,9 +179,13 @@
 
         #clearBtn { background-color: var(--clear-btn-color); color: #fff; }
         #clearBtn:hover { background-color: var(--clear-btn-hover); }
-
+        
+        /* --- DEĞİŞİKLİK: Footer, taşınan içeriği ortalamak için düzenlendi --- */
         footer {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             padding: 20px 30px;
             border-top: 1px solid var(--border-color);
             font-size: 0.85em;
@@ -191,18 +195,13 @@
 </head>
 <body>
 
-    <!-- YENİ KİMLİK DOĞRULAMA BÖLÜMÜ -->
     <div id="auth-container">
         <button id="loginBtn" class="btn">
             <i class="fab fa-google"></i> Google ile Giriş Yap
         </button>
-        <div id="user-info" style="display: none;">
-            <span id="user-email"></span>
-            <button id="logoutBtn" class="btn">Çıkış Yap</button>
-        </div>
+        <!-- User Info buradan taşındı -->
     </div>
 
-    <!-- NOT UYGULAMASI (BAŞLANGIÇTA GİZLİ) -->
     <div class="app-container" id="app-content" style="display: none;">
         <header>
             <h1>Notlarım</h1>
@@ -232,11 +231,15 @@
         </main>
         
         <footer>
-            <p id="footer-text"></p>
+            <!-- DEĞİŞİKLİK: User Info buraya taşındı -->
+            <div id="user-info" style="display: none;">
+                <span id="user-email"></span>
+                <button id="logoutBtn" class="btn">Çıkış Yap</button>
+            </div>
+            <p id="footer-text" style="margin: 0;"></p>
         </footer>
     </div>
 
-    <!-- TAMAMEN GÜNCELLENMİŞ JAVASCRIPT KODU -->
     <script type="module">
         // Firebase importlarına 'auth' modüllerini ekleyin
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
