@@ -47,14 +47,69 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
+            flex-direction: column; /* İçeriği dikeyde hizalamak için */
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
             box-sizing: border-box;
         }
 
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn i { font-size: 1.1em; }
+        
+        /* --- YENİ EKLENEN KİMLİK DOĞRULAMA STİLLERİ --- */
+        #auth-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #loginBtn {
+            background-color: #4285F4; /* Google Mavi */
+            color: white;
+        }
+        #loginBtn:hover {
+            background-color: #357ae8;
+        }
+        
+        #user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        #logoutBtn {
+            background-color: var(--copy-btn-color);
+            color: white;
+            padding: 8px 16px; /* Daha küçük bir buton */
+            font-size: 14px;
+        }
+        #logoutBtn:hover {
+            background-color: var(--copy-btn-hover);
+        }
+
+        /* --- MEVCUT UYGULAMA STİLLERİ --- */
         .app-container {
             max-width: 800px;
             width: 100%;
@@ -62,7 +117,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            display: flex;
+            display: flex; /* Varsayılan olarak flex kalsın, JS ile değiştirilecek */
             flex-direction: column;
             border: 1px solid var(--border-color);
         }
@@ -106,36 +161,12 @@
             box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
         }
 
-        /* --- DÜZENLENEN BÖLÜM BURASI --- */
         .action-buttons {
-            display: grid; /* Flexbox'tan Grid'e geçildi */
-            /* Otomatik olarak sığabilen sayıda sütun oluşturur. Her sütun min 160px olur. */
+            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px; /* Sütunlar ve satırlar arası boşluk */
+            gap: 15px;
             margin-top: 25px;
         }
-        /* --- DÜZENLEME SONU --- */
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn i { font-size: 1.1em; }
 
         #saveBtn { background-color: var(--save-btn-color); color: #000; }
         #saveBtn:hover { background-color: var(--save-btn-hover); }
@@ -160,7 +191,19 @@
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- YENİ KİMLİK DOĞRULAMA BÖLÜMÜ -->
+    <div id="auth-container">
+        <button id="loginBtn" class="btn">
+            <i class="fab fa-google"></i> Google ile Giriş Yap
+        </button>
+        <div id="user-info" style="display: none;">
+            <span id="user-email"></span>
+            <button id="logoutBtn" class="btn">Çıkış Yap</button>
+        </div>
+    </div>
+
+    <!-- NOT UYGULAMASI (BAŞLANGIÇTA GİZLİ) -->
+    <div class="app-container" id="app-content" style="display: none;">
         <header>
             <h1>Notlarım</h1>
         </header>
@@ -193,11 +236,14 @@
         </footer>
     </div>
 
+    <!-- TAMAMEN GÜNCELLENMİŞ JAVASCRIPT KODU -->
     <script type="module">
+        // Firebase importlarına 'auth' modüllerini ekleyin
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        // DİKKAT: Kendi Firebase proje bilgilerinizi buraya yapıştırın.
+        // --- Firebase Config (Kendi bilgilerinizle dolu olmalı) ---
         const firebaseConfig = {
             apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
             authDomain: "notlarim-ee58d.firebaseapp.com",
@@ -209,6 +255,13 @@
             measurementId: "G-L5R3W846YL"
         };
 
+        // --- Uygulamayı Başlatma ---
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app); // Auth servisini başlat
+        const provider = new GoogleAuthProvider(); // Google giriş sağlayıcısını oluştur
+
+        // --- HTML Elementleri ---
         const noteBox = document.getElementById("note");
         const copyBtn = document.getElementById("copyBtn");
         const saveBtn = document.getElementById("saveBtn");
@@ -216,32 +269,95 @@
         const clearBtn = document.getElementById("clearBtn");
         const statusEl = document.getElementById("status");
         const footerTextEl = document.getElementById("footer-text");
+        const loginBtn = document.getElementById("loginBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const userInfo = document.getElementById("user-info");
+        const userEmailEl = document.getElementById("user-email");
+        const appContent = document.getElementById("app-content");
+
+        // İzin verilen e-posta adresleri
+        const allowedEmails = [
+            'aschannel111@gmail.com', 
+            'kerimdemirkaynak@yaani.com', 
+            'cnbmgtr@gmail.com'
+        ];
 
         document.addEventListener('DOMContentLoaded', () => {
             footerTextEl.innerHTML = `© ${new Date().getFullYear()} Notlarım. Tüm hakları saklıdır.`;
         });
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        // --- Kimlik Doğrulama Mantığı ---
+
+        // Kullanıcının giriş durumunu dinle
+        onAuthStateChanged(auth, (user) => {
+            if (user && allowedEmails.includes(user.email)) {
+                // Kullanıcı giriş yapmış VE izinli listede
+                loginBtn.style.display = 'none';
+                userInfo.style.display = 'flex';
+                userEmailEl.textContent = user.email;
+                appContent.style.display = 'flex'; // Not alanını göster
+                loadNote(); // Notları yükle
+            } else {
+                // Kullanıcı giriş yapmamış VEYA izinli değil
+                loginBtn.style.display = 'flex';
+                userInfo.style.display = 'none';
+                appContent.style.display = 'none'; // Not alanını gizle
+                if (user) { // İzinli değilse ama giriş yapmışsa otomatik çıkış yap
+                    signOut(auth);
+                    alert("Bu hesaba erişim izni verilmemiştir.");
+                }
+            }
+        });
+
+        // Giriş Butonu
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .catch((error) => {
+                    console.error("Giriş sırasında hata oluştu:", error);
+                    alert("Giriş yapılamadı. Lütfen tekrar deneyin.");
+                });
+        });
+
+        // Çıkış Butonu
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // --- Veritabanı Mantığı ---
         const noteRef = ref(db, "kerimNotData");
+        let unsubscribe; // onValue dinleyicisini durdurmak için
 
         const formatTimestamp = (timestamp) => {
             if (!timestamp) return "Henüz bir not yok. Yazmaya başlayın!";
             const date = new Date(timestamp);
             return `Son kaydetme: ${date.toLocaleDateString('tr-TR')} ${date.toLocaleTimeString('tr-TR')}`;
         };
+        
+        function loadNote() {
+            if (unsubscribe) unsubscribe(); // Önceki dinleyiciyi kaldır
 
-        onValue(noteRef, (snapshot) => {
-            const data = snapshot.val();
-            statusEl.textContent = data ? formatTimestamp(data.timestamp) : "Henüz bir not kaydedilmedi.";
-            if (data && document.activeElement !== noteBox) {
-                noteBox.value = data.content;
-            } else if (!data) {
-                noteBox.value = "";
-            }
-        });
+            unsubscribe = onValue(noteRef, (snapshot) => {
+                const data = snapshot.val();
+                statusEl.textContent = data ? formatTimestamp(data.timestamp) : "Henüz bir not kaydedilmedi.";
+                if (data && document.activeElement !== noteBox) {
+                    noteBox.value = data.content;
+                } else if (!data) {
+                    noteBox.value = "";
+                }
+            }, (error) => {
+                 // Güvenlik kuralları okumayı engellerse bu hata tetiklenir
+                console.error("Veritabanı okuma hatası:", error);
+                statusEl.textContent = "Notları yükleme yetkiniz yok.";
+            });
+        }
         
         const saveNote = () => {
+            const user = auth.currentUser;
+            if (!user || !allowedEmails.includes(user.email)) {
+                statusEl.textContent = "Kaydetme yetkiniz yok!";
+                return;
+            }
+
             statusEl.textContent = "Kaydediliyor...";
             const noteData = { content: noteBox.value, timestamp: Date.now() };
 
@@ -255,7 +371,7 @@
                     }, 2000);
                 })
                 .catch((error) => {
-                    statusEl.textContent = "Hata: Kaydedilemedi!";
+                    statusEl.textContent = "Hata: Kaydedilemedi! (Yetki sorunu olabilir)";
                     console.error("Firebase yazma hatası:", error);
                 });
         };
