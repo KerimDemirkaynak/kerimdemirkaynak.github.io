@@ -1,143 +1,417 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notlarım</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #1a1a1d;
-      color: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-    }
-    .app-container {
-      background: #252528;
-      border-radius: 12px;
-      padding: 20px;
-      width: 100%;
-      max-width: 700px;
-      border: 1px solid #3a3a3c;
-    }
-    textarea {
-      width: 100%;
-      height: 250px;
-      background: #1a1a1d;
-      color: #eee;
-      border: 1px solid #3a3a3c;
-      border-radius: 8px;
-      padding: 12px;
-    }
-    button {
-      margin: 10px 5px 0 0;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #loginBtn { background: #03dac6; }
-    #logoutBtn { background: #e74c3c; color: #fff; display:none; }
-    #saveBtn { background: #bb86fc; color:#000; display:none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Meta Etiketleriniz -->
+    <title>Notlarım</title>
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kerim Not">
+    <meta name="twitter:description" content="Notlarım">
+    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
+    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
+    <meta name="google-site-verification" content="0TjmUuV639weMDTURj4svFO7cFKj9T2fQ7NoBvc6QPo" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --bg-color: #1a1a1d;
+            --card-bg-color: #252528;
+            --text-color: #e1e1e1;
+            --subtle-text-color: #8f8f8f;
+            --border-color: #3a3a3c;
+            --share-btn-color: #bb86fc; 
+            --share-btn-hover: #a059f7;
+            --copy-btn-color: #6c757d; 
+            --copy-btn-hover: #5a6268;
+            --save-btn-color: #03dac6; 
+            --save-btn-hover: #01bfa9;
+            --clear-btn-color: #e74c3c;
+            --clear-btn-hover: #c0392b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html { background-color: var(--bg-color); }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column; /* İçeriği dikeyde hizalamak için */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn i { font-size: 1.1em; }
+        
+        /* --- YENİ EKLENEN KİMLİK DOĞRULAMA STİLLERİ --- */
+        #auth-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #loginBtn {
+            background-color: #4285F4; /* Google Mavi */
+            color: white;
+        }
+        #loginBtn:hover {
+            background-color: #357ae8;
+        }
+        
+        #user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        #logoutBtn {
+            background-color: var(--copy-btn-color);
+            color: white;
+            padding: 8px 16px; /* Daha küçük bir buton */
+            font-size: 14px;
+        }
+        #logoutBtn:hover {
+            background-color: var(--copy-btn-hover);
+        }
+
+        /* --- MEVCUT UYGULAMA STİLLERİ --- */
+        .app-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex; /* Varsayılan olarak flex kalsın, JS ile değiştirilecek */
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 1.8em; color: var(--text-color); }
+
+        main { padding: 30px; flex-grow: 1; }
+
+        #status {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--subtle-text-color);
+            min-height: 20px;
+            transition: color 0.3s ease;
+        }
+
+        #note {
+            width: 100%;
+            height: 350px;
+            font-size: 16px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            resize: vertical;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        #note:focus {
+            outline: none;
+            border-color: var(--share-btn-color);
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        #saveBtn { background-color: var(--save-btn-color); color: #000; }
+        #saveBtn:hover { background-color: var(--save-btn-hover); }
+        
+        #copyBtn { background-color: var(--copy-btn-color); color: #fff; }
+        #copyBtn:hover { background-color: var(--copy-btn-hover); }
+
+        #shareBtn { background-color: var(--share-btn-color); color: #000; }
+        #shareBtn:hover { background-color: var(--share-btn-hover); }
+
+        #clearBtn { background-color: var(--clear-btn-color); color: #fff; }
+        #clearBtn:hover { background-color: var(--clear-btn-hover); }
+
+        footer {
+            text-align: center;
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85em;
+            color: var(--subtle-text-color);
+        }
+    </style>
 </head>
 <body>
-  <div class="app-container">
-    <h1>Notlarım</h1>
-    <p id="status">Lütfen giriş yapın.</p>
-    <button id="loginBtn">Google ile Giriş Yap</button>
-    <button id="logoutBtn">Çıkış Yap</button>
-    <textarea id="note" placeholder="Notunuzu yazın..."></textarea><br>
-    <button id="saveBtn">Kaydet</button>
-  </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    <!-- YENİ KİMLİK DOĞRULAMA BÖLÜMÜ -->
+    <div id="auth-container">
+        <button id="loginBtn" class="btn">
+            <i class="fab fa-google"></i> Google ile Giriş Yap
+        </button>
+        <div id="user-info" style="display: none;">
+            <span id="user-email"></span>
+            <button id="logoutBtn" class="btn">Çıkış Yap</button>
+        </div>
+    </div>
 
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
-      authDomain: "notlarim-ee58d.firebaseapp.com",
-      databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "notlarim-ee58d",
-      storageBucket: "notlarim-ee58d.firebasestorage.app",
-      messagingSenderId: "104701316276",
-      appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
-      measurementId: "G-L5R3W846YL"
-    };
+    <!-- NOT UYGULAMASI (BAŞLANGIÇTA GİZLİ) -->
+    <div class="app-container" id="app-content" style="display: none;">
+        <header>
+            <h1>Notlarım</h1>
+        </header>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+        <main>
+            <p id="status">Yükleniyor...</p>
+            <textarea id="note" placeholder="Notunuzu buraya yazın..."></textarea>
+            <div class="action-buttons">
+                <button id="saveBtn" class="btn">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span class="btn-text">Kaydet</span>
+                </button>
+                <button id="copyBtn" class="btn">
+                    <i class="fa-solid fa-copy"></i>
+                    <span class="btn-text">Kopyala</span>
+                </button>
+                <button id="shareBtn" class="btn">
+                    <i class="fa-solid fa-share-from-square"></i>
+                    <span class="btn-text">Paylaş</span>
+                </button>
+                <button id="clearBtn" class="btn">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span class="btn-text">Temizle</span>
+                </button>
+            </div>
+        </main>
+        
+        <footer>
+            <p id="footer-text"></p>
+        </footer>
+    </div>
 
-    const noteBox = document.getElementById("note");
-    const saveBtn = document.getElementById("saveBtn");
-    const statusEl = document.getElementById("status");
-    const loginBtn = document.getElementById("loginBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
+    <!-- TAMAMEN GÜNCELLENMİŞ JAVASCRIPT KODU -->
+    <script type="module">
+        // Firebase importlarına 'auth' modüllerini ekleyin
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const noteRef = ref(db, "kerimNotData");
+        // --- Firebase Config (Kendi bilgilerinizle dolu olmalı) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
+            authDomain: "notlarim-ee58d.firebaseapp.com",
+            databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "notlarim-ee58d",
+            storageBucket: "notlarim-ee58d.firebasestorage.app",
+            messagingSenderId: "104701316276",
+            appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
+            measurementId: "G-L5R3W846YL"
+        };
 
-    // Oturum durumu değiştiğinde
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const email = user.email;
-        // Sadece bu e-postalara izin ver
-        const allowed = ["aschannel111@gmail.com","kerimdemirkaynak@yaani.com","bmgtr@gmail.com"];
-        if (allowed.includes(email)) {
-          statusEl.textContent = "Giriş başarılı: " + email;
-          loginBtn.style.display = "none";
-          logoutBtn.style.display = "inline-block";
-          saveBtn.style.display = "inline-block";
+        // --- Uygulamayı Başlatma ---
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app); // Auth servisini başlat
+        const provider = new GoogleAuthProvider(); // Google giriş sağlayıcısını oluştur
 
-          // Notları oku
-          onValue(noteRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-              noteBox.value = data.content;
-              statusEl.textContent = "Son kaydetme: " + new Date(data.timestamp).toLocaleString("tr-TR");
+        // --- HTML Elementleri ---
+        const noteBox = document.getElementById("note");
+        const copyBtn = document.getElementById("copyBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const shareBtn = document.getElementById("shareBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const statusEl = document.getElementById("status");
+        const footerTextEl = document.getElementById("footer-text");
+        const loginBtn = document.getElementById("loginBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const userInfo = document.getElementById("user-info");
+        const userEmailEl = document.getElementById("user-email");
+        const appContent = document.getElementById("app-content");
+
+        // İzin verilen e-posta adresleri
+        const allowedEmails = [
+            'aschannel111@gmail.com', 
+            'kerimdemirkaynak@yaani.com', 
+            'cnbmgtr@gmail.com'
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            footerTextEl.innerHTML = `© ${new Date().getFullYear()} Notlarım. Tüm hakları saklıdır.`;
+        });
+
+        // --- Kimlik Doğrulama Mantığı ---
+
+        // Kullanıcının giriş durumunu dinle
+        onAuthStateChanged(auth, (user) => {
+            if (user && allowedEmails.includes(user.email)) {
+                // Kullanıcı giriş yapmış VE izinli listede
+                loginBtn.style.display = 'none';
+                userInfo.style.display = 'flex';
+                userEmailEl.textContent = user.email;
+                appContent.style.display = 'flex'; // Not alanını göster
+                loadNote(); // Notları yükle
             } else {
-              noteBox.value = "";
-              statusEl.textContent = "Henüz not yok.";
+                // Kullanıcı giriş yapmamış VEYA izinli değil
+                loginBtn.style.display = 'flex';
+                userInfo.style.display = 'none';
+                appContent.style.display = 'none'; // Not alanını gizle
+                if (user) { // İzinli değilse ama giriş yapmışsa otomatik çıkış yap
+                    signOut(auth);
+                    alert("Bu hesaba erişim izni verilmemiştir.");
+                }
             }
-          });
+        });
 
-        } else {
-          statusEl.textContent = "Bu e-posta ile erişim izni yok: " + email;
-          auth.signOut();
+        // Giriş Butonu
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .catch((error) => {
+                    console.error("Giriş sırasında hata oluştu:", error);
+                    alert("Giriş yapılamadı. Lütfen tekrar deneyin.");
+                });
+        });
+
+        // Çıkış Butonu
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // --- Veritabanı Mantığı ---
+        const noteRef = ref(db, "kerimNotData");
+        let unsubscribe; // onValue dinleyicisini durdurmak için
+
+        const formatTimestamp = (timestamp) => {
+            if (!timestamp) return "Henüz bir not yok. Yazmaya başlayın!";
+            const date = new Date(timestamp);
+            return `Son kaydetme: ${date.toLocaleDateString('tr-TR')} ${date.toLocaleTimeString('tr-TR')}`;
+        };
+        
+        function loadNote() {
+            if (unsubscribe) unsubscribe(); // Önceki dinleyiciyi kaldır
+
+            unsubscribe = onValue(noteRef, (snapshot) => {
+                const data = snapshot.val();
+                statusEl.textContent = data ? formatTimestamp(data.timestamp) : "Henüz bir not kaydedilmedi.";
+                if (data && document.activeElement !== noteBox) {
+                    noteBox.value = data.content;
+                } else if (!data) {
+                    noteBox.value = "";
+                }
+            }, (error) => {
+                 // Güvenlik kuralları okumayı engellerse bu hata tetiklenir
+                console.error("Veritabanı okuma hatası:", error);
+                statusEl.textContent = "Notları yükleme yetkiniz yok.";
+            });
         }
-      } else {
-        statusEl.textContent = "Lütfen giriş yapın.";
-        loginBtn.style.display = "inline-block";
-        logoutBtn.style.display = "none";
-        saveBtn.style.display = "none";
-        noteBox.value = "";
-      }
-    });
+        
+        const saveNote = () => {
+            const user = auth.currentUser;
+            if (!user || !allowedEmails.includes(user.email)) {
+                statusEl.textContent = "Kaydetme yetkiniz yok!";
+                return;
+            }
 
-    // Giriş
-    loginBtn.addEventListener("click", () => {
-      signInWithPopup(auth, provider).catch(err => console.error(err));
-    });
+            statusEl.textContent = "Kaydediliyor...";
+            const noteData = { content: noteBox.value, timestamp: Date.now() };
 
-    // Çıkış
-    logoutBtn.addEventListener("click", () => {
-      signOut(auth);
-    });
+            set(noteRef, noteData)
+                .then(() => {
+                    statusEl.textContent = "Kaydedildi ✅";
+                    setTimeout(() => {
+                        if (statusEl.textContent === "Kaydedildi ✅") {
+                            statusEl.textContent = formatTimestamp(noteData.timestamp);
+                        }
+                    }, 2000);
+                })
+                .catch((error) => {
+                    statusEl.textContent = "Hata: Kaydedilemedi! (Yetki sorunu olabilir)";
+                    console.error("Firebase yazma hatası:", error);
+                });
+        };
+        saveBtn.addEventListener('click', saveNote);
 
-    // Kaydetme
-    saveBtn.addEventListener("click", () => {
-      const noteData = { content: noteBox.value, timestamp: Date.now() };
-      set(noteRef, noteData)
-        .then(() => statusEl.textContent = "Kaydedildi ✅")
-        .catch(err => statusEl.textContent = "Kaydetme hatası: " + err);
-    });
-  </script>
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Notu tamamen silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
+                noteBox.value = '';
+                saveNote();
+            }
+        });
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(noteBox.value).then(() => {
+                const textSpan = copyBtn.querySelector('.btn-text');
+                const originalText = textSpan.textContent;
+                textSpan.textContent = "Kopyalandı ✅";
+                setTimeout(() => { textSpan.textContent = originalText; }, 2000);
+            }).catch(err => console.error('Kopyalama başarısız oldu: ', err));
+        });
+        
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Notlarım',
+                text: 'Notlarıma bir göz atın!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try { await navigator.share(shareData); } catch (err) { console.error('Paylaşım hatası:', err); }
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    const textSpan = shareBtn.querySelector('.btn-text');
+                    const originalText = textSpan.textContent;
+                    textSpan.textContent = "Link Kopyalandı";
+                    setTimeout(() => { textSpan.textContent = originalText; }, 2000);
+                } catch (err) { alert("Paylaşım desteklenmiyor, link kopyalanamadı."); }
+            }
+        });
+    </script>
 </body>
 </html>
