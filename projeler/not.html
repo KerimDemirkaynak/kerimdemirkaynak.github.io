@@ -52,7 +52,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px; /* DEĞİŞİKLİK: Dikey padding azaltıldı */
             box-sizing: border-box;
         }
 
@@ -101,8 +101,9 @@
         #logoutBtn {
             background-color: var(--copy-btn-color);
             color: white;
-            padding: 8px 16px;
-            font-size: 14px;
+            /* DEĞİŞİKLİK: Buton küçültüldü */
+            padding: 6px 12px;
+            font-size: 13px;
         }
         #logoutBtn:hover {
             background-color: var(--copy-btn-hover);
@@ -121,20 +122,24 @@
         }
 
         header {
-            padding: 20px 30px;
+            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
+            padding: 15px 30px;
             border-bottom: 1px solid var(--border-color);
             text-align: center;
         }
 
         header h1 { margin: 0; font-size: 1.8em; color: var(--text-color); }
 
-        /* --- DEĞİŞİKLİK: Main padding azaltıldı --- */
-        main { padding: 20px 30px; flex-grow: 1; }
+        main {
+            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
+            padding: 15px 30px 25px 30px;
+            flex-grow: 1;
+        }
 
-        /* --- DEĞİŞİKLİK: Status margin-bottom azaltıldı --- */
         #status {
             text-align: center;
-            margin-bottom: 15px; 
+            /* DEĞİŞİKLİK: Alt boşluk azaltıldı */
+            margin-bottom: 10px; 
             font-size: 0.9em;
             color: var(--subtle-text-color);
             min-height: 20px;
@@ -165,7 +170,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
-            margin-top: 25px;
+            /* DEĞİŞİKLİK: Üst boşluk azaltıldı */
+            margin-top: 20px;
         }
 
         #saveBtn { background-color: var(--save-btn-color); color: #000; }
@@ -178,15 +184,15 @@
         #shareBtn:hover { background-color: var(--share-btn-hover); }
 
         #clearBtn { background-color: var(--clear-btn-color); color: #fff; }
-        #clearBtn:hover { background-color: var(--clear-btn-hover); }
+        #clearBtn:hover { background-color: var(--c0392b); }
         
-        /* --- DEĞİŞİKLİK: Footer, taşınan içeriği ortalamak için düzenlendi --- */
         footer {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            padding: 20px 30px;
+            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
+            padding: 15px 30px;
             border-top: 1px solid var(--border-color);
             font-size: 0.85em;
             color: var(--subtle-text-color);
@@ -199,7 +205,6 @@
         <button id="loginBtn" class="btn">
             <i class="fab fa-google"></i> Google ile Giriş Yap
         </button>
-        <!-- User Info buradan taşındı -->
     </div>
 
     <div class="app-container" id="app-content" style="display: none;">
@@ -231,7 +236,6 @@
         </main>
         
         <footer>
-            <!-- DEĞİŞİKLİK: User Info buraya taşındı -->
             <div id="user-info" style="display: none;">
                 <span id="user-email"></span>
                 <button id="logoutBtn" class="btn">Çıkış Yap</button>
@@ -240,6 +244,7 @@
         </footer>
     </div>
 
+    <!-- JavaScript kodunda bir değişiklik yok, bu yüzden olduğu gibi kalabilir -->
     <script type="module">
         // Firebase importlarına 'auth' modüllerini ekleyin
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
