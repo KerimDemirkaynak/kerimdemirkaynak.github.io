@@ -52,7 +52,8 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px; /* DEĞİŞİKLİK: Dikey padding azaltıldı */
+            /* DEĞİŞİKLİK: Sayfanın genel dikey boşluğu geri getirildi */
+            padding: 40px 20px;
             box-sizing: border-box;
         }
 
@@ -101,7 +102,6 @@
         #logoutBtn {
             background-color: var(--copy-btn-color);
             color: white;
-            /* DEĞİŞİKLİK: Buton küçültüldü */
             padding: 6px 12px;
             font-size: 13px;
         }
@@ -122,8 +122,8 @@
         }
 
         header {
-            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
-            padding: 15px 30px;
+            /* DEĞİŞİKLİK: Header'daki dikey boşluk daha da azaltıldı */
+            padding: 12px 30px;
             border-bottom: 1px solid var(--border-color);
             text-align: center;
         }
@@ -131,14 +131,13 @@
         header h1 { margin: 0; font-size: 1.8em; color: var(--text-color); }
 
         main {
-            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
-            padding: 15px 30px 25px 30px;
+            /* DEĞİŞİKLİK: Main'deki üst boşluk header ile aynı seviyeye getirildi */
+            padding: 12px 30px 25px 30px;
             flex-grow: 1;
         }
 
         #status {
             text-align: center;
-            /* DEĞİŞİKLİK: Alt boşluk azaltıldı */
             margin-bottom: 10px; 
             font-size: 0.9em;
             color: var(--subtle-text-color);
@@ -170,7 +169,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
-            /* DEĞİŞİKLİK: Üst boşluk azaltıldı */
             margin-top: 20px;
         }
 
@@ -191,7 +189,6 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            /* DEĞİŞİKLİK: Dikey padding azaltıldı */
             padding: 15px 30px;
             border-top: 1px solid var(--border-color);
             font-size: 0.85em;
@@ -244,7 +241,6 @@
         </footer>
     </div>
 
-    <!-- JavaScript kodunda bir değişiklik yok, bu yüzden olduğu gibi kalabilir -->
     <script type="module">
         // Firebase importlarına 'auth' modüllerini ekleyin
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -291,7 +287,7 @@
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            footerTextEl.innerHTML = `© ${new Date().getFullYear()} Notlarım. Tüm hakları saklıdır.`;
+            footerTextEl.innerHTML = `© ${newgetFullYear()} Notlarım. Tüm hakları saklıdır.`;
         });
 
         // --- Kimlik Doğrulama Mantığı ---
@@ -422,4 +418,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
