@@ -29,8 +29,6 @@
             --text-secondary: #a0a0a0;
             --font-family: 'Inter', sans-serif;
             --border-radius: 16px;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --aurora-animation: gradientAnimation 20s ease infinite;
         }
 
         body[data-theme='light'] {
@@ -43,8 +41,6 @@
             --glass-border: rgba(0, 0, 0, 0.1);
             --text-primary: #1c2a38;
             --text-secondary: #5a7184;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --aurora-animation: none;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,13 +50,12 @@
             font-family: var(--font-family); background-color: var(--background-start); color: var(--text-primary);
             overflow-x: hidden;
             background: linear-gradient(125deg, var(--background-start), var(--background-end));
-            background-size: 400% 400%; animation: var(--aurora-animation);
-            transition: background-color 0.4s ease, color 0.4s ease;
+            background-size: 400% 400%; animation: gradientAnimation 20s ease infinite;
+            /* HEADER ENGELLEME SORUNU ÇÖZÜMÜ */
+            padding-top: var(--header-height);
         }
 
-        @keyframes gradientAnimation {
-            0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-        }
+        @keyframes gradientAnimation { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
         .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
         
@@ -69,7 +64,7 @@
             position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
             height: var(--header-height);
             background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border); transition: background-color 0.4s, border-color 0.4s;
+            border-bottom: 1px solid var(--glass-border); transition: background-color 0.4s;
         }
         
         .logo a { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); text-decoration: none; }
@@ -92,69 +87,66 @@
             display: flex; justify-content: center; align-items: center; transition: all 0.3s;
         }
         .control-button:hover { background-color: var(--glass-bg); color: var(--text-primary); }
-        .hamburger-menu { display: none; }
-        
-        /* HEADER ENGELLEME SORUNU ÇÖZÜMÜ */
-        main { padding-top: var(--header-height); }
+        .hamburger-menu { display: none; } /* Başlangıçta gizli */
         
         .hero { text-align: center; padding: 4rem 1rem; }
         .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         
-        /* KART ORTALAMA SORUNU ÇÖZÜMÜ */
         .yemek-galerisi {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            padding: 4rem 0 2rem;
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 2rem; padding: 4rem 0 2rem;
         }
         .yemek-karti {
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            overflow: hidden;
-            flex: 0 1 340px; /* Kartların esnek boyutlanması */
+            overflow: hidden; flex: 0 1 340px;
         }
-        .yemek-karti:hover {
-            transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow);
-            border-color: var(--accent-color);
-        }
+        .yemek-karti:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); border-color: var(--accent-color); }
         .yemek-karti img { width: 100%; height: 250px; object-fit: cover; }
         .yemek-karti-bilgi { padding: 1.5rem; }
         .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary); }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
-        /* YENİLENMİŞ FOOTER TASARIMI */
+        /* FOOTER BOŞLUK SORUNU ÇÖZÜMÜ */
         footer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            text-align: center; 
-            padding: 3rem 1rem; 
-            margin-top: 4rem;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 1.5rem; text-align: center; padding: 2.5rem 1rem; 
+            margin-top: 2rem; /* Üstteki boşluk azaltıldı */
             border-top: 1px solid var(--glass-border);
-            transition: border-color 0.4s;
         }
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            list-style: none;
-        }
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; list-style: none; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
         .footer-links a:hover { color: var(--accent-color); }
         .copyright-text { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* HAMBURGER MENÜSÜ İÇİN YENİ STİLLER */
+        .mobile-menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+            z-index: 1001; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        .mobile-nav {
+            position: fixed; top: 0; right: 0; height: 100%; width: 280px;
+            background: var(--background-start); border-left: 1px solid var(--glass-border);
+            z-index: 1002; transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 5rem 2rem;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav ul { list-style: none; }
+        .mobile-nav ul li a {
+            display: block; padding: 1rem 0; font-size: 1.1rem;
+            color: var(--text-primary); text-decoration: none; font-weight: 600;
+        }
         
         @media (max-width: 768px) {
-            .nav-desktop { display: none; } .hamburger-menu { display: flex; }
+            .nav-desktop { display: none; }
+            .hamburger-menu { display: flex; }
             .hero { padding: 2rem 1rem; }
         }
     </style>
@@ -162,10 +154,7 @@
 <body data-theme="dark">
 
     <header>
-        <!-- Header içeriği değişmedi -->
-        <div class="logo">
-            <a href="https://kerimdemirkaynak.github.io/" data-lang-key="logoText">Kerim'in Mutfağı</a>
-        </div>
+        <div class="logo"><a href="https://kerimdemirkaynak.github.io/" data-lang-key="logoText">Kerim'in Mutfağı</a></div>
         <nav class="nav-desktop">
             <ul class="nav-links">
                 <li><a href="https://kerimdemirkaynak.github.io/" class="active" data-lang-key="navHome">Ana Sayfa</a></li>
@@ -176,22 +165,26 @@
         <div class="control-buttons">
             <button id="theme-switcher" class="control-button" title="Temayı Değiştir"><i class="fa-solid fa-sun"></i></button>
             <button id="lang-switcher" class="control-button" title="Change Language">EN</button>
-            <button class="hamburger-menu control-button" id="hamburger-menu" aria-label="Menüyü aç"><i class="fas fa-bars"></i></button>
+            <button class="hamburger-menu control-button" id="hamburger-toggle" aria-label="Menüyü aç"><i class="fas fa-bars"></i></button>
         </div>
     </header>
 
+    <!-- HAMBURGER MENÜSÜ İÇİN YENİ HTML -->
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="navHome">Ana Sayfa</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="navAbout">Hakkında</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="navContact">İletişim</a></li>
+        </ul>
+    </nav>
+
     <main class="container">
-        <section class="hero">
-            <h1 data-lang-key="heroTitle">Lezzet Galerisi</h1>
-            <p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.</p>
-        </section>
+        <section class="hero"><h1 data-lang-key="heroTitle">Lezzet Galerisi</h1><p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.</p></section>
         
         <section class="yemek-galerisi">
-            <!-- Kartların içeriği değişmedi -->
-            <div class="yemek-karti">
-                <img src="https://kerimdemirkaynak.github.io/resimler/8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" alt="Pul Biberli Fiyonk Makarna">
-                <div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pul Biberli Fiyonk Makarna" data-en="Farfalle with Red Pepper Flakes">Pul Biberli Fiyonk Makarna</h3><p>8 Mayıs 2025</p></div>
-            </div>
+            <!-- EKSİK OLAN KART DAHİL TÜM 7 KART -->
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" alt="Pul Biberli Fiyonk Makarna"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pul Biberli Fiyonk Makarna" data-en="Farfalle with Red Pepper Flakes">Pul Biberli Fiyonk Makarna</h3><p>8 Mayıs 2025</p></div></div>
             <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/29 Nisan 2025 - Üçgen Mantı.webp" alt="Üçgen Mantı"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Üçgen Mantı" data-en="Triangle Dumplings">Üçgen Mantı</h3><p>29 Nisan 2025</p></div></div>
             <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/14 Şubat 2025 - Mantı Makarna.webp" alt="Mantı Makarna"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Mantı Makarna" data-en="Manti Pasta">Mantı Makarna</h3><p>14 Şubat 2025</p></div></div>
             <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/10 Ağustos 2023 - Pasta.webp" alt="Pasta"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pasta" data-en="Cake">Pasta</h3><p>10 Ağustos 2023</p></div></div>
@@ -201,7 +194,6 @@
         </section>
     </main>
 
-    <!-- YENİ FOOTER YAPISI -->
     <footer>
         <ul class="footer-links">
             <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="footerHome">Ana Sayfa</a></li>
@@ -214,23 +206,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const translations = {
-                tr: {
-                    logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
-                    heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.",
-                    footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır."
-                },
-                en: {
-                    logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
-                    heroTitle: "The Flavor Gallery", heroSubtitle: "A collection of homemade dishes prepared with passion and care.",
-                    footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved."
-                }
+                tr: { logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim", heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.", footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır." },
+                en: { logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact", heroTitle: "The Flavor Gallery", heroSubtitle: "A collection of homemade dishes prepared with passion and care.", footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved." }
             };
             
-            // Scriptin geri kalanı değişmedi, olduğu gibi çalışıyor.
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
             const body = document.body;
 
+            // Tema Yöneticisi
             const currentTheme = localStorage.getItem('theme') || 'dark';
             body.setAttribute('data-theme', currentTheme);
             themeSwitcher.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
@@ -241,8 +225,10 @@
                 localStorage.setItem('theme', newTheme);
             });
 
+            // Footer Yıl Yöneticisi
             document.getElementById('current-year').textContent = new Date().getFullYear();
 
+            // Dil Yöneticisi
             let currentLang = localStorage.getItem('language') || 'tr';
             function applyTranslations() {
                 document.documentElement.lang = currentLang;
@@ -262,6 +248,22 @@
                 applyTranslations();
             });
             
+            // HAMBURGER MENÜSÜ İÇİN YENİ JAVASCRIPT
+            const hamburgerToggle = document.getElementById('hamburger-toggle');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileOverlay = document.getElementById('mobile-overlay');
+
+            function closeMenu() {
+                mobileNav.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            }
+            hamburgerToggle.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+            });
+            mobileOverlay.addEventListener('click', closeMenu);
+
+            // İlk Yükleme
             applyTranslations();
         });
     </script>
