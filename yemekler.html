@@ -17,13 +17,13 @@
 
     <style>
         :root {
-            --header-height: 70px;
+            --header-height: 80px;
             --accent-color: #3B82F6;
             --accent-glow: rgba(59, 130, 246, 0.5);
             --background-start: #0D1117;
             --background-end: #000000;
-            --header-bg: rgba(13, 17, 23, 0.75);
-            --glass-bg: rgba(22, 27, 34, 0.6);
+            --header-bg: rgba(13, 17, 23, 0.8);
+            --glass-bg: rgba(22, 27, 34, 0.7);
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-primary: #f0f0f0;
             --text-secondary: #a0a0a0;
@@ -33,12 +33,10 @@
 
         body[data-theme='light'] {
             --accent-color: #007BFF;
-            --accent-glow: rgba(0, 123, 255, 0.4);
             --background-start: #f4f7f9;
             --background-end: #e9f2ff;
-            --header-bg: rgba(249, 250, 251, 0.85);
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.8);
             --text-primary: #1c2a38;
             --text-secondary: #5a7184;
         }
@@ -50,33 +48,27 @@
             font-family: var(--font-family); background-color: var(--background-start); color: var(--text-primary);
             overflow-x: hidden;
             background: linear-gradient(125deg, var(--background-start), var(--background-end));
-            background-size: 400% 400%; animation: gradientAnimation 20s ease infinite;
+            background-size: 400% 400%;
             padding-top: var(--header-height);
         }
-
-        @keyframes gradientAnimation { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        body.no-scroll { overflow: hidden; }
 
         .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
         
         header {
-            display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem;
             position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
             height: var(--header-height);
-            background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border); transition: background-color 0.4s;
+            background-color: var(--header-bg); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
         }
         
-        .logo a { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); text-decoration: none; }
-        .nav-desktop { display: flex; align-items: center; gap: 2rem; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: var(--text-secondary); font-weight: 600; text-decoration: none; position: relative; }
-        .nav-links a.active, .nav-links a:hover { color: var(--text-primary); }
-        .nav-links a::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: -5px; left: 50%; background-color: var(--accent-color);
-            transition: all 0.3s ease;
-        }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; left: 0; }
+        .logo a { font-size: 2rem; font-weight: 800; color: var(--text-primary); text-decoration: none; line-height: 1.1; }
+        
+        .nav-desktop { display: flex; align-items: center; gap: 2rem; list-style: none; }
+        .nav-desktop a { color: var(--text-secondary); font-weight: 600; text-decoration: none; }
+        .nav-desktop a:hover { color: var(--text-primary); }
+        
         .control-buttons { display: flex; align-items: center; gap: 0.5rem; }
         .control-button {
             background: none; border: 1px solid var(--glass-border); color: var(--text-secondary);
@@ -86,78 +78,77 @@
         .control-button:hover { background-color: var(--glass-bg); color: var(--text-primary); }
         .hamburger-menu { display: none; }
         
-        .hero { text-align: center; padding: 4rem 1rem; }
-        .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; }
+        .hero { text-align: center; padding: 4rem 1rem 0; }
+        .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         
         .yemek-galerisi {
             display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 2rem;
-            /* DÜZELTME: Galerinin altındaki boşluk kaldırıldı */
-            padding: 4rem 0 0; 
+            gap: 2rem; padding: 4rem 0;
         }
         .yemek-karti {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            overflow: hidden; flex: 0 1 340px;
+            background: var(--glass-bg); border-radius: var(--border-radius);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden; flex: 0 1 350px; cursor: pointer;
         }
-        .yemek-karti:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); border-color: var(--accent-color); }
-        .yemek-karti img { width: 100%; height: 250px; object-fit: cover; }
+        .yemek-karti:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); }
+        .yemek-karti img { width: 100%; height: 260px; object-fit: cover; }
         .yemek-karti-bilgi { padding: 1.5rem; }
-        .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .yemek-karti-bilgi h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
         footer {
             display: flex; flex-direction: column; align-items: center;
             gap: 1.5rem; text-align: center; padding: 2.5rem 1rem;
-            /* DÜZELTME: Footer üstündeki boşluk tutarlı hale getirildi */
-            margin-top: 4rem; 
             border-top: 1px solid var(--glass-border);
         }
-        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; list-style: none; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+        .footer-links { display: flex; gap: 2rem; list-style: none; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; }
         .footer-links a:hover { color: var(--accent-color); }
         .copyright-text { color: var(--text-secondary); font-size: 0.9rem; }
-
-        .mobile-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
-            z-index: 1001; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
-        .mobile-nav {
-            position: fixed; top: 0; right: 0; height: 100%; width: 280px;
-            background: var(--background-start); border-left: 1px solid var(--glass-border);
-            z-index: 1002; transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            padding: 5rem 2rem;
-        }
-        .mobile-nav.active { transform: translateX(0); }
-        .mobile-nav ul { list-style: none; }
-        .mobile-nav ul li a {
-            display: block; padding: 1rem 0; font-size: 1.1rem;
-            color: var(--text-primary); text-decoration: none; font-weight: 600;
-        }
         
+        /* TARİF POP-UP STİLLERİ */
+        .popup-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px); z-index: 2000;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .popup-overlay.active { opacity: 1; visibility: visible; }
+        .popup {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: var(--background-start); border-radius: var(--border-radius);
+            width: 90%; max-width: 500px; z-index: 2001;
+            opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .popup.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .popup-close {
+            position: absolute; top: 10px; right: 15px; background: none; border: none;
+            font-size: 2rem; color: var(--text-secondary); cursor: pointer;
+        }
+        .popup img { width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius) var(--border-radius) 0 0; }
+        .popup-content { padding: 1.5rem 2rem 2rem; }
+        .popup-content h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .popup-content p { color: var(--text-secondary); line-height: 1.7; }
+
         @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .logo a { font-size: 1.5rem; }
             .nav-desktop { display: none; }
             .hamburger-menu { display: flex; }
-            .hero { padding: 2rem 1rem; }
+            .hero { padding: 2rem 1rem 0; }
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <!-- HTML bölümünde herhangi bir değişiklik yoktur. Önceki gibi doğrudur. -->
     <header>
-        <div class="logo"><a href="https://kerimdemirkaynak.github.io/" data-lang-key="logoText">Kerim'in Mutfağı</a></div>
-        <nav class="nav-desktop">
-            <ul class="nav-links">
-                <li><a href="https://kerimdemirkaynak.github.io/" class="active" data-lang-key="navHome">Ana Sayfa</a></li>
-                <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="navAbout">Hakkında</a></li>
-                <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="navContact">İletişim</a></li>
+        <div class="logo"><a href="#" data-lang-key="logoText">Kerim'in<br>Mutfağı</a></div>
+        <nav>
+            <ul class="nav-desktop">
+                <li><a href="#" data-lang-key="navHome">Ana Sayfa</a></li>
+                <li><a href="#" data-lang-key="navAbout">Hakkında</a></li>
+                <li><a href="#" data-lang-key="navContact">İletişim</a></li>
             </ul>
         </nav>
         <div class="control-buttons">
@@ -166,49 +157,122 @@
             <button class="hamburger-menu control-button" id="hamburger-toggle" aria-label="Menüyü aç"><i class="fas fa-bars"></i></button>
         </div>
     </header>
-
-    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
-    <nav class="mobile-nav" id="mobile-nav">
-        <ul>
-            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="navHome">Ana Sayfa</a></li>
-            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="navAbout">Hakkında</a></li>
-            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="navContact">İletişim</a></li>
-        </ul>
-    </nav>
-
+    
     <main class="container">
-        <section class="hero"><h1 data-lang-key="heroTitle">Lezzet Galerisi</h1><p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.</p></section>
+        <section class="hero"><h1 data-lang-key="heroTitle">Lezzet Galerisi</h1><p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler.</p></section>
         
-        <section class="yemek-galerisi">
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" alt="Pul Biberli Fiyonk Makarna"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pul Biberli Fiyonk Makarna" data-en="Farfalle with Red Pepper Flakes">Pul Biberli Fiyonk Makarna</h3><p>8 Mayıs 2025</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/29 Nisan 2025 - Üçgen Mantı.webp" alt="Üçgen Mantı"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Üçgen Mantı" data-en="Triangle Dumplings">Üçgen Mantı</h3><p>29 Nisan 2025</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/14 Şubat 2025 - Mantı Makarna.webp" alt="Mantı Makarna"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Mantı Makarna" data-en="Manti Pasta">Mantı Makarna</h3><p>14 Şubat 2025</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/10 Ağustos 2023 - Pasta.webp" alt="Pasta"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pasta" data-en="Cake">Pasta</h3><p>10 Ağustos 2023</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/26 Temmuz 2023 - Yoğurtlu Sedani Rigati.webp" alt="Yoğurtlu Sedani Rigati"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Yoğurtlu Sedani Rigati" data-en="Sedani Rigati with Yogurt">Yoğurtlu Sedani Rigati</h3><p>26 Temmuz 2023</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" alt="Yoğurtlu Fiyonk"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Yoğurtlu Fiyonk" data-en="Farfalle with Yogurt">Yoğurtlu Fiyonk</h3><p>24 Nisan 2023</p></div></div>
-            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" alt="Sucuklu Beyaz Peynirli Noodle"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Sucuklu Beyaz Peynirli Noodle" data-en="Noodle with Sujuk and Feta Cheese">Sucuklu Beyaz Peynirli Noodle</h3><p>12 Ağustos 2022</p></div></div>
+        <section class="yemek-galerisi" id="yemek-galerisi">
+            <!-- Yemek kartları JavaScript ile dinamik olarak eklenecek -->
         </section>
     </main>
 
     <footer>
         <ul class="footer-links">
-            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="footerHome">Ana Sayfa</a></li>
-            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="footerAbout">Hakkında</a></li>
-            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="footerContact">İletişim</a></li>
+            <li><a href="#" data-lang-key="footerHome">Ana Sayfa</a></li>
+            <li><a href="#" data-lang-key="footerAbout">Hakkında</a></li>
+            <li><a href="#" data-lang-key="footerContact">İletişim</a></li>
         </ul>
         <p class="copyright-text">© <span id="current-year"></span> Kerim Demirkaynak. <span data-lang-key="footerRights">Tüm hakları saklıdır.</span></p>
     </footer>
 
+    <!-- YENİ: TARİF POP-UP HTML YAPISI -->
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="recipe-popup">
+        <button class="popup-close" id="popup-close">&times;</button>
+        <img id="popup-img" src="" alt="">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <p id="popup-recipe"></p>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // JavaScript bölümü hatasız ve tam işlevsel olduğu için değiştirilmemiştir.
+            const foodData = [
+                { id: 0, date: "8 Mayıs 2025", image: "8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" },
+                { id: 1, date: "29 Nisan 2025", image: "29 Nisan 2025 - Üçgen Mantı.webp" },
+                { id: 2, date: "14 Şubat 2025", image: "14 Şubat 2025 - Mantı Makarna.webp" },
+                { id: 3, date: "10 Ağustos 2023", image: "10 Ağustos 2023 - Pasta.webp" },
+                { id: 4, date: "26 Temmuz 2023", image: "26 Temmuz 2023 - Yoğurtlu Sedani Rigati.webp" },
+                { id: 5, date: "24 Nisan 2023", image: "24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" },
+                { id: 6, date: "12 Ağustos 2022", image: "12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" }
+            ];
+
             const translations = {
-                tr: { logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim", heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.", footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır." },
-                en: { logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact", heroTitle: "The Flavor Gallery", heroSubtitle: "A collection of homemade dishes prepared with passion and care.", footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved." }
+                tr: {
+                    logoText: "Kerim'in<br>Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
+                    heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler.",
+                    footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır.",
+                    foods: [
+                        { title: "Pul Biberli Fiyonk Makarna", recipe: "Makarnayı haşlayın. Tavada zeytinyağı ve pul biberi hafifçe kızdırıp makarnayla karıştırın. Afiyet olsun!" },
+                        { title: "Üçgen Mantı", recipe: "Mantıları haşlayın. Üzerine yoğurt ve naneli tereyağı gezdirerek servis yapın." },
+                        { title: "Mantı Makarna", recipe: "Makarnayı haşlayın ve mantı gibi soslarla servis edin. Üzerine sumak serpebilirsiniz." },
+                        { title: "Pasta", recipe: "Hazır pandispanya arasına krema ve meyve ekleyerek kolayca hazırlayın." },
+                        { title: "Yoğurtlu Sedani Rigati", recipe: "Haşlanmış makarnayı sarımsaklı yoğurt ile karıştırın. Üzerine kırmızı biberli yağ gezdirin." },
+                        { title: "Yoğurtlu Fiyonk", recipe: "Fiyonk makarnayı haşlayıp yoğurtla karıştırın. Nane ile süsleyin." },
+                        { title: "Sucuklu Beyaz Peynirli Noodle", recipe: "Noodle'ı hazırlayın. Ayrı bir tavada küp küp doğranmış sucukları pişirin. Noodle, sucuk ve beyaz peyniri birleştirin." }
+                    ]
+                },
+                en: {
+                    logoText: "Kerim's<br>Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
+                    heroTitle: "The Flavor Gallery", heroSubtitle: "Homemade dishes prepared with passion and care.",
+                    footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved.",
+                    foods: [
+                        { title: "Farfalle with Red Pepper Flakes", recipe: "Boil the pasta. Gently heat olive oil and red pepper flakes in a pan and mix with the pasta. Enjoy!" },
+                        { title: "Triangle Dumplings", recipe: "Boil the dumplings. Serve with yogurt and butter with mint." },
+                        { title: "Manti Pasta", recipe: "Boil the pasta and serve with manti-like sauces. You can sprinkle sumac on top." },
+                        { title: "Cake", recipe: "Prepare easily by adding cream and fruit between ready-made sponge cake." },
+                        { title: "Sedani Rigati with Yogurt", recipe: "Mix boiled pasta with garlic yogurt. Drizzle with red pepper oil." },
+                        { title: "Farfalle with Yogurt", recipe: "Boil the farfalle pasta and mix with yogurt. Garnish with mint." },
+                        { title: "Noodle with Sujuk and Feta", recipe: "Prepare the noodle. Cook diced sujuk in a separate pan. Combine the noodle, sujuk, and feta cheese." }
+                    ]
+                }
             };
+            
+            const body = document.body;
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
-            const body = document.body;
+            let currentLang = localStorage.getItem('language') || 'tr';
+
+            // POPUP ELEMENTLERİ
+            const popupOverlay = document.getElementById('popup-overlay');
+            const recipePopup = document.getElementById('recipe-popup');
+            const popupClose = document.getElementById('popup-close');
+            const popupImg = document.getElementById('popup-img');
+            const popupTitle = document.getElementById('popup-title');
+            const popupRecipe = document.getElementById('popup-recipe');
+
+            function renderContent() {
+                // Dil çevirileri
+                document.documentElement.lang = currentLang;
+                langSwitcher.textContent = currentLang === 'tr' ? 'EN' : 'TR';
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+                });
+
+                // Yemek kartlarını oluştur
+                const gallery = document.getElementById('yemek-galerisi');
+                gallery.innerHTML = '';
+                const imagePath = "https://kerimdemirkaynak.github.io/resimler/";
+                
+                foodData.forEach(food => {
+                    const foodInfo = translations[currentLang].foods[food.id];
+                    const card = document.createElement('div');
+                    card.className = 'yemek-karti';
+                    card.dataset.foodId = food.id; // Tıklama için ID ekle
+                    card.innerHTML = `
+                        <img src="${imagePath}${encodeURIComponent(food.image)}" alt="${foodInfo.title}">
+                        <div class="yemek-karti-bilgi">
+                            <h3>${foodInfo.title}</h3>
+                            <p>${food.date}</p>
+                        </div>
+                    `;
+                    gallery.appendChild(card);
+                });
+            }
+            
+            // TEMA İŞLEVİ
             const currentTheme = localStorage.getItem('theme') || 'dark';
             body.setAttribute('data-theme', currentTheme);
             themeSwitcher.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
@@ -218,38 +282,49 @@
                 themeSwitcher.innerHTML = newTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
                 localStorage.setItem('theme', newTheme);
             });
+
+            // YIL İŞLEVİ
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            let currentLang = localStorage.getItem('language') || 'tr';
-            function applyTranslations() {
-                document.documentElement.lang = currentLang;
-                langSwitcher.textContent = currentLang === 'tr' ? 'EN' : 'TR';
-                document.querySelectorAll('[data-lang-key]').forEach(el => {
-                    const key = el.dataset.langKey;
-                    if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
-                });
-                document.querySelectorAll('.food-title').forEach(title => {
-                    const translatedText = title.dataset[currentLang];
-                    if (translatedText) title.textContent = translatedText;
-                });
-            }
+
+            // DİL DEĞİŞTİRME
             langSwitcher.addEventListener('click', () => {
                 currentLang = currentLang === 'tr' ? 'en' : 'tr';
                 localStorage.setItem('language', currentLang);
-                applyTranslations();
+                renderContent();
             });
-            const hamburgerToggle = document.getElementById('hamburger-toggle');
-            const mobileNav = document.getElementById('mobile-nav');
-            const mobileOverlay = document.getElementById('mobile-overlay');
-            function closeMenu() {
-                mobileNav.classList.remove('active');
-                mobileOverlay.classList.remove('active');
+
+            // POP-UP İŞLEVİ
+            function openPopup(foodId) {
+                const food = foodData.find(f => f.id == foodId);
+                const foodInfo = translations[currentLang].foods[foodId];
+                
+                popupImg.src = `https://kerimdemirkaynak.github.io/resimler/${encodeURIComponent(food.image)}`;
+                popupTitle.textContent = foodInfo.title;
+                popupRecipe.textContent = foodInfo.recipe;
+
+                popupOverlay.classList.add('active');
+                recipePopup.classList.add('active');
+                body.classList.add('no-scroll');
             }
-            hamburgerToggle.addEventListener('click', () => {
-                mobileNav.classList.toggle('active');
-                mobileOverlay.classList.toggle('active');
+
+            function closePopup() {
+                popupOverlay.classList.remove('active');
+                recipePopup.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+
+            document.getElementById('yemek-galerisi').addEventListener('click', (e) => {
+                const card = e.target.closest('.yemek-karti');
+                if (card) {
+                    openPopup(card.dataset.foodId);
+                }
             });
-            mobileOverlay.addEventListener('click', closeMenu);
-            applyTranslations();
+
+            popupClose.addEventListener('click', closePopup);
+            popupOverlay.addEventListener('click', closePopup);
+
+            // İLK YÜKLEME
+            renderContent();
         });
     </script>
 </body>
