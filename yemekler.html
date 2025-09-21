@@ -17,11 +17,12 @@
 
     <style>
         :root {
+            --header-height: 70px;
             --accent-color: #3B82F6;
             --accent-glow: rgba(59, 130, 246, 0.5);
             --background-start: #0D1117;
             --background-end: #000000;
-            --header-bg: rgba(13, 17, 23, 0.7);
+            --header-bg: rgba(13, 17, 23, 0.75);
             --glass-bg: rgba(22, 27, 34, 0.6);
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-primary: #f0f0f0;
@@ -64,8 +65,9 @@
         .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
         
         header {
-            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
             position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+            height: var(--header-height);
             background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border); transition: background-color 0.4s, border-color 0.4s;
         }
@@ -92,32 +94,27 @@
         .control-button:hover { background-color: var(--glass-bg); color: var(--text-primary); }
         .hamburger-menu { display: none; }
         
-        main { padding-top: 6rem; }
+        /* HEADER ENGELLEME SORUNU ÇÖZÜMÜ */
+        main { padding-top: var(--header-height); }
+        
         .hero { text-align: center; padding: 4rem 1rem; }
         .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         
+        /* KART ORTALAMA SORUNU ÇÖZÜMÜ */
         .yemek-galerisi {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;
-            padding-top: 4rem; padding-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 4rem 0 2rem;
         }
         .yemek-karti {
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.4s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             overflow: hidden;
-            /* HATAYI DÜZELTEN KISIM: BAŞLANGIÇTA GÖRÜNÜR YAPILDI */
-            opacity: 1; transform: translateY(0);
-        }
-        .js-enabled .fade-in {
-            /* JavaScript çalıştığında animasyon için başlangıç durumu */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .js-enabled .fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+            flex: 0 1 340px; /* Kartların esnek boyutlanması */
         }
         .yemek-karti:hover {
             transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow);
@@ -128,23 +125,44 @@
         .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary); }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
+        /* YENİLENMİŞ FOOTER TASARIMI */
         footer {
-            text-align: center; padding: 3rem 1rem; margin-top: 4rem;
-            border-top: 1px solid var(--glass-border); transition: border-color 0.4s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: center; 
+            padding: 3rem 1rem; 
+            margin-top: 4rem;
+            border-top: 1px solid var(--glass-border);
+            transition: border-color 0.4s;
         }
-        .copyright-text { color: var(--text-secondary); }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: var(--accent-color); }
+        .copyright-text { color: var(--text-secondary); font-size: 0.9rem; }
         
         @media (max-width: 768px) {
             .nav-desktop { display: none; } .hamburger-menu { display: flex; }
-            .hero { padding: 2rem 1rem; } main { padding-top: 5rem; }
+            .hero { padding: 2rem 1rem; }
         }
     </style>
-    <!-- GÜVENLİK ÖNLEMİ: JavaScript kapalıysa animasyonları devre dışı bırakır -->
-    <noscript><style>.fade-in { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body data-theme="dark">
 
     <header>
+        <!-- Header içeriği değişmedi -->
         <div class="logo">
             <a href="https://kerimdemirkaynak.github.io/" data-lang-key="logoText">Kerim'in Mutfağı</a>
         </div>
@@ -163,84 +181,56 @@
     </header>
 
     <main class="container">
-        <section class="hero fade-in">
+        <section class="hero">
             <h1 data-lang-key="heroTitle">Lezzet Galerisi</h1>
-            <p data-lang-key="heroSubtitle" style="transition-delay: 150ms;">Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.</p>
+            <p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.</p>
         </section>
         
         <section class="yemek-galerisi">
-            <!-- Temiz ve okunabilir resim linkleri ile kartlar -->
-            <div class="yemek-karti fade-in">
+            <!-- Kartların içeriği değişmedi -->
+            <div class="yemek-karti">
                 <img src="https://kerimdemirkaynak.github.io/resimler/8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" alt="Pul Biberli Fiyonk Makarna">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Pul Biberli Fiyonk Makarna" data-en="Farfalle with Red Pepper Flakes">Pul Biberli Fiyonk Makarna</h3>
-                    <p>8 Mayıs 2025</p>
-                </div>
+                <div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pul Biberli Fiyonk Makarna" data-en="Farfalle with Red Pepper Flakes">Pul Biberli Fiyonk Makarna</h3><p>8 Mayıs 2025</p></div>
             </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/29 Nisan 2025 - Üçgen Mantı.webp" alt="Üçgen Mantı">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Üçgen Mantı" data-en="Triangle Dumplings">Üçgen Mantı</h3>
-                    <p>29 Nisan 2025</p>
-                </div>
-            </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/14 Şubat 2025 - Mantı Makarna.webp" alt="Mantı Makarna">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Mantı Makarna" data-en="Manti Pasta">Mantı Makarna</h3>
-                    <p>14 Şubat 2025</p>
-                </div>
-            </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/10 Ağustos 2023 - Pasta.webp" alt="Pasta">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Pasta" data-en="Cake">Pasta</h3>
-                    <p>10 Ağustos 2023</p>
-                </div>
-            </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/26 Temmuz 2023 - Yoğurtlu Sedani Rigati.webp" alt="Yoğurtlu Sedani Rigati">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Yoğurtlu Sedani Rigati" data-en="Sedani Rigati with Yogurt">Yoğurtlu Sedani Rigati</h3>
-                    <p>26 Temmuz 2023</p>
-                </div>
-            </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" alt="Yoğurtlu Fiyonk">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Yoğurtlu Fiyonk" data-en="Farfalle with Yogurt">Yoğurtlu Fiyonk</h3>
-                    <p>24 Nisan 2023</p>
-                </div>
-            </div>
-            <div class="yemek-karti fade-in">
-                <img src="https://kerimdemirkaynak.github.io/resimler/12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" alt="Sucuklu Beyaz Peynirli Noodle">
-                <div class="yemek-karti-bilgi">
-                    <h3 class="food-title" data-tr="Sucuklu Beyaz Peynirli Noodle" data-en="Noodle with Sujuk and Feta Cheese">Sucuklu Beyaz Peynirli Noodle</h3>
-                    <p>12 Ağustos 2022</p>
-                </div>
-            </div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/29 Nisan 2025 - Üçgen Mantı.webp" alt="Üçgen Mantı"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Üçgen Mantı" data-en="Triangle Dumplings">Üçgen Mantı</h3><p>29 Nisan 2025</p></div></div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/14 Şubat 2025 - Mantı Makarna.webp" alt="Mantı Makarna"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Mantı Makarna" data-en="Manti Pasta">Mantı Makarna</h3><p>14 Şubat 2025</p></div></div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/10 Ağustos 2023 - Pasta.webp" alt="Pasta"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Pasta" data-en="Cake">Pasta</h3><p>10 Ağustos 2023</p></div></div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/26 Temmuz 2023 - Yoğurtlu Sedani Rigati.webp" alt="Yoğurtlu Sedani Rigati"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Yoğurtlu Sedani Rigati" data-en="Sedani Rigati with Yogurt">Yoğurtlu Sedani Rigati</h3><p>26 Temmuz 2023</p></div></div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" alt="Yoğurtlu Fiyonk"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Yoğurtlu Fiyonk" data-en="Farfalle with Yogurt">Yoğurtlu Fiyonk</h3><p>24 Nisan 2023</p></div></div>
+            <div class="yemek-karti"><img src="https://kerimdemirkaynak.github.io/resimler/12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" alt="Sucuklu Beyaz Peynirli Noodle"><div class="yemek-karti-bilgi"><h3 class="food-title" data-tr="Sucuklu Beyaz Peynirli Noodle" data-en="Noodle with Sujuk and Feta Cheese">Sucuklu Beyaz Peynirli Noodle</h3><p>12 Ağustos 2022</p></div></div>
         </section>
     </main>
 
-    <footer class="fade-in">
+    <!-- YENİ FOOTER YAPISI -->
+    <footer>
+        <ul class="footer-links">
+            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="footerHome">Ana Sayfa</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="footerAbout">Hakkında</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="footerContact">İletişim</a></li>
+        </ul>
         <p class="copyright-text">© <span id="current-year"></span> Kerim Demirkaynak. <span data-lang-key="footerRights">Tüm hakları saklıdır.</span></p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // JavaScript çalıştığı anda body'e bir sınıf ekleyerek animasyonları etkinleştir
-            document.body.classList.add('js-enabled');
-
             const translations = {
-                tr: { logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim", heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.", footerRights: "Tüm hakları saklıdır." },
-                en: { logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact", heroTitle: "The Flavor Gallery", heroSubtitle: "A collection of homemade dishes prepared with passion and care.", footerRights: "All rights reserved." }
+                tr: {
+                    logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
+                    heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler koleksiyonu.",
+                    footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır."
+                },
+                en: {
+                    logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
+                    heroTitle: "The Flavor Gallery", heroSubtitle: "A collection of homemade dishes prepared with passion and care.",
+                    footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved."
+                }
             };
             
+            // Scriptin geri kalanı değişmedi, olduğu gibi çalışıyor.
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
             const body = document.body;
 
-            // 1. Tema Yöneticisi
             const currentTheme = localStorage.getItem('theme') || 'dark';
             body.setAttribute('data-theme', currentTheme);
             themeSwitcher.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
@@ -251,20 +241,16 @@
                 localStorage.setItem('theme', newTheme);
             });
 
-            // 2. Footer Yıl Yöneticisi
             document.getElementById('current-year').textContent = new Date().getFullYear();
 
-            // 3. Dil Yöneticisi
             let currentLang = localStorage.getItem('language') || 'tr';
             function applyTranslations() {
                 document.documentElement.lang = currentLang;
                 langSwitcher.textContent = currentLang === 'tr' ? 'EN' : 'TR';
-                
                 document.querySelectorAll('[data-lang-key]').forEach(el => {
                     const key = el.dataset.langKey;
                     if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
                 });
-
                 document.querySelectorAll('.food-title').forEach(title => {
                     const translatedText = title.dataset[currentLang];
                     if (translatedText) title.textContent = translatedText;
@@ -276,20 +262,8 @@
                 applyTranslations();
             });
             
-            // 4. Scroll Animasyon Gözlemcisi (GÜVENLİ HALE GETİRİLDİ)
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-            // İlk Yükleme
             applyTranslations();
         });
     </script>
 </body>
-  </html>
+</html>
