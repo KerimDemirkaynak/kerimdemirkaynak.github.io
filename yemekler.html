@@ -17,13 +17,13 @@
 
     <style>
         :root {
-            --header-height: 80px;
+            --header-height: 70px;
             --accent-color: #3B82F6;
             --accent-glow: rgba(59, 130, 246, 0.5);
             --background-start: #0D1117;
             --background-end: #000000;
-            --header-bg: rgba(13, 17, 23, 0.8);
-            --glass-bg: rgba(22, 27, 34, 0.7);
+            --header-bg: rgba(13, 17, 23, 0.75);
+            --glass-bg: rgba(22, 27, 34, 0.6);
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-primary: #f0f0f0;
             --text-secondary: #a0a0a0;
@@ -56,19 +56,17 @@
         .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
         
         header {
-            display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
             position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
             height: var(--header-height);
             background-color: var(--header-bg); backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
         }
         
-        .logo a { font-size: 2rem; font-weight: 800; color: var(--text-primary); text-decoration: none; line-height: 1.1; }
-        
+        .logo a { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); text-decoration: none; }
         .nav-desktop { display: flex; align-items: center; gap: 2rem; list-style: none; }
         .nav-desktop a { color: var(--text-secondary); font-weight: 600; text-decoration: none; }
         .nav-desktop a:hover { color: var(--text-primary); }
-        
         .control-buttons { display: flex; align-items: center; gap: 0.5rem; }
         .control-button {
             background: none; border: 1px solid var(--glass-border); color: var(--text-secondary);
@@ -78,42 +76,54 @@
         .control-button:hover { background-color: var(--glass-bg); color: var(--text-primary); }
         .hamburger-menu { display: none; }
         
-        .hero { text-align: center; padding: 4rem 1rem 0; }
+        .hero { text-align: center; padding: 4rem 1rem; }
         .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         
         .yemek-galerisi {
             display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 2rem; padding: 4rem 0;
+            gap: 2rem; padding: 2rem 0 0;
         }
         .yemek-karti {
             background: var(--glass-bg); border-radius: var(--border-radius);
             transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden; flex: 0 1 350px; cursor: pointer;
+            overflow: hidden; flex: 0 1 340px; cursor: pointer;
         }
         .yemek-karti:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); }
-        .yemek-karti img { width: 100%; height: 260px; object-fit: cover; }
+        .yemek-karti img { width: 100%; height: 250px; object-fit: cover; }
         .yemek-karti-bilgi { padding: 1.5rem; }
-        .yemek-karti-bilgi h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
         footer {
             display: flex; flex-direction: column; align-items: center;
             gap: 1.5rem; text-align: center; padding: 2.5rem 1rem;
+            margin-top: 4rem;
             border-top: 1px solid var(--glass-border);
         }
         .footer-links { display: flex; gap: 2rem; list-style: none; }
         .footer-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; }
         .footer-links a:hover { color: var(--accent-color); }
         .copyright-text { color: var(--text-secondary); font-size: 0.9rem; }
-        
-        /* TARİF POP-UP STİLLERİ */
-        .popup-overlay {
+
+        .mobile-menu-overlay, .popup-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px); z-index: 2000;
+            backdrop-filter: blur(8px); z-index: 1001;
             opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
         }
-        .popup-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu-overlay.active, .popup-overlay.active { opacity: 1; visibility: visible; }
+        
+        .mobile-nav {
+            position: fixed; top: 0; right: 0; height: 100%; width: 280px;
+            background: var(--background-start); border-left: 1px solid var(--glass-border);
+            z-index: 1002; transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 5rem 2rem;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav ul { list-style: none; }
+        .mobile-nav ul li a { display: block; padding: 1rem 0; font-size: 1.1rem; color: var(--text-primary); text-decoration: none; font-weight: 600; }
+        
         .popup {
             position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.95);
@@ -122,28 +132,23 @@
             opacity: 0; visibility: hidden; transition: all 0.3s;
         }
         .popup.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-        .popup-close {
-            position: absolute; top: 10px; right: 15px; background: none; border: none;
-            font-size: 2rem; color: var(--text-secondary); cursor: pointer;
-        }
+        .popup-close { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 2rem; color: var(--text-secondary); cursor: pointer; }
         .popup img { width: 100%; height: 250px; object-fit: cover; border-radius: var(--border-radius) var(--border-radius) 0 0; }
         .popup-content { padding: 1.5rem 2rem 2rem; }
         .popup-content h3 { font-size: 1.8rem; margin-bottom: 1rem; }
         .popup-content p { color: var(--text-secondary); line-height: 1.7; }
-
+        
         @media (max-width: 768px) {
-            .container { padding: 0 1rem; }
-            .logo a { font-size: 1.5rem; }
             .nav-desktop { display: none; }
             .hamburger-menu { display: flex; }
-            .hero { padding: 2rem 1rem 0; }
+            .hero { padding: 2rem 1rem; }
         }
     </style>
 </head>
 <body data-theme="dark">
 
     <header>
-        <div class="logo"><a href="#" data-lang-key="logoText">Kerim'in<br>Mutfağı</a></div>
+        <div class="logo"><a href="#" data-lang-key="logoText">Kerim'in Mutfağı</a></div>
         <nav>
             <ul class="nav-desktop">
                 <li><a href="#" data-lang-key="navHome">Ana Sayfa</a></li>
@@ -158,12 +163,18 @@
         </div>
     </header>
     
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a href="#" data-lang-key="navHome">Ana Sayfa</a></li>
+            <li><a href="#" data-lang-key="navAbout">Hakkında</a></li>
+            <li><a href="#" data-lang-key="navContact">İletişim</a></li>
+        </ul>
+    </nav>
+
     <main class="container">
         <section class="hero"><h1 data-lang-key="heroTitle">Lezzet Galerisi</h1><p data-lang-key="heroSubtitle">Tutkuyla ve özenle hazırlanan ev yapımı yemekler.</p></section>
-        
-        <section class="yemek-galerisi" id="yemek-galerisi">
-            <!-- Yemek kartları JavaScript ile dinamik olarak eklenecek -->
-        </section>
+        <section class="yemek-galerisi" id="yemek-galerisi"></section>
     </main>
 
     <footer>
@@ -175,7 +186,6 @@
         <p class="copyright-text">© <span id="current-year"></span> Kerim Demirkaynak. <span data-lang-key="footerRights">Tüm hakları saklıdır.</span></p>
     </footer>
 
-    <!-- YENİ: TARİF POP-UP HTML YAPISI -->
     <div class="popup-overlay" id="popup-overlay"></div>
     <div class="popup" id="recipe-popup">
         <button class="popup-close" id="popup-close">&times;</button>
@@ -200,7 +210,7 @@
 
             const translations = {
                 tr: {
-                    logoText: "Kerim'in<br>Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
+                    logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
                     heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler.",
                     footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır.",
                     foods: [
@@ -214,7 +224,7 @@
                     ]
                 },
                 en: {
-                    logoText: "Kerim's<br>Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
+                    logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
                     heroTitle: "The Flavor Gallery", heroSubtitle: "Homemade dishes prepared with passion and care.",
                     footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved.",
                     foods: [
@@ -232,47 +242,37 @@
             const body = document.body;
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
-            let currentLang = localStorage.getItem('language') || 'tr';
-
-            // POPUP ELEMENTLERİ
+            const hamburgerToggle = document.getElementById('hamburger-toggle');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileOverlay = document.getElementById('mobile-overlay');
             const popupOverlay = document.getElementById('popup-overlay');
             const recipePopup = document.getElementById('recipe-popup');
             const popupClose = document.getElementById('popup-close');
             const popupImg = document.getElementById('popup-img');
             const popupTitle = document.getElementById('popup-title');
             const popupRecipe = document.getElementById('popup-recipe');
+            let currentLang = localStorage.getItem('language') || 'tr';
 
             function renderContent() {
-                // Dil çevirileri
                 document.documentElement.lang = currentLang;
                 langSwitcher.textContent = currentLang === 'tr' ? 'EN' : 'TR';
                 document.querySelectorAll('[data-lang-key]').forEach(el => {
                     const key = el.dataset.langKey;
                     if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
                 });
-
-                // Yemek kartlarını oluştur
                 const gallery = document.getElementById('yemek-galerisi');
                 gallery.innerHTML = '';
                 const imagePath = "https://kerimdemirkaynak.github.io/resimler/";
-                
                 foodData.forEach(food => {
                     const foodInfo = translations[currentLang].foods[food.id];
                     const card = document.createElement('div');
                     card.className = 'yemek-karti';
-                    card.dataset.foodId = food.id; // Tıklama için ID ekle
-                    card.innerHTML = `
-                        <img src="${imagePath}${encodeURIComponent(food.image)}" alt="${foodInfo.title}">
-                        <div class="yemek-karti-bilgi">
-                            <h3>${foodInfo.title}</h3>
-                            <p>${food.date}</p>
-                        </div>
-                    `;
+                    card.dataset.foodId = food.id;
+                    card.innerHTML = `<img src="${imagePath}${encodeURIComponent(food.image)}" alt="${foodInfo.title}"><div class="yemek-karti-bilgi"><h3>${foodInfo.title}</h3><p>${food.date}</p></div>`;
                     gallery.appendChild(card);
                 });
             }
             
-            // TEMA İŞLEVİ
             const currentTheme = localStorage.getItem('theme') || 'dark';
             body.setAttribute('data-theme', currentTheme);
             themeSwitcher.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
@@ -283,25 +283,20 @@
                 localStorage.setItem('theme', newTheme);
             });
 
-            // YIL İŞLEVİ
             document.getElementById('current-year').textContent = new Date().getFullYear();
 
-            // DİL DEĞİŞTİRME
             langSwitcher.addEventListener('click', () => {
                 currentLang = currentLang === 'tr' ? 'en' : 'tr';
                 localStorage.setItem('language', currentLang);
                 renderContent();
             });
 
-            // POP-UP İŞLEVİ
             function openPopup(foodId) {
                 const food = foodData.find(f => f.id == foodId);
                 const foodInfo = translations[currentLang].foods[foodId];
-                
                 popupImg.src = `https://kerimdemirkaynak.github.io/resimler/${encodeURIComponent(food.image)}`;
                 popupTitle.textContent = foodInfo.title;
                 popupRecipe.textContent = foodInfo.recipe;
-
                 popupOverlay.classList.add('active');
                 recipePopup.classList.add('active');
                 body.classList.add('no-scroll');
@@ -315,15 +310,22 @@
 
             document.getElementById('yemek-galerisi').addEventListener('click', (e) => {
                 const card = e.target.closest('.yemek-karti');
-                if (card) {
-                    openPopup(card.dataset.foodId);
-                }
+                if (card) openPopup(card.dataset.foodId);
+            });
+            
+            function closeMobileMenu() {
+                mobileNav.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            }
+            hamburgerToggle.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
             });
 
             popupClose.addEventListener('click', closePopup);
             popupOverlay.addEventListener('click', closePopup);
+            mobileOverlay.addEventListener('click', closeMobileMenu);
 
-            // İLK YÜKLEME
             renderContent();
         });
     </script>
