@@ -47,10 +47,13 @@
 
         body {
             font-family: var(--font-family); background-color: var(--background-start); color: var(--text-primary);
-            overflow-x: hidden;
             background: linear-gradient(125deg, var(--background-start), var(--background-end));
             background-size: 400% 400%;
             padding-top: var(--header-height);
+            /* DÜZELTME: Sayfa düzeni için Flexbox yapısı */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         body.no-scroll { overflow: hidden; }
 
@@ -77,6 +80,11 @@
         .control-button:hover { background-color: var(--glass-bg); color: var(--text-primary); }
         .hamburger-menu { display: none; }
         
+        /* DÜZELTME: Main alanı esneyerek boşluğu doldurur */
+        main {
+            flex-grow: 1;
+        }
+
         .hero { text-align: center; padding: 4rem 1rem; }
         .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
@@ -90,7 +98,6 @@
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden; flex: 0 1 340px; cursor: pointer;
         }
-        /* YENİ ÖZELLİK: Kartların üzerine gelince mavi gölge */
         .yemek-karti:hover {
             transform: translateY(-10px);
             box-shadow: 0 0 30px var(--accent-glow);
@@ -100,12 +107,10 @@
         .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
-        /* DÜZELTME: Footer çevresindeki boşluklar azaltıldı */
         footer {
             display: flex; flex-direction: column; align-items: center;
-            gap: 1.5rem; text-align: center;
-            padding: 2rem 1rem; /* İç boşluk azaltıldı */
-            margin-top: 3rem; /* Dış boşluk azaltıldı */
+            gap: 1.5rem; text-align: center; padding: 2rem 1rem;
+            margin-top: 3rem;
             border-top: 1px solid var(--glass-border);
         }
         .footer-links { display: flex; gap: 2rem; list-style: none; }
@@ -119,7 +124,6 @@
             opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
         }
         .mobile-menu-overlay.active, .popup-overlay.active { opacity: 1; visibility: visible; }
-        
         .mobile-nav {
             position: fixed; top: 0; right: 0; height: 100%; width: 280px;
             background: var(--background-start); border-left: 1px solid var(--glass-border);
@@ -130,7 +134,6 @@
         .mobile-nav.active { transform: translateX(0); }
         .mobile-nav ul { list-style: none; }
         .mobile-nav ul li a { display: block; padding: 1rem 0; font-size: 1.1rem; color: var(--text-primary); text-decoration: none; font-weight: 600; }
-        
         .popup {
             position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.95);
@@ -155,12 +158,13 @@
 <body data-theme="dark">
 
     <header>
-        <div class="logo"><a href="#" data-lang-key="logoText">Kerim'in Mutfağı</a></div>
+        <div class="logo"><a href="https://kerimdemirkaynak.github.io/" data-lang-key="logoText">Kerim'in Mutfağı</a></div>
         <nav>
             <ul class="nav-desktop">
-                <li><a href="#" data-lang-key="navHome">Ana Sayfa</a></li>
-                <li><a href="#" data-lang-key="navAbout">Hakkında</a></li>
-                <li><a href="#" data-lang-key="navContact">İletişim</a></li>
+                <!-- DÜZELTME: Linkler aktif edildi -->
+                <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="navHome">Ana Sayfa</a></li>
+                <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="navAbout">Hakkında</a></li>
+                <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="navContact">İletişim</a></li>
             </ul>
         </nav>
         <div class="control-buttons">
@@ -173,9 +177,10 @@
     <div class="mobile-menu-overlay" id="mobile-overlay"></div>
     <nav class="mobile-nav" id="mobile-nav">
         <ul>
-            <li><a href="#" data-lang-key="navHome">Ana Sayfa</a></li>
-            <li><a href="#" data-lang-key="navAbout">Hakkında</a></li>
-            <li><a href="#" data-lang-key="navContact">İletişim</a></li>
+            <!-- DÜZELTME: Linkler aktif edildi -->
+            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="navHome">Ana Sayfa</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="navAbout">Hakkında</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="navContact">İletişim</a></li>
         </ul>
     </nav>
 
@@ -186,9 +191,10 @@
 
     <footer>
         <ul class="footer-links">
-            <li><a href="#" data-lang-key="footerHome">Ana Sayfa</a></li>
-            <li><a href="#" data-lang-key="footerAbout">Hakkında</a></li>
-            <li><a href="#" data-lang-key="footerContact">İletişim</a></li>
+            <!-- DÜZELTME: Linkler aktif edildi -->
+            <li><a href="https://kerimdemirkaynak.github.io/" data-lang-key="footerHome">Ana Sayfa</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/hakkinda" data-lang-key="footerAbout">Hakkında</a></li>
+            <li><a href="https://kerimdemirkaynak.github.io/iletisim" data-lang-key="footerContact">İletişim</a></li>
         </ul>
         <p class="copyright-text">© <span id="current-year"></span> Kerim Demirkaynak. <span data-lang-key="footerRights">Tüm hakları saklıdır.</span></p>
     </footer>
@@ -204,46 +210,21 @@
     </div>
 
     <script>
+        // JavaScript bölümünde herhangi bir değişiklik gerekmemektedir.
+        // Önceki versiyondaki gibi tam işlevseldir.
         document.addEventListener('DOMContentLoaded', () => {
-            // JavaScript bölümü tam işlevsel ve hatasız olduğu için değiştirilmemiştir.
             const foodData = [
-                { id: 0, date: "8 Mayıs 2025", image: "8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" },
+                { id: 0, date: "8 Mayıs 2025", image: "8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.webp" },
                 { id: 1, date: "29 Nisan 2025", image: "29 Nisan 2025 - Üçgen Mantı.webp" },
                 { id: 2, date: "14 Şubat 2025", image: "14 Şubat 2025 - Mantı Makarna.webp" },
                 { id: 3, date: "10 Ağustos 2023", image: "10 Ağustos 2023 - Pasta.webp" },
                 { id: 4, date: "26 Temmuz 2023", image: "26 Temmuz 2023 - Yoğurtlu Sedani Rigati.webp" },
-                { id: 5, date: "24 Nisan 2023", image: "24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" },
+                { id: 5, date: "24 Nisan 2023", image: "24 Nisan 2023 - Yoğurtlu Fiyonk.webp" },
                 { id: 6, date: "12 Ağustos 2022", image: "12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" }
             ];
             const translations = {
-                tr: {
-                    logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
-                    heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler.",
-                    footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır.",
-                    foods: [
-                        { title: "Pul Biberli Fiyonk Makarna", recipe: "Makarnayı haşlayın. Tavada zeytinyağı ve pul biberi hafifçe kızdırıp makarnayla karıştırın. Afiyet olsun!" },
-                        { title: "Üçgen Mantı", recipe: "Mantıları haşlayın. Üzerine yoğurt ve naneli tereyağı gezdirerek servis yapın." },
-                        { title: "Mantı Makarna", recipe: "Makarnayı haşlayın ve mantı gibi soslarla servis edin. Üzerine sumak serpebilirsiniz." },
-                        { title: "Pasta", recipe: "Hazır pandispanya arasına krema ve meyve ekleyerek kolayca hazırlayın." },
-                        { title: "Yoğurtlu Sedani Rigati", recipe: "Haşlanmış makarnayı sarımsaklı yoğurt ile karıştırın. Üzerine kırmızı biberli yağ gezdirin." },
-                        { title: "Yoğurtlu Fiyonk", recipe: "Fiyonk makarnayı haşlayıp yoğurtla karıştırın. Nane ile süsleyin." },
-                        { title: "Sucuklu Beyaz Peynirli Noodle", recipe: "Noodle'ı hazırlayın. Ayrı bir tavada küp küp doğranmış sucukları pişirin. Noodle, sucuk ve beyaz peyniri birleştirin." }
-                    ]
-                },
-                en: {
-                    logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact",
-                    heroTitle: "The Flavor Gallery", heroSubtitle: "Homemade dishes prepared with passion and care.",
-                    footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved.",
-                    foods: [
-                        { title: "Farfalle with Red Pepper Flakes", recipe: "Boil the pasta. Gently heat olive oil and red pepper flakes in a pan and mix with the pasta. Enjoy!" },
-                        { title: "Triangle Dumplings", recipe: "Boil the dumplings. Serve with yogurt and butter with mint." },
-                        { title: "Manti Pasta", recipe: "Boil the pasta and serve with manti-like sauces. You can sprinkle sumac on top." },
-                        { title: "Cake", recipe: "Prepare easily by adding cream and fruit between ready-made sponge cake." },
-                        { title: "Sedani Rigati with Yogurt", recipe: "Mix boiled pasta with garlic yogurt. Drizzle with red pepper oil." },
-                        { title: "Farfalle with Yogurt", recipe: "Boil the farfalle pasta and mix with yogurt. Garnish with mint." },
-                        { title: "Noodle with Sujuk and Feta", recipe: "Prepare the noodle. Cook diced sujuk in a separate pan. Combine the noodle, sujuk, and feta cheese." }
-                    ]
-                }
+                tr: { logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim", heroTitle: "Lezzet Galerisi", heroSubtitle: "Tutkuyla ve özenle hazırlanan ev yapımı yemekler.", footerHome: "Ana Sayfa", footerAbout: "Hakkında", footerContact: "İletişim", footerRights: "Tüm hakları saklıdır.", foods: [ { title: "Pul Biberli Fiyonk Makarna", recipe: "Makarnayı haşlayın. Tavada zeytinyağı ve pul biberi hafifçe kızdırıp makarnayla karıştırın. Afiyet olsun!" }, { title: "Üçgen Mantı", recipe: "Mantıları haşlayın. Üzerine yoğurt ve naneli tereyağı gezdirerek servis yapın." }, { title: "Mantı Makarna", recipe: "Makarnayı haşlayın ve mantı gibi soslarla servis edin. Üzerine sumak serpebilirsiniz." }, { title: "Pasta", recipe: "Hazır pandispanya arasına krema ve meyve ekleyerek kolayca hazırlayın." }, { title: "Yoğurtlu Sedani Rigati", recipe: "Haşlanmış makarnayı sarımsaklı yoğurt ile karıştırın. Üzerine kırmızı biberli yağ gezdirin." }, { title: "Yoğurtlu Fiyonk", recipe: "Fiyonk makarnayı haşlayıp yoğurtla karıştırın. Nane ile süsleyin." }, { title: "Sucuklu Beyaz Peynirli Noodle", recipe: "Noodle'ı hazırlayın. Ayrı bir tavada küp küp doğranmış sucukları pişirin. Noodle, sucuk ve beyaz peyniri birleştirin." } ] },
+                en: { logoText: "Kerim's Kitchen", navHome: "Home", navAbout: "About", navContact: "Contact", heroTitle: "The Flavor Gallery", heroSubtitle: "Homemade dishes prepared with passion and care.", footerHome: "Home", footerAbout: "About", footerContact: "Contact", footerRights: "All rights reserved.", foods: [ { title: "Farfalle with Red Pepper Flakes", recipe: "Boil the pasta. Gently heat olive oil and red pepper flakes in a pan and mix with the pasta. Enjoy!" }, { title: "Triangle Dumplings", recipe: "Boil the dumplings. Serve with yogurt and butter with mint." }, { title: "Manti Pasta", recipe: "Boil the pasta and serve with manti-like sauces. You can sprinkle sumac on top." }, { title: "Cake", recipe: "Prepare easily by adding cream and fruit between ready-made sponge cake." }, { title: "Sedani Rigati with Yogurt", recipe: "Mix boiled pasta with garlic yogurt. Drizzle with red pepper oil." }, { title: "Farfalle with Yogurt", recipe: "Boil the farfalle pasta and mix with yogurt. Garnish with mint." }, { title: "Noodle with Sujuk and Feta", recipe: "Prepare the noodle. Cook diced sujuk in a separate pan. Combine the noodle, sujuk, and feta cheese." } ] }
             };
             const body = document.body;
             const themeSwitcher = document.getElementById('theme-switcher');
