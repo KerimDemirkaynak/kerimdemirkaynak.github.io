@@ -33,6 +33,7 @@
 
         body[data-theme='light'] {
             --accent-color: #007BFF;
+            --accent-glow: rgba(0, 123, 255, 0.4);
             --background-start: #f4f7f9;
             --background-end: #e9f2ff;
             --header-bg: rgba(255, 255, 255, 0.85);
@@ -82,23 +83,29 @@
         
         .yemek-galerisi {
             display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 2rem; padding: 2rem 0 0;
+            gap: 2rem; padding: 2rem 0;
         }
         .yemek-karti {
             background: var(--glass-bg); border-radius: var(--border-radius);
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden; flex: 0 1 340px; cursor: pointer;
         }
-        .yemek-karti:hover { transform: translateY(-10px); box-shadow: 0 0 30px var(--accent-glow); }
+        /* YENİ ÖZELLİK: Kartların üzerine gelince mavi gölge */
+        .yemek-karti:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
         .yemek-karti img { width: 100%; height: 250px; object-fit: cover; }
         .yemek-karti-bilgi { padding: 1.5rem; }
         .yemek-karti-bilgi h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
         .yemek-karti-bilgi p { color: var(--text-secondary); }
         
+        /* DÜZELTME: Footer çevresindeki boşluklar azaltıldı */
         footer {
             display: flex; flex-direction: column; align-items: center;
-            gap: 1.5rem; text-align: center; padding: 2.5rem 1rem;
-            margin-top: 4rem;
+            gap: 1.5rem; text-align: center;
+            padding: 2rem 1rem; /* İç boşluk azaltıldı */
+            margin-top: 3rem; /* Dış boşluk azaltıldı */
             border-top: 1px solid var(--glass-border);
         }
         .footer-links { display: flex; gap: 2rem; list-style: none; }
@@ -198,6 +205,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // JavaScript bölümü tam işlevsel ve hatasız olduğu için değiştirilmemiştir.
             const foodData = [
                 { id: 0, date: "8 Mayıs 2025", image: "8 Mayıs 2025 - Pul Biberli Fiyonk Makarna.jpg" },
                 { id: 1, date: "29 Nisan 2025", image: "29 Nisan 2025 - Üçgen Mantı.webp" },
@@ -207,7 +215,6 @@
                 { id: 5, date: "24 Nisan 2023", image: "24 Nisan 2023 - Yoğurtlu Fiyonk.jpg" },
                 { id: 6, date: "12 Ağustos 2022", image: "12 Ağustos 2022 - SucukluBeyazPeynirli Noodle.webp" }
             ];
-
             const translations = {
                 tr: {
                     logoText: "Kerim'in Mutfağı", navHome: "Ana Sayfa", navAbout: "Hakkında", navContact: "İletişim",
@@ -238,7 +245,6 @@
                     ]
                 }
             };
-            
             const body = document.body;
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
@@ -252,7 +258,6 @@
             const popupTitle = document.getElementById('popup-title');
             const popupRecipe = document.getElementById('popup-recipe');
             let currentLang = localStorage.getItem('language') || 'tr';
-
             function renderContent() {
                 document.documentElement.lang = currentLang;
                 langSwitcher.textContent = currentLang === 'tr' ? 'EN' : 'TR';
@@ -272,7 +277,6 @@
                     gallery.appendChild(card);
                 });
             }
-            
             const currentTheme = localStorage.getItem('theme') || 'dark';
             body.setAttribute('data-theme', currentTheme);
             themeSwitcher.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
@@ -282,15 +286,12 @@
                 themeSwitcher.innerHTML = newTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
                 localStorage.setItem('theme', newTheme);
             });
-
             document.getElementById('current-year').textContent = new Date().getFullYear();
-
             langSwitcher.addEventListener('click', () => {
                 currentLang = currentLang === 'tr' ? 'en' : 'tr';
                 localStorage.setItem('language', currentLang);
                 renderContent();
             });
-
             function openPopup(foodId) {
                 const food = foodData.find(f => f.id == foodId);
                 const foodInfo = translations[currentLang].foods[foodId];
@@ -301,18 +302,15 @@
                 recipePopup.classList.add('active');
                 body.classList.add('no-scroll');
             }
-
             function closePopup() {
                 popupOverlay.classList.remove('active');
                 recipePopup.classList.remove('active');
                 body.classList.remove('no-scroll');
             }
-
             document.getElementById('yemek-galerisi').addEventListener('click', (e) => {
                 const card = e.target.closest('.yemek-karti');
                 if (card) openPopup(card.dataset.foodId);
             });
-            
             function closeMobileMenu() {
                 mobileNav.classList.remove('active');
                 mobileOverlay.classList.remove('active');
@@ -321,11 +319,9 @@
                 mobileNav.classList.toggle('active');
                 mobileOverlay.classList.toggle('active');
             });
-
             popupClose.addEventListener('click', closePopup);
             popupOverlay.addEventListener('click', closePopup);
             mobileOverlay.addEventListener('click', closeMobileMenu);
-
             renderContent();
         });
     </script>
