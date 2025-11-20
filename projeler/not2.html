@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Notlarım | Pro</title>
+    
+    <!-- SEO & Meta -->
+    <meta name="description" content="Kişisel şifreli bulut not defteriniz.">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg" />
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+        /* --- MODERN CSS DEĞİŞKENLERİ --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --primary-color: #6c5ce7;
+            --accent-color: #00cec9;
+            --danger-color: #ff7675;
+            --text-main: #ffffff;
+            --text-muted: #b2bec3;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- LOADING OVERLAY --- */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 12, 41, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- ANA KART (GLASSMORPHISM) --- */
+        .app-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- GİRİŞ EKRANI --- */
+        #auth-view {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .welcome-text {
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+        .btn-google {
+            background: white;
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .btn-google:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* --- UYGULAMA İÇERİĞİ --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .logo-area h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, #fff, #a5b1c2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .last-saved {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .editor-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 50vh;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            padding: 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.2);
+        }
+
+        .stats-bar {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.4);
+            padding: 4px 8px;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        /* --- BUTON GRUBU --- */
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .btn:active { transform: scale(0.96); }
+
+        .btn-primary { background: linear-gradient(45deg, #6c5ce7, #a29bfe); box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3); }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(108, 92, 231, 0.5); }
+
+        .btn-secondary { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .btn-danger { background: rgba(255, 118, 117, 0.15); color: #ff7675; }
+        .btn-danger:hover { background: rgba(255, 118, 117, 0.25); }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.2);
+            padding: 5px 15px 5px 5px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+        .user-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* --- TOAST BİLDİRİMLERİ --- */
+        #toast-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: rgba(30, 30, 30, 0.9);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            animation: fadeInToast 0.3s ease, fadeOutToast 0.3s ease 2.7s forwards;
+            backdrop-filter: blur(4px);
+            border-left: 4px solid var(--primary-color);
+        }
+        .toast.success { border-left-color: var(--accent-color); }
+        .toast.error { border-left-color: var(--danger-color); }
+
+        @keyframes fadeInToast { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { to { opacity: 0; transform: translateY(-20px); } }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .app-wrapper { padding: 20px; width: 100%; border-radius: 0; height: 100vh; display: flex; flex-direction: column; }
+            .editor-container { flex-grow: 1; margin-bottom: 10px; }
+            textarea { min-height: 100%; border-radius: 8px; }
+            header { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .user-profile { margin-left: auto; }
+            .toolbar { justify-content: space-between; }
+            .btn { flex: 1; justify-content: center; padding: 12px; }
+            .btn span { display: none; } /* Mobilde buton metinlerini gizle, sadece ikon */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Yükleniyor Ekranı -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: #fff; font-size: 0.9rem;">Güvenli bağlantı kuruluyor...</p>
+    </div>
+
+    <!-- Toast Bildirim Alanı -->
+    <div id="toast-container"></div>
+
+    <div class="app-wrapper">
+        
+        <!-- GİRİŞ YAPMAMIŞ KULLANICI EKRANI -->
+        <div id="auth-view" style="display: none;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🔒</div>
+            <h2 class="welcome-text">Notlarım'a Hoşgeldiniz</h2>
+            <p style="margin-bottom: 40px; color: var(--text-muted);">Kişisel notlarınıza erişmek için lütfen doğrulama yapın.</p>
+            
+            <button id="loginBtn" class="btn-google">
+                <i class="fab fa-google"></i> Google ile Devam Et
+            </button>
+            
+            <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.5;">
+                Sadece yetkili hesaplar erişebilir.
+            </p>
+        </div>
+
+        <!-- GİRİŞ YAPMIŞ KULLANICI EKRANI -->
+        <div id="app-view" style="display: none; flex-direction: column; height: 100%;">
+            <header>
+                <div class="logo-area">
+                    <h1>Notlarım <span style="font-size:0.5em; vertical-align: super; color: var(--accent-color);">PRO</span></h1>
+                    <div id="status" class="last-saved">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Senkronize ediliyor...
+                    </div>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="user-avatar" id="avatar-initial">K</div>
+                    <span id="user-email">kullanici@email.com</span>
+                    <button id="logoutBtn" style="background:none; border:none; color: var(--danger-color); cursor:pointer; margin-left:5px;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </header>
+
+            <main style="flex-grow: 1; display: flex; flex-direction: column;">
+                <div class="editor-container" style="flex-grow: 1;">
+                    <textarea id="note" placeholder="Bugün aklında ne var? Buraya yazmaya başla..."></textarea>
+                    <div class="stats-bar">
+                        <span id="char-count">0</span> karakter | <span id="word-count">0</span> kelime
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <button id="clearBtn" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can"></i> <span>Temizle</span>
+                    </button>
+                    <button id="shareBtn" class="btn btn-secondary">
+                        <i class="fa-solid fa-share-nodes"></i> <span>Paylaş</span>
+                    </button>
+                    <button id="copyBtn" class="btn btn-secondary">
+                        <i class="fa-solid fa-copy"></i> <span>Kopyala</span>
+                    </button>
+                    <button id="saveBtn" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i> <span>Kaydet</span>
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // --- YAPILANDIRMA ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
+            authDomain: "notlarim-ee58d.firebaseapp.com",
+            databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "notlarim-ee58d",
+            storageBucket: "notlarim-ee58d.firebasestorage.app",
+            messagingSenderId: "104701316276",
+            appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
+            measurementId: "G-L5R3W846YL"
+        };
+
+        const allowedEmails = [
+            'aschannel111@gmail.com', 
+            'kerimdemirkaynak@yaani.com', 
+            'cnbmgtr@gmail.com'
+        ];
+
+        // Firebase Başlat
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // UI Referansları
+        const dom = {
+            authView: document.getElementById('auth-view'),
+            appView: document.getElementById('app-view'),
+            loader: document.getElementById('loading-overlay'),
+            note: document.getElementById('note'),
+            status: document.getElementById('status'),
+            loginBtn: document.getElementById('loginBtn'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            userEmail: document.getElementById('user-email'),
+            avatar: document.getElementById('avatar-initial'),
+            saveBtn: document.getElementById('saveBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            shareBtn: document.getElementById('shareBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            charCount: document.getElementById('char-count'),
+            wordCount: document.getElementById('word-count')
+        };
+
+        let autoSaveTimer;
+        const noteRef = ref(db, "kerimNotData");
+
+        // --- YARDIMCI FONKSİYONLAR ---
+
+        function showToast(msg, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            let icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
+            toast.innerHTML = `<i class="fa-solid fa-${icon}"></i> ${msg}`;
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function updateStats() {
+            const text = dom.note.value;
+            dom.charCount.textContent = text.length;
+            dom.wordCount.textContent = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+        }
+
+        function setLoading(state) {
+            dom.loader.style.opacity = state ? '1' : '0';
+            dom.loader.style.pointerEvents = state ? 'all' : 'none';
+        }
+
+        // --- VERİTABANI İŞLEMLERİ ---
+
+        function loadNote() {
+            onValue(noteRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data && document.activeElement !== dom.note) {
+                    dom.note.value = data.content || "";
+                    updateStats();
+                    const date = new Date(data.timestamp);
+                    dom.status.innerHTML = `<i class="fa-regular fa-clock"></i> Son kayıt: ${date.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'})}`;
+                } else if (!data) {
+                    dom.status.textContent = "Yeni Not";
+                }
+            }, (error) => {
+                showToast("Veri yüklenemedi: " + error.message, "error");
+            });
+        }
+
+        function saveNote(isAuto = false) {
+            if (!auth.currentUser) return;
+            
+            dom.status.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Kaydediliyor...`;
+            
+            const noteData = {
+                content: dom.note.value,
+                timestamp: Date.now(),
+                author: auth.currentUser.email
+            };
+
+            set(noteRef, noteData)
+                .then(() => {
+                    const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+                    dom.status.innerHTML = `<i class="fa-solid fa-check"></i> Kaydedildi (${time})`;
+                    if (!isAuto) showToast("Not başarıyla kaydedildi", "success");
+                })
+                .catch((error) => {
+                    dom.status.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Hata`;
+                    showToast("Kaydetme hatası!", "error");
+                    console.error(error);
+                });
+        }
+
+        // --- AUTH İŞLEMLERİ ---
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && allowedEmails.includes(user.email)) {
+                // Başarılı Giriş
+                dom.authView.style.display = 'none';
+                dom.appView.style.display = 'flex';
+                dom.userEmail.textContent = user.email.split('@')[0]; // Sadece kullanıcı adı
+                dom.avatar.textContent = user.email.charAt(0).toUpperCase();
+                loadNote();
+                showToast(`Hoşgeldin, ${user.displayName || 'Kullanıcı'}`, 'success');
+            } else {
+                // Giriş Yok veya Yetkisiz
+                dom.authView.style.display = 'block';
+                dom.appView.style.display = 'none';
+                if (user) {
+                    showToast("Erişim izniniz yok!", "error");
+                    signOut(auth);
+                }
+            }
+            setTimeout(() => setLoading(false), 800);
+        });
+
+        // --- OLAY DİNLEYİCİLERİ ---
+
+        dom.loginBtn.addEventListener('click', () => {
+            setLoading(true);
+            signInWithPopup(auth, provider).catch(err => {
+                setLoading(false);
+                showToast("Giriş yapılamadı", "error");
+            });
+        });
+
+        dom.logoutBtn.addEventListener('click', () => {
+            if(confirm("Çıkış yapmak istiyor musunuz?")) signOut(auth);
+        });
+
+        // Otomatik Kayıt Mantığı (Debounce)
+        dom.note.addEventListener('input', () => {
+            updateStats();
+            dom.status.innerHTML = "Yazılıyor...";
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => saveNote(true), 1500); // Yazma durduktan 1.5sn sonra kaydet
+        });
+
+        dom.saveBtn.addEventListener('click', () => saveNote(false));
+
+        dom.copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(dom.note.value)
+                .then(() => showToast("Panoya kopyalandı", "success"))
+                .catch(() => showToast("Kopyalama başarısız", "error"));
+        });
+
+        dom.clearBtn.addEventListener('click', () => {
+            if (confirm("Tüm not silinecek. Emin misiniz?")) {
+                dom.note.value = "";
+                saveNote(false);
+                updateStats();
+            }
+        });
+
+        dom.shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Notlarım',
+                        text: dom.note.value,
+                        url: window.location.href
+                    });
+                } catch (err) { console.log('Paylaşım iptal'); }
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Tarayıcınız paylaşımı desteklemiyor, link kopyalandı.", "info");
+            }
+        });
+
+    </script>
+</body>
+</html>
