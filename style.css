@@ -1,0 +1,310 @@
+/* --- style.css --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    /* Varsayılan: KOYU MOD (Dark Mode) */
+    --bg-color: #0f0f11;
+    --surface-color: #1a1a1d;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
+    --accent-color: #ff923c;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --pill-bg: #252529;
+    --input-bg: #151518;
+}
+
+/* AÇIK MOD (Light Mode) Sınıfı */
+body.light-mode {
+    --bg-color: #f4f4f5;
+    --surface-color: #ffffff;
+    --text-primary: #18181b;
+    --text-secondary: #52525b;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --pill-bg: #e4e4e7;
+    --input-bg: #f9f9f9;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* HEADER & NAV */
+header {
+    background-color: var(--bg-color); /* Yarı saydamlık yerine solid renk daha stabil durur */
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    height: 40px;
+    filter: invert(1); /* Koyu modda beyaz yapar */
+    transition: 0.3s;
+}
+
+body.light-mode .logo img {
+    filter: invert(0); /* Açık modda siyah yapar */
+}
+
+nav ul { display: flex; gap: 25px; align-items: center; }
+
+nav a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    position: relative;
+}
+
+nav a:hover, nav a.active { color: var(--text-primary); }
+
+/* Aktif linkin altındaki çizgi */
+nav a.active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: var(--accent-gradient);
+}
+
+/* --- HAP (PILL) AYARLARI --- */
+.settings-pill {
+    display: flex;
+    align-items: center;
+    background: var(--pill-bg);
+    border-radius: 50px;
+    padding: 5px;
+    margin-left: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.pill-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pill-btn:hover { color: var(--text-primary); }
+
+.divider {
+    width: 1px;
+    height: 15px;
+    background-color: var(--border-color);
+    margin: 0 2px;
+}
+
+/* MAIN CONTENT */
+main {
+    flex: 1;
+    padding: 50px 20px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Text gradient */
+    display: inline-block;
+}
+
+/* HOME PAGE */
+.bio-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid var(--surface-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.social-icons a {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--surface-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* İkon ile yazı arası boşluk */
+}
+
+.btn-primary {
+    background: var(--accent-gradient);
+    color: #000;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+.btn-outline:hover { background: var(--surface-color); }
+
+/* ABOUT PAGE */
+.about-card {
+    background: var(--surface-color);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+.about-card h2 { color: var(--accent-color); margin-top: 20px; }
+
+/* CONTACT FORM */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    z-index: 10;
+}
+
+/* Textarea için ikon ayarı */
+.input-group i.textarea-icon {
+    top: 20px;
+    transform: none;
+}
+
+.form-input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px 15px 15px 45px; /* İkon için soldan boşluk */
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.form-input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    background: var(--surface-color);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-gradient);
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* FOOTER */
+footer {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* MOBİL MENÜ */
+.menu-toggle { display: none; font-size: 24px; cursor: pointer; }
+
+@media (max-width: 768px) {
+    .menu-toggle { display: block; }
+    
+    nav {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        background: var(--bg-color);
+        width: 100%;
+        height: calc(100vh - 70px);
+        padding: 40px;
+        transition: 0.3s;
+        border-left: 1px solid var(--border-color);
+    }
+    
+    nav.active { right: 0; }
+    
+    nav ul { flex-direction: column; font-size: 20px; }
+    
+    /* Mobilde hap menüyü nav içine değil, header'da tutmak istersen burayı ayarla. 
+       Şu an header'da logo yanına sığmayabilir, nav içine de alabiliriz. 
+       Ama header'da kalması istendiği için dokunmuyoruz. */
+       
+    .settings-pill { margin-left: auto; margin-right: 15px; } 
+}
