@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kerim Demirkaynak | Hakkında</title>
+    <title>Kerim Demirkaynak | İletişim</title>
     
     <meta name="description" content="Tasarımcı ve Anime Sever">
     
@@ -20,24 +20,24 @@
             /* KOYU MOD */
             --bg-color: #0f0f11;
             --surface-color: #1a1a1d;
+            --input-bg: #222226;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
             --accent-color: #ff923c;
             --border-color: rgba(255, 255, 255, 0.1);
             --pill-bg: #252529;
-            --card-hover-bg: #222226;
         }
 
         /* AÇIK MOD */
         body.light-mode {
             --bg-color: #f4f4f5;
             --surface-color: #ffffff;
+            --input-bg: #f0f0f2;
             --text-primary: #18181b;
             --text-secondary: #52525b;
             --border-color: rgba(0, 0, 0, 0.1);
             --pill-bg: #e4e4e7;
-            --card-hover-bg: #f9f9f9;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -128,70 +128,101 @@
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
 
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
-            text-align: center;
         }
 
-        .intro-text {
+        .subtitle {
             text-align: center;
             color: var(--text-secondary);
             font-size: 1.1rem;
-            max-width: 700px;
-            margin-bottom: 50px;
-            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 500px;
         }
 
-        /* KART YAPISI (Izgara) */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+        /* FORM STYLES */
+        .contact-form-wrapper {
             width: 100%;
-        }
-
-        .info-card {
+            max-width: 500px;
             background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
             padding: 30px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-            background-color: var(--card-hover-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .card-icon {
-            font-size: 2rem;
-            color: var(--accent-color);
+        .input-group {
+            position: relative;
             margin-bottom: 20px;
-            display: inline-block;
         }
 
-        .info-card h2 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .info-card p {
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
+            transition: color 0.3s;
         }
+
+        .input-group textarea + .input-icon {
+            top: 20px; /* Textarea için ikonu yukarı sabitle */
+            transform: none;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 15px 15px 45px; /* İkon için soldan boşluk */
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 146, 60, 0.1);
+        }
+
+        .form-control:focus + .input-icon {
+            color: var(--accent-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 146, 60, 0.4);
+        }
+        .submit-btn:active { transform: scale(0.98); }
 
         /* FOOTER */
         footer {
@@ -204,7 +235,7 @@
         }
         .footer-links { margin-bottom: 20px; display: none; justify-content: center; gap: 25px; }
         .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
-        .footer-copy { color: var(--text-secondary); font-size: 13px; max-width: 100%; width: 100%; margin: 0; }
+        .footer-copy { color: var(--text-secondary); font-size: 13px; margin: 0; width: 100%; }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -220,9 +251,8 @@
             nav a { font-size: 22px; }
             
             .footer-links { display: flex; }
-            
-            .intro-text { font-size: 1rem; }
             h1 { font-size: 2rem; }
+            .contact-form-wrapper { padding: 20px; }
         }
     </style>
 </head>
@@ -236,8 +266,8 @@
         <nav id="navbar">
             <ul>
                 <li><a href="index.html" data-lang="home">Ana Sayfa</a></li>
-                <li><a href="hakkinda.html" class="active" data-lang="about">Hakkında</a></li>
-                <li><a href="iletisim.html" data-lang="contact">İletişim</a></li>
+                <li><a href="hakkinda.html" data-lang="about">Hakkında</a></li>
+                <li><a href="iletisim.html" class="active" data-lang="contact">İletişim</a></li>
             </ul>
         </nav>
 
@@ -254,38 +284,28 @@
     </header>
 
     <main>
-        <h1 class="animate-item" data-lang="about_title">Hakkımda</h1>
-        
-        <p class="intro-text animate-item delay-1" data-lang="about_intro">
-            Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.
-        </p>
+        <h1 class="animate-item" data-lang="contact_title">İletişim</h1>
+        <p class="subtitle animate-item delay-1" data-lang="contact_desc">Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.</p>
 
-        <div class="grid-container">
-            <div class="info-card animate-item delay-2">
-                <i class="fas fa-film card-icon"></i>
-                <h2 data-lang="media_title">Medya & Çeviri</h2>
-                <p data-lang="media_desc">
-                    Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. 
-                    İçerik üreticileri için sosyal medya görselleri ve düzenlenebilir şablonlar tasarladım.
-                </p>
-            </div>
+        <div class="contact-form-wrapper animate-item delay-2">
+            <form onsubmit="sendEmail(event)">
+                <div class="input-group">
+                    <input type="text" id="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
 
-            <div class="info-card animate-item delay-3">
-                <i class="fab fa-youtube card-icon"></i>
-                <h2 data-lang="content_title">İçerik Üretimi</h2>
-                <p data-lang="content_desc">
-                    YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.
-                </p>
-            </div>
+                <div class="input-group">
+                    <input type="email" id="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
 
-            <div class="info-card animate-item delay-4">
-                <i class="fas fa-code card-icon"></i>
-                <h2 data-lang="dev_title">Geliştirme</h2>
-                <p data-lang="dev_desc">
-                    2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. 
-                    Ayrıca açık kaynak web tasarımları yapıyorum.
-                </p>
-            </div>
+                <div class="input-group">
+                    <textarea id="message" class="form-control" rows="5" placeholder="Mesajınız..." required></textarea>
+                    <i class="fas fa-comment input-icon"></i>
+                </div>
+
+                <button type="submit" class="submit-btn" data-lang="send_btn">Gönder</button>
+            </form>
         </div>
     </main>
 
@@ -308,17 +328,13 @@
                     contact: "İletişim",
                     rights: "Tüm Hakları Saklıdır.",
                     
-                    about_title: "Hakkımda",
-                    about_intro: "Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.",
+                    contact_title: "İletişim",
+                    contact_desc: "Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.",
                     
-                    media_title: "Medya & Çeviri",
-                    media_desc: "Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. İçerik üreticileri için sosyal medya görselleri ve şablonlar tasarladım.",
-                    
-                    content_title: "İçerik Üretimi",
-                    content_desc: "YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.",
-                    
-                    dev_title: "Geliştirme",
-                    dev_desc: "2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. Ayrıca açık kaynak web tasarımları yapıyorum."
+                    name_ph: "Adınız Soyadınız",
+                    email_ph: "E-posta Adresiniz",
+                    msg_ph: "Mesajınız...",
+                    send_btn: "Gönder"
                 },
                 en: {
                     home: "Home",
@@ -326,17 +342,13 @@
                     contact: "Contact",
                     rights: "All Rights Reserved.",
                     
-                    about_title: "About Me",
-                    about_intro: "I am a content creator based in Düzce. I create content about anime and manga, and I am also interested in technology and software projects.",
+                    contact_title: "Contact",
+                    contact_desc: "Feel free to reach out for projects, questions, or just to say hello.",
                     
-                    media_title: "Media & Translation",
-                    media_desc: "I have prepared Turkish subtitles for many Asian and Western animated series. I designed social media visuals and templates for content creators.",
-                    
-                    content_title: "Content Creation",
-                    content_desc: "I create videos for YouTube and prepare animated credits and video projects using professional software like After Effects.",
-                    
-                    dev_title: "Development",
-                    dev_desc: "Since 2022, I have been developing a visual novel project called 'Turkish Ice-Cream'. I also create open source web designs."
+                    name_ph: "Your Name",
+                    email_ph: "Your Email Address",
+                    msg_ph: "Your Message...",
+                    send_btn: "Send Message"
                 }
             };
 
@@ -411,14 +423,45 @@
 
             function applyLang(lang) {
                 if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+                
+                // Textleri güncelle
                 document.querySelectorAll('[data-lang]').forEach(el => {
                     const key = el.getAttribute('data-lang');
                     if (translations[lang] && translations[lang][key]) {
                         el.textContent = translations[lang][key];
                     }
                 });
+
+                // Input Placeholderlarını güncelle
+                if (translations[lang]) {
+                    const nameInput = document.getElementById('name');
+                    const emailInput = document.getElementById('email');
+                    const msgInput = document.getElementById('message');
+
+                    if(nameInput) nameInput.placeholder = translations[lang].name_ph;
+                    if(emailInput) emailInput.placeholder = translations[lang].email_ph;
+                    if(msgInput) msgInput.placeholder = translations[lang].msg_ph;
+                }
             }
         });
+
+        // Mail Gönderme Fonksiyonu
+        function sendEmail(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Mailto linki oluştur
+            window.location.href = `mailto:aschannel111@gmail.com?subject=İletişim Formu: ${name}&body=Mesaj: ${message}%0D%0AE-posta: ${email}`;
+
+            // Formu temizle (Opsiyonel)
+            setTimeout(() => {
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            }, 1000);
+        }
     </script>
 </body>
 </html>
