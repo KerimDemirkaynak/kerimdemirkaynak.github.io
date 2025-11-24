@@ -15,11 +15,13 @@
     <meta name="google-site-verification" content="0TjmUuV639weMDTURj4svFO7cFKj9T2fQ7NoBvc6QPo" />
     <title>Kerim Demirkaynak | Biyografi</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/resimler/favicon.png">
+    <link rel="icon" type="image/png" href="resimler/favicon.png">
 
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -154,7 +156,6 @@
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            /* BOŞLUK DÜZELTİLDİ: Üstten sadece 20px (Önceki 60px idi) */
             padding: 20px 20px 60px 20px; 
             display: flex;
             flex-direction: column;
@@ -180,7 +181,7 @@
         .img-wrapper {
             margin-bottom: 25px;
             display: inline-block;
-            margin-top: 10px; /* Üstten hafif pay */
+            margin-top: 10px;
         }
 
         .bio-img {
@@ -308,7 +309,7 @@
             .menu-toggle { display: block; }
             
             nav {
-                display: none; /* Varsayılan gizli */
+                display: none;
                 position: fixed;
                 top: 80px;
                 right: 0;
@@ -322,7 +323,6 @@
                 opacity: 0;
             }
 
-            /* --- MENÜ AÇILIŞ ANİMASYONU --- */
             @keyframes slideInMenu {
                 from { opacity: 0; transform: translateY(-20px); }
                 to { opacity: 1; transform: translateY(0); }
@@ -357,7 +357,7 @@
 
     <header>
         <div class="logo">
-            <a href="#"><img src="resimler/logo.webp" alt="Logo"></a>
+            <a href="#><img src="resimler/logo.webp" alt="Logo"></a>
         </div>
 
         <nav id="navbar">
@@ -402,7 +402,7 @@
             <a href="https://kerimdemirkaynak.github.io/projeler" class="btn btn-primary">
                 <i class="fas fa-code"></i> <span data-lang="projects">Projelerim</span>
             </a>
-            <a href="https://kerimdemirkaynak.github.io/blog" class="btn btn-outline">
+            <a href="https://kerimdemirkaynak.github.io/blog" class="btn btn-outline" id="blogLink">
                 <i class="fas fa-pen-nib"></i> <span data-lang="blog">Blogum</span>
             </a>
         </div>
@@ -518,6 +518,16 @@
                         el.textContent = translations[lang][key];
                     }
                 });
+
+                // --- BLOG LİNKİ DEĞİŞİKLİĞİ ---
+                const blogLink = document.getElementById('blogLink');
+                if (blogLink) {
+                    if (lang === 'en') {
+                        blogLink.href = "https://kerimdemirkaynak-github-io.translate.goog/blog/?_x_tr_sl=tr&_x_tr_tl=en&_x_tr_hl=tr&_x_tr_pto=wapp";
+                    } else {
+                        blogLink.href = "https://kerimdemirkaynak.github.io/blog";
+                    }
+                }
             }
         });
     </script>
