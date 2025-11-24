@@ -19,202 +19,411 @@
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    
     <style>
+        :root {
+            /* KOYU MOD */
+            --bg-color: #0f0f11;
+            --surface-color: #1a1a1d;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
+            --accent-color: #ff923c;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --pill-bg: #252529;
+            --card-hover-bg: #222226;
+        }
+
+        /* AÇIK MOD */
+        body.light-mode {
+            --bg-color: #f4f4f5;
+            --surface-color: #ffffff;
+            --text-primary: #18181b;
+            --text-secondary: #52525b;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --pill-bg: #e4e4e7;
+            --card-hover-bg: #f9f9f9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* HEADER */
         header {
-            background-color: #1f1f1f;
-            padding: 10px 20px;
+            background-color: var(--bg-color);
+            padding: 0 5%;
+            height: 80px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .logo {
+
+        .logo img { height: 40px; filter: invert(1); transition: 0.3s; }
+        body.light-mode .logo img { filter: invert(0); }
+
+        nav ul { display: flex; gap: 30px; align-items: center; }
+        nav a { color: var(--text-secondary); font-weight: 500; font-size: 16px; position: relative; }
+        nav a:hover, nav a.active { color: var(--text-primary); }
+        nav a.active::after {
+            content: ''; position: absolute; width: 100%; height: 2px;
+            bottom: -5px; left: 0; background: var(--accent-gradient);
+        }
+
+        .header-right { display: flex; align-items: center; gap: 20px; }
+
+        .settings-pill {
             display: flex;
             align-items: center;
+            background: var(--pill-bg);
+            border-radius: 50px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
         }
-        .logo img {
-            width: 100px;
-            height: auto;
-            filter: brightness(0) invert(1); /* Beyaz logo efekti */
+        .pill-btn {
+            background: none; border: none; cursor: pointer; padding: 6px 14px;
+            color: var(--text-secondary); font-size: 14px; font-weight: 600;
+            border-radius: 20px; transition: 0.3s; display: flex; align-items: center;
         }
-        nav {
+        .pill-btn:hover { color: var(--text-primary); }
+        .divider { width: 1px; height: 16px; background-color: var(--border-color); margin: 0 2px; }
+
+        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--text-primary); width: 40px; height: 40px; text-align: center; line-height: 40px; }
+        .menu-toggle i { transition: transform 0.4s ease; }
+        .menu-toggle.active i { transform: rotate(90deg); }
+
+        /* MAIN CONTENT */
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
+
+        /* ANİMASYONLAR */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .nav-links li {
-            margin: 0 15px;
+        .animate-item {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .menu-icon {
-            display: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #ffffff;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background-color: #1f1f1f;
-                padding: 10px;
-                border-radius: 5px;
-                width: 100%;
-                max-width: 300px;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-icon {
-                display: block;
-            }
-        }
-        @media (max-width: 768px) {
-            .logo img {
-                width: 80px;
-            }
-        }
-        .content {
-            padding: 20px 20px; /* Üst padding'i 20px'e düşürdük */
-            text-align: center;
-            max-width: 800px; /* İçerik genişliğini ayarlayın */
-            margin: auto; /* Merkeze hizalayın */
-        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
         h1 {
-            color: #ffffff;
-            margin: 10px 0; /* Başlık margin'ini ayarlayın */
-        }
-        h2 {
-            margin: 5px 0; /* Alt başlık margin'ini ayarlayın */
-        }
-        p {
-            margin: 5px 0; /* Paragraf margin'ini ayarlayın */
-        }
-        .bio-img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            text-align: center;
         }
-        .social-icons {
-            margin: 20px 0;
+
+        .intro-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-bottom: 50px;
+            line-height: 1.8;
         }
-        .social-icons a {
-            color: #ffffff;
-            margin: 0 10px;
-            font-size: 24px;
+
+        /* KART YAPISI (Izgara) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
         }
+
+        .info-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background-color: var(--card-hover-bg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .info-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
         footer {
-            background-color: #1f1f1f;
-            padding: 20px;
+            background-color: var(--surface-color);
+            padding: 40px 20px;
             text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            width: 100%;
         }
-        footer p {
-            font-size: 14px;
-        }
-        .footer-links {
-            margin-top: 20px;
-        }
-        .footer-links a {
-            color: #ffffff;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-        .language-switch {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .language-switch a {
-            color: #ffffff;
-            margin: 0 10px;
-            text-decoration: none;
+        .footer-links { margin-bottom: 20px; display: none; justify-content: center; gap: 25px; }
+        .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
+        .footer-copy { color: var(--text-secondary); font-size: 13px; max-width: 100%; width: 100%; margin: 0; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav {
+                display: none; position: fixed; top: 80px; right: 0; width: 100%; height: calc(100vh - 80px);
+                background-color: var(--bg-color); flex-direction: column; padding-top: 40px;
+                border-top: 1px solid var(--border-color); z-index: 999; opacity: 0;
+            }
+            @keyframes slideInMenu { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+            nav.active { display: flex; animation: slideInMenu 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+            nav ul { flex-direction: column; gap: 30px; }
+            nav a { font-size: 22px; }
+            
+            .footer-links { display: flex; }
+            
+            .intro-text { font-size: 1rem; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Üst Menü ve Logo -->
     <header>
-    <a href="/">
         <div class="logo">
-            <img src="resimler/logo.webp" alt="Site Logo">
+            <a href="index.html"><img src="resimler/logo.webp" alt="Logo"></a>
         </div>
-     </a>
-        <nav>
-            <div class="menu-icon" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Ana Sayfa</a></li>
-                <li><a href="#">Hakkında</a></li>
-                <li><a href="iletisim">İletişim</a></li>
+
+        <nav id="navbar">
+            <ul>
+                <li><a href="index.html" data-lang="home">Ana Sayfa</a></li>
+                <li><a href="hakkinda.html" class="active" data-lang="about">Hakkında</a></li>
+                <li><a href="iletisim.html" data-lang="contact">İletişim</a></li>
             </ul>
         </nav>
+
+        <div class="header-right">
+            <div class="settings-pill">
+                <button id="lang-btn" class="pill-btn">TR</button>
+                <div class="divider"></div>
+                <button id="theme-btn" class="pill-btn"><i class="fas fa-moon"></i></button>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </header>
 
-    <div class="content">
-    <h1>Hakkında</h1>
-    <p>Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum. Ayrıca Türkçe Vikipedi’de devriye olarak gönüllü katkılarda bulunuyorum.</p>
+    <main>
+        <h1 class="animate-item" data-lang="about_title">Hakkımda</h1>
+        
+        <p class="intro-text animate-item delay-1" data-lang="about_intro">
+            Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.
+        </p>
 
-    <h2>Medya</h2>
-    <p>Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. 
-    Bunun yanı sıra içerik üreticileri için sosyal medya görselleri ve düzenlenebilir şablonlar tasarladım.</p>
+        <div class="grid-container">
+            <div class="info-card animate-item delay-2">
+                <i class="fas fa-film card-icon"></i>
+                <h2 data-lang="media_title">Medya & Çeviri</h2>
+                <p data-lang="media_desc">
+                    Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. 
+                    İçerik üreticileri için sosyal medya görselleri ve düzenlenebilir şablonlar tasarladım.
+                </p>
+            </div>
 
-    <p>YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.</p>
+            <div class="info-card animate-item delay-3">
+                <i class="fab fa-youtube card-icon"></i>
+                <h2 data-lang="content_title">İçerik Üretimi</h2>
+                <p data-lang="content_desc">
+                    YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.
+                </p>
+            </div>
 
-    <p>2022 yılından beri <strong>Turkish Ice-Cream</strong> adını verdiğim görsel roman (visual novel) projesini Ren'Py oyun motoru ile geliştiriyorum.</p>
+            <div class="info-card animate-item delay-4">
+                <i class="fas fa-code card-icon"></i>
+                <h2 data-lang="dev_title">Geliştirme</h2>
+                <p data-lang="dev_desc">
+                    2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. 
+                    Ayrıca açık kaynak web tasarımları yapıyorum.
+                </p>
+            </div>
+        </div>
+    </main>
 
-    <p>2017’den bu yana animasyon ve teknoloji üzerine blog yazıları yazıyor, ayrıca web siteleri tasarlayarak açık kaynak olarak paylaşıyorum.</p>
-</div>
-
-    <!-- Footer -->
     <footer>
-            <span class="footer-links">
-            <a href="/">Ana Sayfa</a> | 
-            <a href="#">Hakkında</a> | 
-            <a href="iletisim">İletişim</a>
-           </span>
-<p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. Tüm Hakları Saklıdır.</p>
-
-<script>
-  // Geçerli yılı al
-  const currentYear = new Date().getFullYear();
-  // Yılı span içine yerleştir
-  document.getElementById('currentYear').textContent = currentYear;
-</script>
+        <div class="footer-links">
+            <a href="index.html" data-lang="home">Ana Sayfa</a>
+            <a href="hakkinda.html" data-lang="about">Hakkında</a>
+            <a href="iletisim.html" data-lang="contact">İletişim</a>
+        </div>
+        <p class="footer-copy">© <span id="year"></span> Kerim Demirkaynak. <span data-lang="rights">Tüm Hakları Saklıdır.</span></p>
     </footer>
 
     <script>
-        function toggleMenu() {
-            var navLinks = document.getElementById("navLinks");
-            navLinks.classList.toggle("active");
-        }
-    </script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Çeviri Verileri
+            const translations = {
+                tr: {
+                    home: "Ana Sayfa",
+                    about: "Hakkında",
+                    contact: "İletişim",
+                    rights: "Tüm Hakları Saklıdır.",
+                    
+                    about_title: "Hakkımda",
+                    about_intro: "Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.",
+                    
+                    media_title: "Medya & Çeviri",
+                    media_desc: "Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. İçerik üreticileri için sosyal medya görselleri ve şablonlar tasarladım.",
+                    
+                    content_title: "İçerik Üretimi",
+                    content_desc: "YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.",
+                    
+                    dev_title: "Geliştirme",
+                    dev_desc: "2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. Ayrıca açık kaynak web tasarımları yapıyorum."
+                },
+                en: {
+                    home: "Home",
+                    about: "About",
+                    contact: "Contact",
+                    rights: "All Rights Reserved.",
+                    
+                    about_title: "About Me",
+                    about_intro: "I am a content creator based in Düzce. I create content about anime and manga, and I am also interested in technology and software projects.",
+                    
+                    media_title: "Media & Translation",
+                    media_desc: "I have prepared Turkish subtitles for many Asian and Western animated series. I designed social media visuals and templates for content creators.",
+                    
+                    content_title: "Content Creation",
+                    content_desc: "I create videos for YouTube and prepare animated credits and video projects using professional software like After Effects.",
+                    
+                    dev_title: "Development",
+                    dev_desc: "Since 2022, I have been developing a visual novel project called 'Turkish Ice-Cream'. I also create open source web designs."
+                }
+            };
 
+            // Yıl
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+            // Mobil Menü
+            const menuToggle = document.getElementById('menuToggle');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navbar) {
+                menuToggle.addEventListener('click', () => {
+                    navbar.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    
+                    const icon = menuToggle.querySelector('i');
+                    if (navbar.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+
+            // Tema ve Dil
+            const themeBtn = document.getElementById('theme-btn');
+            const langBtn = document.getElementById('lang-btn');
+            const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedLang = localStorage.getItem('lang') || 'tr';
+
+            applyTheme(savedTheme);
+            applyLang(savedLang);
+
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const isLight = document.body.classList.contains('light-mode');
+                    const newTheme = isLight ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
+
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    const currentLangText = langBtn.textContent;
+                    const newLang = currentLangText === 'TR' ? 'en' : 'tr';
+                    applyLang(newLang);
+                    localStorage.setItem('lang', newLang);
+                });
+            }
+
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    if(themeIcon) {
+                        themeIcon.className = 'fas fa-sun';
+                        themeIcon.style.color = '#ff923c';
+                    }
+                } else {
+                    document.body.classList.remove('light-mode');
+                    if(themeIcon) {
+                        themeIcon.className = 'fas fa-moon';
+                        themeIcon.style.color = 'inherit';
+                    }
+                }
+            }
+
+            function applyLang(lang) {
+                if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
