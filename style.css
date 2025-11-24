@@ -1,244 +1,125 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-
-:root {
-    --bg-color: #0f0f11;
-    --surface-color: #1a1a1d;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
-    --accent-color: #ff923c;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --pill-bg: #252529;
-    --input-bg: #151518;
-}
-
-body.light-mode {
-    --bg-color: #f4f4f5;
-    --surface-color: #ffffff;
-    --text-primary: #18181b;
-    --text-secondary: #52525b;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --pill-bg: #e4e4e7;
-    --input-bg: #f9f9f9;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-a { text-decoration: none; color: inherit; transition: 0.3s; }
-ul { list-style: none; }
-
-/* HEADER */
-header {
-    background-color: var(--bg-color);
-    padding: 15px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo img {
-    height: 40px;
-    filter: invert(1);
-    transition: 0.3s;
-}
-
-body.light-mode .logo img { filter: invert(0); }
-
-nav ul { display: flex; gap: 25px; align-items: center; }
-
-nav a {
-    color: var(--text-secondary);
-    font-weight: 500;
-    position: relative;
-}
-
-nav a:hover, nav a.active { color: var(--text-primary); }
-
-nav a.active::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background: var(--accent-gradient);
-}
-
-/* HAP (PILL) BUTONLAR */
-.settings-pill {
-    display: flex;
-    align-items: center;
-    background: var(--pill-bg);
-    border-radius: 50px;
-    padding: 5px;
-    margin-left: auto; /* Sağa yaslar */
-    margin-right: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.pill-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px 12px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 20px;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pill-btn:hover { color: var(--text-primary); }
-
-.divider {
-    width: 1px;
-    height: 15px;
-    background-color: var(--border-color);
-    margin: 0 2px;
-}
-
-/* MAIN CONTENT */
-main {
-    flex: 1;
-    padding: 50px 20px;
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-}
-
-.subtitle { color: var(--text-secondary); margin-bottom: 20px; }
-
-.bio-img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-    border: 3px solid var(--surface-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* SOSYAL MEDYA İKONLARI */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 30px 0;
-    flex-wrap: wrap;
-}
-
-.social-icons a {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--surface-color);
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.social-icons a:hover {
-    transform: scale(1.15);
-    border-color: currentColor; /* Border rengini ikon rengiyle aynı yapar */
-}
-
-/* Özel Renkler */
-.social-icons a.instagram:hover { color: #E1306C; }
-.social-icons a.x-twitter:hover { color: #1DA1F2; }
-.social-icons a.youtube:hover { color: #FF0000; }
-.social-icons a.facebook:hover { color: #1877F2; }
-.social-icons a.mastodon:hover { color: #6364FF; }
-.social-icons a.bluesky:hover { color: #257DD6; }
-.social-icons a.github:hover { color: #3d3c3c; }
-
-/* BUTONLAR */
-.cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.3s;
-}
-
-.btn-primary { background: var(--accent-gradient); color: #000; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,146,60,0.3); }
-
-.btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
-.btn-outline:hover { background: var(--surface-color); border-color: var(--text-primary); }
-
-/* FOOTER */
-footer {
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-/* MOBİL MENÜ */
-.menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--text-primary); }
-
-@media (max-width: 768px) {
-    .menu-toggle { display: block; }
+document.addEventListener('DOMContentLoaded', () => {
     
-    nav {
-        position: fixed;
-        top: 70px;
-        right: -100%;
-        background: var(--bg-color);
-        width: 100%;
-        height: calc(100vh - 70px);
-        padding: 40px;
-        transition: 0.3s ease-in-out;
-        border-left: 1px solid var(--border-color);
-        z-index: 999;
+    // 1. FOOTER YIL AYARI
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
     }
-    
-    nav.active { right: 0; }
-    
-    nav ul { flex-direction: column; font-size: 20px; gap: 30px; }
-    
-    .settings-pill { margin-right: 15px; } 
-}
+
+    // 2. MOBİL MENÜ AYARI
+    const menuToggle = document.getElementById('menuToggle');
+    const navbar = document.getElementById('navbar');
+
+    if (menuToggle && navbar) {
+        menuToggle.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+            // Menü açıldığında ikonu çarpı yapalım mı? İsteğe bağlı
+            const icon = menuToggle.querySelector('i');
+            if (navbar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // 3. TEMA VE DİL YÖNETİMİ
+    const themeBtn = document.getElementById('theme-btn');
+    const langBtn = document.getElementById('lang-btn');
+    const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+
+    // Kayıtlı ayarları yükle
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedLang = localStorage.getItem('lang') || 'tr';
+
+    applyTheme(savedTheme);
+    applyLang(savedLang);
+
+    // Tema Değiştirme
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const isLight = document.body.classList.contains('light-mode');
+            const newTheme = isLight ? 'dark' : 'light';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
+    // Dil Değiştirme
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            const currentLangText = langBtn.textContent;
+            const newLang = currentLangText === 'TR' ? 'en' : 'tr';
+            applyLang(newLang);
+            localStorage.setItem('lang', newLang);
+        });
+    }
+
+    // Yardımcı Fonksiyon: Tema Uygula
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-mode');
+            if(themeIcon) themeIcon.className = 'fas fa-sun';
+        } else {
+            document.body.classList.remove('light-mode');
+            if(themeIcon) themeIcon.className = 'fas fa-moon';
+        }
+    }
+
+    // Yardımcı Fonksiyon: Dil Uygula
+    function applyLang(lang) {
+        if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+        
+        // Data-lang attribute'una sahip tüm elementleri bul
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+
+        // Input Placeholderlarını Güncelle
+        if (translations[lang]) {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const msgInput = document.getElementById('message');
+
+            if(nameInput) nameInput.placeholder = translations[lang].name_placeholder;
+            if(emailInput) emailInput.placeholder = translations[lang].email_placeholder;
+            if(msgInput) msgInput.placeholder = translations[lang].msg_placeholder;
+        }
+    }
+});
+
+// Çeviri Sözlüğü
+const translations = {
+    tr: {
+        home: "Ana Sayfa",
+        about: "Hakkında",
+        contact: "İletişim",
+        bio_short: "Tasarımcı, Anime Sever ve İçerik Üreticisi",
+        projects: "Projelerim",
+        blog: "Blogum",
+        rights: "Tüm Hakları Saklıdır.",
+        name_placeholder: "Adınız Soyadınız",
+        email_placeholder: "E-posta Adresiniz",
+        msg_placeholder: "Mesajınızı buraya yazın...",
+        send_btn: "Gönder"
+    },
+    en: {
+        home: "Home",
+        about: "About",
+        contact: "Contact",
+        bio_short: "Designer, Anime Lover and Content Creator",
+        projects: "My Projects",
+        blog: "My Blog",
+        rights: "All Rights Reserved.",
+        name_placeholder: "Your Name",
+        email_placeholder: "Your Email",
+        msg_placeholder: "Type your message here...",
+        send_btn: "Send Messa
+        ge"
+    }
+};
