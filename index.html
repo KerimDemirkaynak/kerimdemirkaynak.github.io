@@ -29,7 +29,6 @@
             --accent-color: #ff923c;
             --border-color: rgba(255, 255, 255, 0.1);
             --pill-bg: #252529;
-            /* Butonlar */
             --btn-outline-text: #ffffff;
             --btn-outline-border: rgba(255, 255, 255, 0.3);
             --btn-outline-hover-bg: rgba(255, 255, 255, 0.1);
@@ -43,7 +42,6 @@
             --text-secondary: #52525b;
             --border-color: rgba(0, 0, 0, 0.1);
             --pill-bg: #e4e4e7;
-            /* Butonlar */
             --btn-outline-text: #000000;
             --btn-outline-border: rgba(0, 0, 0, 0.3);
             --btn-outline-hover-bg: rgba(0, 0, 0, 0.05);
@@ -143,16 +141,9 @@
             height: 40px;
             text-align: center;
             line-height: 40px;
-            transition: transform 0.2s; /* Basma efekti */
         }
-        .menu-toggle:active { transform: scale(0.9); }
-        
-        .menu-toggle i {
-            transition: transform 0.4s ease; /* Dönme animasyonu */
-        }
-        .menu-toggle.active i {
-            transform: rotate(90deg); /* Açılınca döner */
-        }
+        .menu-toggle i { transition: transform 0.4s ease; }
+        .menu-toggle.active i { transform: rotate(90deg); }
 
         /* MAIN */
         main {
@@ -160,14 +151,15 @@
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            padding: 60px 20px;
+            /* BOŞLUK DÜZELTİLDİ: Üstten sadece 20px (Önceki 60px idi) */
+            padding: 20px 20px 60px 20px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
 
-        /* GİRİŞ ANİMASYONLARI */
+        /* ANİMASYONLAR */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -181,10 +173,11 @@
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
 
-        /* Profil Resmi Wrapper (Animasyon çakışmasını önler) */
+        /* Profil Resmi */
         .img-wrapper {
             margin-bottom: 25px;
             display: inline-block;
+            margin-top: 10px; /* Üstten hafif pay */
         }
 
         .bio-img {
@@ -194,7 +187,6 @@
             object-fit: cover;
             border: 4px solid var(--surface-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            /* Hover ve Active efektleri doğrudan resimde */
             transition: transform 0.3s ease, border-color 0.3s;
             cursor: pointer;
         }
@@ -202,9 +194,7 @@
             transform: scale(1.05);
             border-color: var(--accent-color);
         }
-        .bio-img:active {
-            transform: scale(0.95); /* Tıklama hissi */
-        }
+        .bio-img:active { transform: scale(0.95); }
 
         h1 {
             font-size: 3rem;
@@ -284,7 +274,7 @@
             color: #000;
             border: none;
         }
-        .btn-primary:active { transform: scale(0.95); } /* Tıklama efekti */
+        .btn-primary:active { transform: scale(0.95); }
         
         .btn-outline {
             background: transparent;
@@ -303,19 +293,19 @@
         }
         .footer-links {
             margin-bottom: 20px;
-            display: none; /* PC'de Gizli */
+            display: none;
             justify-content: center;
             gap: 25px;
         }
         .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
         .footer-copy { color: var(--text-secondary); font-size: 13px; }
 
-        /* MOBİL RESPONSIVE */
+        /* MOBİL RESPONSIVE & ANİMASYON */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             
             nav {
-                display: none;
+                display: none; /* Varsayılan gizli */
                 position: fixed;
                 top: 80px;
                 right: 0;
@@ -326,27 +316,36 @@
                 padding-top: 40px;
                 border-top: 1px solid var(--border-color);
                 z-index: 999;
+                opacity: 0;
             }
-            nav.active { display: flex; animation: fadeIn 0.3s ease; }
+
+            /* --- MENÜ AÇILIŞ ANİMASYONU --- */
+            @keyframes slideInMenu {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            nav.active {
+                display: flex;
+                animation: slideInMenu 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
             nav ul { flex-direction: column; gap: 30px; }
             nav a { font-size: 22px; }
 
             h1 { font-size: 2rem; }
             
-            /* Mobil Buton Ayarları (Daha küçük ve kibar) */
             .cta-buttons {
-                flex-direction: row; /* Yan yana */
+                flex-direction: row;
                 width: 100%;
                 padding: 0 10px;
             }
             .btn {
-                flex: 1; /* Alanı paylaş */
-                padding: 10px 15px; /* Daha az boşluk */
+                flex: 1;
+                padding: 10px 15px;
                 font-size: 13px;
-                min-width: 0; /* Küçülmesine izin ver */
+                min-width: 0;
             }
-
-            /* Mobilde Footer Linklerini Göster */
             .footer-links { display: flex; }
         }
     </style>
@@ -450,7 +449,7 @@
             if (menuToggle && navbar) {
                 menuToggle.addEventListener('click', () => {
                     navbar.classList.toggle('active');
-                    menuToggle.classList.toggle('active'); // İkonu döndürmek için class ekle
+                    menuToggle.classList.toggle('active');
                     
                     const icon = menuToggle.querySelector('i');
                     if (navbar.classList.contains('active')) {
