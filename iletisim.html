@@ -21,377 +21,452 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand&display=swap'>
     <style>
+        :root {
+            /* KOYU MOD */
+            --bg-color: #0f0f11;
+            --surface-color: #1a1a1d;
+            --input-bg: #222226;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
+            --accent-color: #ff923c;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --pill-bg: #252529;
+        }
+
+        /* AÇIK MOD */
+        body.light-mode {
+            --bg-color: #f4f4f5;
+            --surface-color: #ffffff;
+            --input-bg: #f0f0f2;
+            --text-primary: #18181b;
+            --text-secondary: #52525b;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --pill-bg: #e4e4e7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* HEADER */
         header {
-            background-color: #1f1f1f;
-            padding: 10px 20px;
+            background-color: var(--bg-color);
+            padding: 0 5%;
+            height: 80px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            width: 100px;
-            height: auto;
-            filter: brightness(0) invert(1);
-        }
-        nav {
-            display: flex;
-            align-items: center;
-        }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-        .nav-links li {
-            margin: 0 15px;
-        }
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .menu-icon {
-            display: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #ffffff;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background-color: #1f1f1f;
-                padding: 10px;
-                border-radius: 5px;
-                width: 100%;
-                max-width: 300px;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-icon {
-                display: block;
-            }
-        }
-        @media (max-width: 768px) {
-            .logo img {
-                width: 80px;
-            }
-        }
-        .content {
-            flex-grow: 1;
-            padding: 20px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 {
-            color: #ffffff;
-            margin-bottom: 20px;
-            font-family: inherit;
-        }
-        p {
-            margin: 10px 0;
-        }
-        .bio-img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-        }
-        .social-icons {
-            margin: 20px 0;
-        }
-        .social-icons a {
-            color: #ffffff;
-            margin: 0 10px;
-            font-size: 24px;
-        }
-        footer {
-            background-color: #1f1f1f;
-            padding: 20px;
-            text-align: center;
-            margin-top: auto;
-        }
-        footer p {
-            font-size: 14px;
-        }
-        .footer-links {
-            margin-top: 20px;
-        }
-        .footer-links a {
-            color: #ffffff;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-        .language-switch {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .language-switch a {
-            color: #ffffff;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-        /* Form Styles */
-       .contact-form {
-            max-width: 380px;
-            width: 90%;
-            background-color: #1f1f1f;
-            padding: 20px;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            margin: 20px auto;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-          @media (max-width: 768px) {
-            .contact-form {
-                padding: 15px;
-             }
-          }
+        .logo img { height: 40px; filter: invert(1); transition: 0.3s; }
+        body.light-mode .logo img { filter: invert(0); }
 
-        .contact-form .form-group {
-            position: relative;
-            margin-bottom: 15px;
+        nav ul { display: flex; gap: 30px; align-items: center; }
+        nav a { color: var(--text-secondary); font-weight: 500; font-size: 16px; position: relative; }
+        nav a:hover, nav a.active { color: var(--text-primary); }
+        nav a.active::after {
+            content: ''; position: absolute; width: 100%; height: 2px;
+            bottom: -5px; left: 0; background: var(--accent-gradient);
         }
 
-        .contact-form label {
-            position: absolute;
-            top: 12px;
-            left: 35px;
-            pointer-events: none;
-            color: #aaa;
-            transition: all 0.3s ease;
-            padding: 0 5px;
-            white-space: nowrap;
-            background-color: transparent;
-            z-index: 1;
-        }
+        .header-right { display: flex; align-items: center; gap: 20px; }
 
-        .contact-form input,
-        .contact-form textarea {
+        .settings-pill {
+            display: flex;
+            align-items: center;
+            background: var(--pill-bg);
+            border-radius: 50px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+        .pill-btn {
+            background: none; border: none; cursor: pointer; padding: 6px 14px;
+            color: var(--text-secondary); font-size: 14px; font-weight: 600;
+            border-radius: 20px; transition: 0.3s; display: flex; align-items: center;
+        }
+        .pill-btn:hover { color: var(--text-primary); }
+        .divider { width: 1px; height: 16px; background-color: var(--border-color); margin: 0 2px; }
+
+        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--text-primary); width: 40px; height: 40px; text-align: center; line-height: 40px; }
+        .menu-toggle i { transition: transform 0.4s ease; }
+        .menu-toggle.active i { transform: rotate(90deg); }
+
+        /* MAIN CONTENT */
+        main {
+            flex: 1;
             width: 100%;
-            padding: 10px;
-            margin: 0;
-            border: 1px solid #888;
-            border-radius: 4px;
-            background-color: #ffffff;
-            color: #000;
-            padding-left: 40px;
-            box-sizing: border-box;
-            position: relative;
-            font-size: 16px;
-         }
-         @media (max-width: 768px) {
-          .contact-form input, .contact-form textarea {
-            font-size: 14px;
-             }
-         }
-
-
-       .contact-form .icon {
-            position: absolute;
-            top: 12px;
-            left: 10px;
-            font-size: 18px;
-            color: #888;
-             z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-       .contact-form input:focus + label,
-        .contact-form textarea:focus + label{
-          top: -10px;
-          font-size: 12px;
-          color: #ccc;
-          padding: 0 5px;
-          background-color: transparent;
-         text-shadow:
-            -1px -1px 0px black,
-            -1px 1px 0px black,
-            1px -1px 0px black,
-            1px 1px 0px black,
-             0px 1px 1px rgba(0, 0, 0, 0.5);
-           z-index: 3;
-      }
-    .contact-form input.has-value + label,
-    .contact-form textarea.has-value + label {
-      top: -10px;
-          font-size: 12px;
-          color: #ccc;
-          padding: 0 5px;
-          background-color: transparent;
-         text-shadow:
-            -1px -1px 0px black,
-            -1px 1px 0px black,
-            1px -1px 0px black,
-            1px 1px 0px black,
-             0px 1px 1px rgba(0, 0, 0, 0.5);
-       z-index: 3;
-    }
+        /* ANİMASYONLAR */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-item {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
 
-        .contact-form button {
-             padding: 10px 15px;
-           border: 0;
-            border-radius: 3rem;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        /* FORM STYLES */
+        .contact-form-wrapper {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--surface-color);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .input-group textarea + .input-icon {
+            top: 20px; /* Textarea için ikonu yukarı sabitle */
+            transform: none;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 15px 15px 45px; /* İkon için soldan boşluk */
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 146, 60, 0.1);
+        }
+
+        .form-control:focus + .input-icon {
+            color: var(--accent-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #000;
             cursor: pointer;
-            align-self: center;
-           margin-top: 20px;
-             font-size: 16px;
-             background-image: linear-gradient(131deg, #ffd340, #ff923c, #ff923c, #ff923c);
-            background-size: 300% 100%;
-              color: black;
-              transition: all 0.3s ease-in-out;
-            display: block;
-         }
-          @media (max-width: 768px) {
-            .contact-form button {
-                font-size: 14px;
-             }
-         }
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
 
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 146, 60, 0.4);
+        }
+        .submit-btn:active { transform: scale(0.98); }
 
-        .contact-form button:hover {
-             box-shadow: 0 0.5em 0.5em -0.4em #ff923cba;
-              background-size: 100% 100%;
-              transform: translateY(-0.15em);
-         }
+        /* FOOTER */
+        footer {
+            background-color: var(--surface-color);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            width: 100%;
+        }
+        .footer-links { margin-bottom: 20px; display: none; justify-content: center; gap: 25px; }
+        .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
+        .footer-copy { color: var(--text-secondary); font-size: 13px; margin: 0; width: 100%; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav {
+                display: none; position: fixed; top: 80px; right: 0; width: 100%; height: calc(100vh - 80px);
+                background-color: var(--bg-color); flex-direction: column; padding-top: 40px;
+                border-top: 1px solid var(--border-color); z-index: 999; opacity: 0;
+            }
+            @keyframes slideInMenu { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+            nav.active { display: flex; animation: slideInMenu 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+            nav ul { flex-direction: column; gap: 30px; }
+            nav a { font-size: 22px; }
+            
+            .footer-links { display: flex; }
+            h1 { font-size: 2rem; }
+            .contact-form-wrapper { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Üst Menü ve Logo -->
     <header>
-    <a href="/">
         <div class="logo">
-            <img src="resimler/logo.webp" alt="Site Logo">
+            <a href="/"><img src="resimler/logo.webp" alt="Logo"></a>
         </div>
-     </a>
-        <nav>
-            <div class="menu-icon" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Ana Sayfa</a></li>
-                <li><a href="hakkinda">Hakkında</a></li>
-                <li><a href="#">İletişim</a></li>
+
+        <nav id="navbar">
+            <ul>
+                <li><a href="/" data-lang="home">Ana Sayfa</a></li>
+                <li><a href="hakkinda" data-lang="about">Hakkında</a></li>
+                <li><a href="#" class="active" data-lang="contact">İletişim</a></li>
             </ul>
         </nav>
+
+        <div class="header-right">
+            <div class="settings-pill">
+                <button id="lang-btn" class="pill-btn">TR</button>
+                <div class="divider"></div>
+                <button id="theme-btn" class="pill-btn"><i class="fas fa-moon"></i></button>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </header>
 
-    <div class="content">
-        <h1>İletişim</h1>
-        <p>Herhangi bir soru veya öneriniz varsa lütfen iletişime geçin!</p>
+    <main>
+        <h1 class="animate-item" data-lang="contact_title">İletişim</h1>
+        <p class="subtitle animate-item delay-1" data-lang="contact_desc">Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.</p>
 
-        <!-- İletişim Formu -->
-        <form class="contact-form" onsubmit="sendEmail(event)">
-            <div class="form-group position-relative">
-                <i class="fas fa-user icon"></i>
-                <input type="text" id="name"  required>
-                <label for="name">İsim</label>
-            </div>
-            <div class="form-group position-relative">
-                 <i class="fas fa-envelope icon"></i>
-                <input type="email" id="email"  required>
-                <label for="email">E-posta</label>
-            </div>
-            <div class="form-group position-relative">
-                  <i class="fas fa-comment icon"></i>
-                <textarea id="message"  rows="5" required></textarea>
-                <label for="message">Mesaj</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Gönder</button>
-        </form>
-    </div>
-<!-- partial -->
-  <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
-<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
-<script src='https://unpkg.com/feather-icons'></script>
+        <div class="contact-form-wrapper animate-item delay-2">
+            <form onsubmit="sendEmail(event)">
+                <div class="input-group">
+                    <input type="text" id="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
 
-    <!-- Footer -->
+                <div class="input-group">
+                    <input type="email" id="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+
+                <div class="input-group">
+                    <textarea id="message" class="form-control" rows="5" placeholder="Mesajınız..." required></textarea>
+                    <i class="fas fa-comment input-icon"></i>
+                </div>
+
+                <button type="submit" class="submit-btn" data-lang="send_btn">Gönder</button>
+            </form>
+        </div>
+    </main>
+
     <footer>
-        <span class="footer-links">
-            <a href="/">Ana Sayfa</a> |
-            <a href="hakkinda">Hakkında</a> |
-            <a href="#">İletişim</a>
-        </span>
-        <p style="margin-top: 20px;">© <span id="currentYear"></span> Kerim Demirkaynak. Tüm Hakları Saklıdır.</p>
+        <div class="footer-links">
+            <a href="/" data-lang="home">Ana Sayfa</a>
+            <a href="hakkinda" data-lang="about">Hakkında</a>
+            <a href="#" data-lang="contact">İletişim</a>
+        </div>
+        <p class="footer-copy">© <span id="year"></span> Kerim Demirkaynak. <span data-lang="rights">Tüm Hakları Saklıdır.</span></p>
     </footer>
 
     <script>
-        // Geçerli yılı al
-        const currentYear = new Date().getFullYear();
-        // Yılı span içine yerleştir
-        document.getElementById('currentYear').textContent = currentYear;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Çeviri Verileri
+            const translations = {
+                tr: {
+                    home: "Ana Sayfa",
+                    about: "Hakkında",
+                    contact: "İletişim",
+                    rights: "Tüm Hakları Saklıdır.",
+                    
+                    contact_title: "İletişim",
+                    contact_desc: "Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.",
+                    
+                    name_ph: "Adınız Soyadınız",
+                    email_ph: "E-posta Adresiniz",
+                    msg_ph: "Mesajınız...",
+                    send_btn: "Gönder"
+                },
+                en: {
+                    home: "Home",
+                    about: "About",
+                    contact: "Contact",
+                    rights: "All Rights Reserved.",
+                    
+                    contact_title: "Contact",
+                    contact_desc: "Feel free to reach out for projects, questions, or just to say hello.",
+                    
+                    name_ph: "Your Name",
+                    email_ph: "Your Email Address",
+                    msg_ph: "Your Message...",
+                    send_btn: "Send Message"
+                }
+            };
 
-        function toggleMenu() {
-            var navLinks = document.getElementById("navLinks");
-            navLinks.classList.toggle("active");
-        }
+            // Yıl
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
+            // Mobil Menü
+            const menuToggle = document.getElementById('menuToggle');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navbar) {
+                menuToggle.addEventListener('click', () => {
+                    navbar.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    
+                    const icon = menuToggle.querySelector('i');
+                    if (navbar.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+
+            // Tema ve Dil
+            const themeBtn = document.getElementById('theme-btn');
+            const langBtn = document.getElementById('lang-btn');
+            const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedLang = localStorage.getItem('lang') || 'tr';
+
+            applyTheme(savedTheme);
+            applyLang(savedLang);
+
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const isLight = document.body.classList.contains('light-mode');
+                    const newTheme = isLight ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
+
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    const currentLangText = langBtn.textContent;
+                    const newLang = currentLangText === 'TR' ? 'en' : 'tr';
+                    applyLang(newLang);
+                    localStorage.setItem('lang', newLang);
+                });
+            }
+
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    if(themeIcon) {
+                        themeIcon.className = 'fas fa-sun';
+                        themeIcon.style.color = '#ff923c';
+                    }
+                } else {
+                    document.body.classList.remove('light-mode');
+                    if(themeIcon) {
+                        themeIcon.className = 'fas fa-moon';
+                        themeIcon.style.color = 'inherit';
+                    }
+                }
+            }
+
+            function applyLang(lang) {
+                if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+                
+                // Textleri güncelle
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                // Input Placeholderlarını güncelle
+                if (translations[lang]) {
+                    const nameInput = document.getElementById('name');
+                    const emailInput = document.getElementById('email');
+                    const msgInput = document.getElementById('message');
+
+                    if(nameInput) nameInput.placeholder = translations[lang].name_ph;
+                    if(emailInput) emailInput.placeholder = translations[lang].email_ph;
+                    if(msgInput) msgInput.placeholder = translations[lang].msg_ph;
+                }
+            }
+        });
+
+        // Mail Gönderme Fonksiyonu
         function sendEmail(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
 
-            // Form alanlarını temizle
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('message').value = '';
-
+            // Mailto linki oluştur
             window.location.href = `mailto:aschannel111@gmail.com?subject=İletişim Formu: ${name}&body=Mesaj: ${message}%0D%0AE-posta: ${email}`;
+
+            // Formu temizle (Opsiyonel)
+            setTimeout(() => {
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            }, 1000);
         }
-
-          const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
-
-        inputs.forEach(input => {
-            const label = input.nextElementSibling;
-
-
-            input.addEventListener('focus', () => {
-                label.classList.add('active');
-           });
-
-            input.addEventListener('blur', () => {
-                if (!input.value) {
-                     label.classList.remove('active');
-                }
-            });
-
-            input.addEventListener('input', function () {
-
-               if (this.value) {
-                  this.classList.add('has-value');
-                } else {
-                  this.classList.remove('has-value');
-               }
-
-            });
-        });
     </script>
 </body>
 </html>
