@@ -7,20 +7,14 @@
     
     <meta name="description" content="Tasarımcı ve Anime Sever">
     <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Kerim Demirkaynak">
-    <meta name="twitter:description" content="Tasarımcı ve Anime Sever">
-    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
-    <meta name="twitter:url" content="https://kerimdemirkaynak.github.io/">
-    <meta name="google-site-verification" content="0TjmUuV639weMDTURj4svFO7cFKj9T2fQ7NoBvc6QPo" />
-
+    
     <link rel="icon" type="image/png" href="resimler/favicon.png">
 
-    <link rel="stylesheet" href="style.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -77,6 +71,144 @@
         <p>© <span id="year"></span> Kerim Demirkaynak. <span data-lang="rights">Tüm Hakları Saklıdır.</span></p>
     </footer>
 
-    <script src="script.js"></script>
-    </body>
+    <script>
+        // Sayfa tamamen yüklendiğinde çalışacak kodlar
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Site Script Yüklendi!");
+
+            // 1. Çeviri Verileri
+            const translations = {
+                tr: {
+                    home: "Ana Sayfa",
+                    about: "Hakkında",
+                    contact: "İletişim",
+                    bio_short: "Tasarımcı, Anime Sever ve İçerik Üreticisi",
+                    projects: "Projelerim",
+                    blog: "Blogum",
+                    rights: "Tüm Hakları Saklıdır.",
+                    name_placeholder: "Adınız Soyadınız",
+                    email_placeholder: "E-posta Adresiniz",
+                    msg_placeholder: "Mesajınızı buraya yazın...",
+                    send_btn: "Gönder"
+                },
+                en: {
+                    home: "Home",
+                    about: "About",
+                    contact: "Contact",
+                    bio_short: "Designer, Anime Lover and Content Creator",
+                    projects: "My Projects",
+                    blog: "My Blog",
+                    rights: "All Rights Reserved.",
+                    name_placeholder: "Your Name",
+                    email_placeholder: "Your Email",
+                    msg_placeholder: "Type your message here...",
+                    send_btn: "Send Message"
+                }
+            };
+
+            // 2. Yıl Ayarı
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+
+            // 3. Mobil Menü
+            const menuToggle = document.getElementById('menuToggle');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navbar) {
+                menuToggle.addEventListener('click', () => {
+                    navbar.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    // İkon değiştirme (Bars <-> Times)
+                    if (navbar.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+
+            // 4. Tema ve Dil Ayarları
+            const themeBtn = document.getElementById('theme-btn');
+            const langBtn = document.getElementById('lang-btn');
+            const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+
+            // Kayıtlı Ayarları Yükle
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedLang = localStorage.getItem('lang') || 'tr';
+
+            applyTheme(savedTheme);
+            applyLang(savedLang);
+
+            // Tema Butonu Tıklama
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const isLight = document.body.classList.contains('light-mode');
+                    const newTheme = isLight ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
+
+            // Dil Butonu Tıklama
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    const currentLangText = langBtn.textContent;
+                    const newLang = currentLangText === 'TR' ? 'en' : 'tr';
+                    applyLang(newLang);
+                    localStorage.setItem('lang', newLang);
+                });
+            }
+
+            // Yardımcı Fonksiyon: Tema Uygula
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    if(themeIcon) themeIcon.className = 'fas fa-sun';
+                } else {
+                    document.body.classList.remove('light-mode');
+                    if(themeIcon) themeIcon.className = 'fas fa-moon';
+                }
+            }
+
+            // Yardımcı Fonksiyon: Dil Uygula
+            function applyLang(lang) {
+                if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+                
+                // data-lang olan her şeyi bul ve değiştir
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                // Input Placeholder'larını değiştir (Eğer varsa)
+                if (translations[lang]) {
+                    const inputs = ['name', 'email', 'message'];
+                    inputs.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            if (id === 'name') element.placeholder = translations[lang].name_placeholder;
+                            if (id === 'email') element.placeholder = translations[lang].email_placeholder;
+                            if (id === 'message') element.placeholder = translations[lang].msg_placeholder;
+                        }
+                    });
+                    
+                    // Gönder butonu (Eğer varsa)
+                    const submitBtn = document.querySelector('button[type="submit"]');
+                    if(submitBtn) {
+                        const btnKey = submitBtn.getAttribute('data-lang');
+                        if(btnKey && translations[lang][btnKey]) {
+                            submitBtn.textContent = translations[lang][btnKey];
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
     </html>
