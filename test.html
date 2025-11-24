@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 | Sayfa Bulunamadı</title>
+    <title>Kerim Demirkaynak | Hakkında</title>
+    
+    <meta name="description" content="Tasarımcı ve Anime Sever">
     
     <link rel="icon" type="image/png" href="resimler/favicon.png">
 
@@ -24,7 +26,7 @@
             --accent-color: #ff923c;
             --border-color: rgba(255, 255, 255, 0.1);
             --pill-bg: #252529;
-            --btn-text: #000;
+            --card-hover-bg: #222226;
         }
 
         /* AÇIK MOD */
@@ -35,6 +37,7 @@
             --text-secondary: #52525b;
             --border-color: rgba(0, 0, 0, 0.1);
             --pill-bg: #e4e4e7;
+            --card-hover-bg: #f9f9f9;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,6 +77,10 @@
         nav ul { display: flex; gap: 30px; align-items: center; }
         nav a { color: var(--text-secondary); font-weight: 500; font-size: 16px; position: relative; }
         nav a:hover, nav a.active { color: var(--text-primary); }
+        nav a.active::after {
+            content: ''; position: absolute; width: 100%; height: 2px;
+            bottom: -5px; left: 0; background: var(--accent-gradient);
+        }
 
         .header-right { display: flex; align-items: center; gap: 20px; }
 
@@ -97,76 +104,94 @@
         .menu-toggle i { transition: transform 0.4s ease; }
         .menu-toggle.active i { transform: rotate(90deg); }
 
-        /* MAIN 404 CONTENT */
+        /* MAIN CONTENT */
         main {
             flex: 1;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 20px;
-            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
+        /* ANİMASYONLAR */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .animate-item {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
 
-        /* 404 Başlığı */
         h1 {
-            font-size: 1.8rem;
-            margin: 0;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
-            line-height: 1;
+            text-align: center;
         }
 
-        /* Yuvarlak Resim */
-        .error-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%; /* Tam Yuvarlak */
-            object-fit: cover;
-            margin: 25px 0; /* Boşluk */
-            border: 4px solid var(--surface-color);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-        }
-        .error-img:hover { transform: scale(1.05); border-color: var(--accent-color); }
-
-        h2 { margin: 10px 0 15px; font-size: 1.8rem; color: var(--text-primary); }
-        
-        /* Genel P etiketi (Main içindeki açıklama için) */
-        main p { 
-            color: var(--text-secondary); 
-            margin-bottom: 30px; 
-            max-width: 450px; /* Sadece açıklama metni dar olsun */
-            font-size: 1.1rem; 
+        .intro-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-bottom: 50px;
+            line-height: 1.8;
         }
 
-        .btn-home {
-            padding: 14px 40px;
-            border-radius: 50px;
-            font-weight: 600;
-            background: var(--accent-gradient);
-            color: #000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* KART YAPISI (Izgara) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .info-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 15px;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-home:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 146, 60, 0.4);
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background-color: var(--card-hover-bg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .btn-home:active { transform: scale(0.95); }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .info-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
 
         /* FOOTER */
         footer {
@@ -177,25 +202,9 @@
             margin-top: auto;
             width: 100%;
         }
-        
-        /* Footer içindeki linkler (Sadece mobilde görünür) */
-        .footer-links { 
-            margin-bottom: 20px; 
-            display: none; /* PC'de gizli */
-            justify-content: center; 
-            gap: 25px; 
-        }
+        .footer-links { margin-bottom: 20px; display: none; justify-content: center; gap: 25px; }
         .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
-        
-        /* Footer Yazısı (ÖZEL AYAR - BUG ÇÖZÜMÜ) */
-        .footer-copy { 
-            color: var(--text-secondary); 
-            font-size: 13px; 
-            max-width: 100% !important; /* Genel p kısıtlamasını ez */
-            width: 100%;
-            margin: 0;
-            text-align: center;
-        }
+        .footer-copy { color: var(--text-secondary); font-size: 13px; max-width: 100%; width: 100%; margin: 0; }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -210,8 +219,10 @@
             nav ul { flex-direction: column; gap: 30px; }
             nav a { font-size: 22px; }
             
-            /* Mobilde footer linkleri görünür */
             .footer-links { display: flex; }
+            
+            .intro-text { font-size: 1rem; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -225,7 +236,7 @@
         <nav id="navbar">
             <ul>
                 <li><a href="index.html" data-lang="home">Ana Sayfa</a></li>
-                <li><a href="hakkinda.html" data-lang="about">Hakkında</a></li>
+                <li><a href="hakkinda.html" class="active" data-lang="about">Hakkında</a></li>
                 <li><a href="iletisim.html" data-lang="contact">İletişim</a></li>
             </ul>
         </nav>
@@ -243,13 +254,39 @@
     </header>
 
     <main>
-        <h1 data-lang="page_not_found">Sayfa Bulunamadı</h1>
-        <img src="resimler/404.gif" alt="404 Not Found" class="error-img">
-        <p data-lang="page_not_found_desc">Aradığınız sayfa silinmiş, taşınmış veya hiç var olmamış olabilir.</p>
+        <h1 class="animate-item" data-lang="about_title">Hakkımda</h1>
         
-        <a href="index.html" class="btn-home">
-            <i class="fas fa-home"></i> <span data-lang="go_home">Ana Sayfaya Dön</span>
-        </a>
+        <p class="intro-text animate-item delay-1" data-lang="about_intro">
+            Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.
+        </p>
+
+        <div class="grid-container">
+            <div class="info-card animate-item delay-2">
+                <i class="fas fa-film card-icon"></i>
+                <h2 data-lang="media_title">Medya & Çeviri</h2>
+                <p data-lang="media_desc">
+                    Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. 
+                    İçerik üreticileri için sosyal medya görselleri ve düzenlenebilir şablonlar tasarladım.
+                </p>
+            </div>
+
+            <div class="info-card animate-item delay-3">
+                <i class="fab fa-youtube card-icon"></i>
+                <h2 data-lang="content_title">İçerik Üretimi</h2>
+                <p data-lang="content_desc">
+                    YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.
+                </p>
+            </div>
+
+            <div class="info-card animate-item delay-4">
+                <i class="fas fa-code card-icon"></i>
+                <h2 data-lang="dev_title">Geliştirme</h2>
+                <p data-lang="dev_desc">
+                    2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. 
+                    Ayrıca açık kaynak web tasarımları yapıyorum.
+                </p>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -270,18 +307,36 @@
                     about: "Hakkında",
                     contact: "İletişim",
                     rights: "Tüm Hakları Saklıdır.",
-                    page_not_found: "Sayfa Bulunamadı",
-                    page_not_found_desc: "Aradığınız sayfa silinmiş, taşınmış veya hiç var olmamış olabilir.",
-                    go_home: "Ana Sayfaya Dön"
+                    
+                    about_title: "Hakkımda",
+                    about_intro: "Düzce’de yaşayan bir içerik üreticisiyim. Animeler ve mangalar üzerine içerikler üretiyor, aynı zamanda teknoloji ve yazılım projeleriyle ilgileniyorum.",
+                    
+                    media_title: "Medya & Çeviri",
+                    media_desc: "Asya ve Batı yapımı birçok animasyon dizisi için Türkçe altyazılar hazırladım. İçerik üreticileri için sosyal medya görselleri ve şablonlar tasarladım.",
+                    
+                    content_title: "İçerik Üretimi",
+                    content_desc: "YouTube için videolar üretiyor, After Effects gibi profesyonel yazılımlar kullanarak animasyonlu jenerikler ve video projeleri hazırlıyorum.",
+                    
+                    dev_title: "Geliştirme",
+                    dev_desc: "2022 yılından beri 'Turkish Ice-Cream' adını verdiğim görsel roman projesini geliştiriyorum. Ayrıca açık kaynak web tasarımları yapıyorum."
                 },
                 en: {
                     home: "Home",
                     about: "About",
                     contact: "Contact",
                     rights: "All Rights Reserved.",
-                    page_not_found: "Page Not Found",
-                    page_not_found_desc: "The page you are looking for might have been removed, had its name changed or is temporarily unavailable.",
-                    go_home: "Go Back Home"
+                    
+                    about_title: "About Me",
+                    about_intro: "I am a content creator based in Düzce. I create content about anime and manga, and I am also interested in technology and software projects.",
+                    
+                    media_title: "Media & Translation",
+                    media_desc: "I have prepared Turkish subtitles for many Asian and Western animated series. I designed social media visuals and templates for content creators.",
+                    
+                    content_title: "Content Creation",
+                    content_desc: "I create videos for YouTube and prepare animated credits and video projects using professional software like After Effects.",
+                    
+                    dev_title: "Development",
+                    dev_desc: "Since 2022, I have been developing a visual novel project called 'Turkish Ice-Cream'. I also create open source web designs."
                 }
             };
 
