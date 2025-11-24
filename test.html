@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kerim Demirkaynak | Projelerim</title>
+    <title>Kerim Demirkaynak | Notlarım</title>
     
-    <meta name="description" content="Geliştirdiğim projeler ve Türkçe çeviriler.">
+    <meta name="description" content="Kişisel Notlarım">
+    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg" />
     
     <link rel="icon" type="image/png" href="resimler/favicon.png">
 
@@ -20,26 +21,29 @@
             /* KOYU MOD */
             --bg-color: #0f0f11;
             --surface-color: #1a1a1d;
+            --input-bg: #222226;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
             --accent-color: #ff923c;
             --border-color: rgba(255, 255, 255, 0.1);
             --pill-bg: #252529;
-            --card-hover-bg: #222226;
-            --modal-bg: rgba(15, 15, 17, 0.85);
+            
+            /* Özel Buton Renkleri */
+            --btn-copy: #3b82f6;
+            --btn-share: #8b5cf6;
+            --btn-clear: #ef4444;
         }
 
         /* AÇIK MOD */
         body.light-mode {
             --bg-color: #f4f4f5;
             --surface-color: #ffffff;
+            --input-bg: #f0f0f2;
             --text-primary: #18181b;
             --text-secondary: #52525b;
             --border-color: rgba(0, 0, 0, 0.1);
             --pill-bg: #e4e4e7;
-            --card-hover-bg: #f9f9f9;
-            --modal-bg: rgba(255, 255, 255, 0.85);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -110,12 +114,60 @@
         main {
             flex: 1;
             width: 100%;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        /* LOGIN CARD */
+        #auth-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--surface-color);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin-top: 50px;
+            animation: fadeInUp 0.8s ease;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .auth-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        #loginBtn {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        #loginBtn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4); }
+
+        /* APP CONTENT (NOTE AREA) */
+        #app-content {
+            width: 100%;
+            display: none; /* JS ile açılacak */
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 0.8s ease;
         }
 
         h1 {
@@ -125,193 +177,110 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
-            text-align: center;
         }
 
-        .subtitle {
-            text-align: center;
+        #status {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin-bottom: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            min-height: 1.5em;
         }
 
-        /* --- PROJE KARTLARI --- */
-        
-        .section-title {
+        #note {
             width: 100%;
-            text-align: left;
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            margin: 40px 0 20px 0;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 15px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            width: 100%;
-        }
-
-        .project-card {
-            background-color: var(--surface-color);
+            height: 50vh;
+            min-height: 300px;
+            background-color: var(--input-bg);
             border: 1px solid var(--border-color);
-            padding: 25px;
             border-radius: 15px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 20px;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            transition: 0.3s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
+        #note:focus {
+            outline: none;
             border-color: var(--accent-color);
-            background-color: var(--card-hover-bg);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 0 0 3px rgba(255, 146, 60, 0.1);
         }
 
-        .card-header {
+        /* BUTTONS GRID */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn:active { transform: scale(0.95); }
+
+        #saveBtn { background: var(--accent-gradient); color: #000; }
+        #copyBtn { background-color: var(--btn-copy); }
+        #shareBtn { background-color: var(--btn-share); }
+        #clearBtn { background-color: var(--btn-clear); }
+
+        /* USER INFO (Footer Area) */
+        #user-info {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            background: var(--pill-bg);
+            padding: 5px 15px;
+            border-radius: 50px;
         }
-
-        .card-icon {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-        }
-
-        .project-card h3 {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .project-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        /* Özel Buton (Details) */
-        .btn-small {
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            width: fit-content;
-            transition: 0.3s;
+        #user-email { font-size: 0.85rem; color: var(--text-secondary); }
+        #logoutBtn {
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            text-decoration: none;
-        }
-        .btn-small:hover {
-            background: var(--accent-gradient);
-            color: #000;
-            border-color: transparent;
-        }
-
-        /* --- MODAL (POPUP) --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            font-size: 0.8rem;
             border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .modal-header h2 { color: var(--accent-color); margin: 0; }
-        
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
             cursor: pointer;
-            transition: 0.3s;
         }
-        .close-btn:hover { color: var(--text-primary); }
-
-        .modal-body img {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-        }
-        .modal-body h3 {
-            font-size: 1.1rem;
-            margin: 20px 0 10px;
-            color: var(--text-primary);
-        }
-
-        /* ANİMASYONLAR */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-item { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
+        #logoutBtn:hover { background: var(--border-color); }
 
         /* FOOTER */
         footer {
             background-color: var(--surface-color);
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             border-top: 1px solid var(--border-color);
             margin-top: auto;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .footer-links { margin-bottom: 20px; display: none; justify-content: center; gap: 25px; }
         .footer-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
-        .footer-copy { color: var(--text-secondary); font-size: 13px; margin: 0; width: 100%; }
+        .footer-copy { color: var(--text-secondary); font-size: 13px; margin: 0; }
+
+        /* ANİMASYON */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -328,7 +297,7 @@
             
             .footer-links { display: flex; }
             h1 { font-size: 2rem; }
-            .grid-container { grid-template-columns: 1fr; }
+            .action-buttons { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -360,66 +329,42 @@
     </header>
 
     <main>
-        <h1 class="animate-item" data-lang="projects_title">Projelerim</h1>
-        <p class="subtitle animate-item delay-1" data-lang="projects_desc">
-            Aktif olarak geliştirdiğim projeler ve katkıda bulunduğum çeviriler.
-        </p>
-
-        <div class="section-title animate-item delay-2" data-lang="cat_games">Oyun Projeleri</div>
-        <div class="grid-container animate-item delay-2">
-            
-            <div class="project-card">
-                <div>
-                    <div class="card-header">
-                        <i class="fas fa-gamepad card-icon"></i>
-                        <h3>Turkish Ice-Cream</h3>
-                    </div>
-                    <p data-lang="desc_icecream">Ren'Py oyun motoru ile 2022'den beri geliştirdiğim, seçimlerinize göre şekillenen görsel roman projesi.</p>
-                </div>
-                <button class="btn-small" onclick="openModal()" data-lang="view_details">Detayları Gör</button>
-            </div>
-
+        
+        <div id="auth-container">
+            <i class="fas fa-lock auth-icon"></i>
+            <h2 style="margin-bottom: 10px;">Özel Erişim</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 0.9rem;">
+                Notlara erişmek için yetkili bir hesapla giriş yapmalısınız.
+            </p>
+            <button id="loginBtn">
+                <i class="fab fa-google"></i> Google ile Giriş Yap
+            </button>
         </div>
 
-        <div class="section-title animate-item delay-3" data-lang="cat_apps">Uygulama Çevirileri</div>
-        <div class="grid-container animate-item delay-3">
+        <div id="app-content">
+            <h1>Notlarım</h1>
+            <p id="status">Yükleniyor...</p>
             
-            <div class="project-card">
-                <div class="card-header"><i class="fas fa-mobile-screen card-icon"></i> <h3>Quetta Browser</h3></div>
-                <p data-lang="desc_quetta">Quetta Browser uygulamasının resmi Türkçe çevirisi.</p>
-            </div>
-
-            <div class="project-card">
-                <div class="card-header"><i class="fab fa-reddit card-icon"></i> <h3>Infinity for Reddit</h3></div>
-                <p data-lang="desc_infinity">Popüler Reddit istemcisi Infinity'nin resmi Türkçe çevirisi.</p>
-            </div>
-
-            <div class="project-card">
-                <div class="card-header"><i class="fas fa-closed-captioning card-icon"></i> <h3>Aegisub</h3></div>
-                <p data-lang="desc_aegisub">Altyazı düzenleme programı Aegisub'ın resmi Türkçe çevirisi.</p>
-                <a href="#" class="btn-small" data-lang="view_details">Detaylar</a>
-            </div>
-
-        </div>
-
-        <div class="section-title animate-item delay-3" data-lang="cat_web">Web & Platform Çevirileri</div>
-        <div class="grid-container animate-item delay-3">
+            <textarea id="note" placeholder="Buraya not almaya başlayın..."></textarea>
             
-            <div class="project-card">
-                <div class="card-header"><i class="fas fa-video card-icon"></i> <h3>PeerTube</h3></div>
-                <p data-lang="desc_peertube">Merkeziyetsiz video platformu PeerTube'un resmi Türkçe çevirisi.</p>
+            <div class="action-buttons">
+                <button id="saveBtn" class="btn">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span class="btn-text">Kaydet</span>
+                </button>
+                <button id="copyBtn" class="btn">
+                    <i class="fa-solid fa-copy"></i>
+                    <span class="btn-text">Kopyala</span>
+                </button>
+                <button id="shareBtn" class="btn">
+                    <i class="fa-solid fa-share-from-square"></i>
+                    <span class="btn-text">Paylaş</span>
+                </button>
+                <button id="clearBtn" class="btn">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span class="btn-text">Temizle</span>
+                </button>
             </div>
-
-            <div class="project-card">
-                <div class="card-header"><i class="fas fa-ban card-icon"></i> <h3>Popup Blocker</h3></div>
-                <p data-lang="desc_popup">Popup Blocker (strict) Chrome ve Firefox uzantısının resmi çevirisi.</p>
-            </div>
-
-            <div class="project-card">
-                <div class="card-header"><i class="fas fa-cloud card-icon"></i> <h3>Bluesky</h3></div>
-                <p data-lang="desc_bluesky">Sosyal medya platformu Bluesky'ın resmi Türkçe çevirisi.</p>
-            </div>
-
         </div>
 
     </main>
@@ -430,92 +375,158 @@
             <a href="hakkinda.html" data-lang="about">Hakkında</a>
             <a href="iletisim.html" data-lang="contact">İletişim</a>
         </div>
-        <p class="footer-copy">© <span id="year"></span> Kerim Demirkaynak. <span data-lang="rights">Tüm Hakları Saklıdır.</span></p>
+
+        <div id="user-info" style="display: none;">
+            <i class="fas fa-user-circle" style="color: var(--accent-color);"></i>
+            <span id="user-email"></span>
+            <button id="logoutBtn">Çıkış</button>
+        </div>
+
+        <p class="footer-copy">© <span id="year"></span> Kerim Demirkaynak. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <div class="modal-overlay" id="gameModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-lang="game_title">Oyun Projeleri</h2>
-                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <p data-lang="game_modal_desc">Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi:</p>
-                
-                <h3 data-lang="gameplay">Oynanış (Gameplay)</h3>
-                <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Gameplay">
-                
-                <h3 data-lang="settings">Ayarlar Menüsü</h3>
-                <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Settings">
-            </div>
-        </div>
-    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // --- Firebase Config ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGapO0lBmLlJeiSPNXwj5gvE_fIXx2HwY",
+            authDomain: "notlarim-ee58d.firebaseapp.com",
+            databaseURL: "https://notlarim-ee58d-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "notlarim-ee58d",
+            storageBucket: "notlarim-ee58d.firebasestorage.app",
+            messagingSenderId: "104701316276",
+            appId: "1:104701316276:web:6c40345fdd3eea9059dbe1",
+            measurementId: "G-L5R3W846YL"
+        };
+
+        // --- Init ---
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // --- UI Elements ---
+        const noteBox = document.getElementById("note");
+        const copyBtn = document.getElementById("copyBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const shareBtn = document.getElementById("shareBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const statusEl = document.getElementById("status");
+        const loginBtn = document.getElementById("loginBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const authContainer = document.getElementById("auth-container");
+        const appContent = document.getElementById("app-content");
+        const userInfo = document.getElementById("user-info");
+        const userEmailEl = document.getElementById("user-email");
+
+        const allowedEmails = ['aschannel111@gmail.com', 'kerimdemirkaynak@yaani.com', 'cnbmgtr@gmail.com'];
+
+        // --- Auth Logic ---
+        onAuthStateChanged(auth, (user) => {
+            if (user && allowedEmails.includes(user.email)) {
+                // Giriş Başarılı
+                authContainer.style.display = 'none';
+                appContent.style.display = 'flex';
+                userInfo.style.display = 'flex';
+                userEmailEl.textContent = user.email;
+                loadNote();
+            } else {
+                // Giriş Yok veya Yetkisiz
+                authContainer.style.display = 'flex';
+                appContent.style.display = 'none';
+                userInfo.style.display = 'none';
+                if (user) { 
+                    signOut(auth);
+                    alert("Bu hesaba erişim izni verilmemiştir.");
+                }
+            }
+        });
+
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error("Giriş Hatası:", error);
+                alert("Giriş yapılamadı.");
+            });
+        });
+
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        // --- Database Logic ---
+        const noteRef = ref(db, "kerimNotData");
+        let unsubscribe;
+
+        const formatTimestamp = (timestamp) => {
+            if (!timestamp) return "Henüz bir not yok.";
+            const date = new Date(timestamp);
+            return `Son kaydetme: ${date.toLocaleDateString('tr-TR')} ${date.toLocaleTimeString('tr-TR')}`;
+        };
+        
+        function loadNote() {
+            if (unsubscribe) unsubscribe();
+            unsubscribe = onValue(noteRef, (snapshot) => {
+                const data = snapshot.val();
+                statusEl.textContent = data ? formatTimestamp(data.timestamp) : "Henüz bir not kaydedilmedi.";
+                if (data && document.activeElement !== noteBox) {
+                    noteBox.value = data.content;
+                } else if (!data) {
+                    noteBox.value = "";
+                }
+            });
+        }
+        
+        saveBtn.addEventListener('click', () => {
+            const user = auth.currentUser;
+            if (!user || !allowedEmails.includes(user.email)) return;
+
+            statusEl.textContent = "Kaydediliyor...";
+            const noteData = { content: noteBox.value, timestamp: Date.now() };
+
+            set(noteRef, noteData)
+                .then(() => {
+                    statusEl.textContent = "Kaydedildi ✅";
+                    setTimeout(() => {
+                        if (statusEl.textContent === "Kaydedildi ✅") statusEl.textContent = formatTimestamp(noteData.timestamp);
+                    }, 2000);
+                })
+                .catch((err) => {
+                    statusEl.textContent = "Hata oluştu!";
+                    console.error(err);
+                });
+        });
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Notu tamamen silmek istiyor musunuz?")) {
+                noteBox.value = '';
+                saveBtn.click(); // Silmek yerine boş kaydediyoruz
+            }
+        });
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(noteBox.value).then(() => {
+                const span = copyBtn.querySelector('.btn-text');
+                const original = span.textContent;
+                span.textContent = "Kopyalandı!";
+                setTimeout(() => span.textContent = original, 2000);
+            });
+        });
+        
+        shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try { await navigator.share({ title: 'Notlarım', text: 'Notlarıma göz at!', url: window.location.href }); } catch (err) {}
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Link kopyalandı!");
+            }
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Çeviri Verileri
-            const translations = {
-                tr: {
-                    home: "Ana Sayfa",
-                    about: "Hakkında",
-                    contact: "İletişim",
-                    rights: "Tüm Hakları Saklıdır.",
-                    
-                    projects_title: "Projelerim",
-                    projects_desc: "Aktif olarak geliştirdiğim projeler ve katkıda bulunduğum çeviriler.",
-                    
-                    cat_games: "Oyun Projeleri",
-                    cat_apps: "Uygulama Çevirileri",
-                    cat_web: "Web & Platform Çevirileri",
-                    
-                    view_details: "Detayları Gör",
-                    
-                    desc_icecream: "Ren'Py oyun motoru ile 2022'den beri geliştirdiğim, seçimlerinize göre şekillenen görsel roman projesi.",
-                    desc_quetta: "Quetta Browser uygulamasının resmi Türkçe çevirisi.",
-                    desc_infinity: "Popüler Reddit istemcisi Infinity'nin resmi Türkçe çevirisi.",
-                    desc_aegisub: "Altyazı düzenleme programı Aegisub'ın resmi Türkçe çevirisi.",
-                    desc_peertube: "Merkeziyetsiz video platformu PeerTube'un resmi Türkçe çevirisi.",
-                    desc_popup: "Popup Blocker (strict) Chrome ve Firefox uzantısının resmi çevirisi.",
-                    desc_bluesky: "Sosyal medya platformu Bluesky'ın resmi Türkçe çevirisi.",
-
-                    game_title: "Oyun Projeleri",
-                    game_modal_desc: "Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi:",
-                    gameplay: "Oynanış (Gameplay)",
-                    settings: "Ayarlar Menüsü"
-                },
-                en: {
-                    home: "Home",
-                    about: "About",
-                    contact: "Contact",
-                    rights: "All Rights Reserved.",
-                    
-                    projects_title: "My Projects",
-                    projects_desc: "Projects I am actively developing and translations I have contributed to.",
-                    
-                    cat_games: "Game Projects",
-                    cat_apps: "App Translations",
-                    cat_web: "Web & Platform Translations",
-                    
-                    view_details: "View Details",
-                    
-                    desc_icecream: "A visual novel project I've been developing with Ren'Py since 2022, shaped by your choices.",
-                    desc_quetta: "Official Turkish translation of Quetta Browser app.",
-                    desc_infinity: "Official Turkish translation of the popular Reddit client Infinity.",
-                    desc_aegisub: "Official Turkish translation of the subtitle editor Aegisub.",
-                    desc_peertube: "Official Turkish translation of the decentralized video platform PeerTube.",
-                    desc_popup: "Official translation of Popup Blocker (strict) Chrome and Firefox extension.",
-                    desc_bluesky: "Official Turkish translation of the social media platform Bluesky.",
-
-                    game_title: "Game Projects",
-                    game_modal_desc: "A visual novel project I have been developing using Ren'py since 2022:",
-                    gameplay: "Gameplay",
-                    settings: "Settings Menu"
-                }
-            };
-
             // Yıl
-            const yearSpan = document.getElementById('year');
-            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+            document.getElementById('year').textContent = new Date().getFullYear();
 
             // Mobil Menü
             const menuToggle = document.getElementById('menuToggle');
@@ -584,32 +595,18 @@
 
             function applyLang(lang) {
                 if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
+                // Notlar sayfası özel içerik olduğu için sadece header/footer çevirisi yeterli
+                const translations = {
+                    tr: { home: "Ana Sayfa", about: "Hakkında", contact: "İletişim" },
+                    en: { home: "Home", about: "About", contact: "Contact" }
+                };
+                
                 document.querySelectorAll('[data-lang]').forEach(el => {
                     const key = el.getAttribute('data-lang');
                     if (translations[lang] && translations[lang][key]) {
                         el.textContent = translations[lang][key];
                     }
                 });
-            }
-        });
-
-        // MODAL FONKSİYONLARI
-        const modal = document.getElementById('gameModal');
-
-        function openModal() {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Arka plan kaydırmayı engelle
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Kaydırmayı aç
-        }
-
-        // Dışarı tıklayınca kapatma
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
             }
         });
     </script>
