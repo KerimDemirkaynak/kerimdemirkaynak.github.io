@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kerim Demirkaynak | İletişim</title>
+    <title>Kerim Demirkaynak | Projelerim</title>
     
-    <meta name="description" content="Tasarımcı ve Anime Sever">
+    <meta name="description" content="Geliştirdiğim projeler ve Türkçe çeviriler.">
     
     <link rel="icon" type="image/png" href="resimler/favicon.png">
 
@@ -20,24 +20,26 @@
             /* KOYU MOD */
             --bg-color: #0f0f11;
             --surface-color: #1a1a1d;
-            --input-bg: #222226;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --accent-gradient: linear-gradient(135deg, #ffd340, #ff923c);
             --accent-color: #ff923c;
             --border-color: rgba(255, 255, 255, 0.1);
             --pill-bg: #252529;
+            --card-hover-bg: #222226;
+            --modal-bg: rgba(15, 15, 17, 0.85);
         }
 
         /* AÇIK MOD */
         body.light-mode {
             --bg-color: #f4f4f5;
             --surface-color: #ffffff;
-            --input-bg: #f0f0f2;
             --text-primary: #18181b;
             --text-secondary: #52525b;
             --border-color: rgba(0, 0, 0, 0.1);
             --pill-bg: #e4e4e7;
+            --card-hover-bg: #f9f9f9;
+            --modal-bg: rgba(255, 255, 255, 0.85);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,26 +110,13 @@
         main {
             flex: 1;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
-        /* ANİMASYONLAR */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-item {
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
 
         h1 {
             font-size: 2.5rem;
@@ -136,93 +125,180 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+            text-align: center;
         }
 
         .subtitle {
             text-align: center;
             color: var(--text-secondary);
             font-size: 1.1rem;
-            margin-bottom: 40px;
-            max-width: 500px;
+            max-width: 700px;
+            margin-bottom: 50px;
         }
 
-        /* FORM STYLES */
-        .contact-form-wrapper {
+        /* --- PROJE KARTLARI --- */
+        
+        .section-title {
             width: 100%;
-            max-width: 500px;
+            text-align: left;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin: 40px 0 20px 0;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .project-card {
             background-color: var(--surface-color);
-            padding: 30px;
-            border-radius: 20px;
             border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background-color: var(--card-hover-bg);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            transition: color 0.3s;
-        }
-
-        .input-group textarea + .input-icon {
-            top: 20px; /* Textarea için ikonu yukarı sabitle */
-            transform: none;
-        }
-
-        .form-control {
-            width: 100%;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px 15px 15px 45px; /* İkon için soldan boşluk */
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .form-control::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.7;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(255, 146, 60, 0.1);
-        }
-
-        .form-control:focus + .input-icon {
+        .card-icon {
+            font-size: 1.8rem;
             color: var(--accent-color);
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+        .project-card h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 0;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 146, 60, 0.4);
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
-        .submit-btn:active { transform: scale(0.98); }
+
+        /* Özel Buton (Details) */
+        .btn-small {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            width: fit-content;
+            transition: 0.3s;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .btn-small:hover {
+            background: var(--accent-gradient);
+            color: #000;
+            border-color: transparent;
+        }
+
+        /* --- MODAL (POPUP) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 { color: var(--accent-color); margin: 0; }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover { color: var(--text-primary); }
+
+        .modal-body img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        .modal-body h3 {
+            font-size: 1.1rem;
+            margin: 20px 0 10px;
+            color: var(--text-primary);
+        }
+
+        /* ANİMASYONLAR */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-item { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
 
         /* FOOTER */
         footer {
@@ -252,7 +328,7 @@
             
             .footer-links { display: flex; }
             h1 { font-size: 2rem; }
-            .contact-form-wrapper { padding: 20px; }
+            .grid-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -267,7 +343,7 @@
             <ul>
                 <li><a href="index.html" data-lang="home">Ana Sayfa</a></li>
                 <li><a href="hakkinda.html" data-lang="about">Hakkında</a></li>
-                <li><a href="iletisim.html" class="active" data-lang="contact">İletişim</a></li>
+                <li><a href="iletisim.html" data-lang="contact">İletişim</a></li>
             </ul>
         </nav>
 
@@ -284,29 +360,68 @@
     </header>
 
     <main>
-        <h1 class="animate-item" data-lang="contact_title">İletişim</h1>
-        <p class="subtitle animate-item delay-1" data-lang="contact_desc">Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.</p>
+        <h1 class="animate-item" data-lang="projects_title">Projelerim</h1>
+        <p class="subtitle animate-item delay-1" data-lang="projects_desc">
+            Aktif olarak geliştirdiğim projeler ve katkıda bulunduğum çeviriler.
+        </p>
 
-        <div class="contact-form-wrapper animate-item delay-2">
-            <form onsubmit="sendEmail(event)">
-                <div class="input-group">
-                    <input type="text" id="name" class="form-control" placeholder="Adınız Soyadınız" required>
-                    <i class="fas fa-user input-icon"></i>
+        <div class="section-title animate-item delay-2" data-lang="cat_games">Oyun Projeleri</div>
+        <div class="grid-container animate-item delay-2">
+            
+            <div class="project-card">
+                <div>
+                    <div class="card-header">
+                        <i class="fas fa-gamepad card-icon"></i>
+                        <h3>Turkish Ice-Cream</h3>
+                    </div>
+                    <p data-lang="desc_icecream">Ren'Py oyun motoru ile 2022'den beri geliştirdiğim, seçimlerinize göre şekillenen görsel roman projesi.</p>
                 </div>
+                <button class="btn-small" onclick="openModal()" data-lang="view_details">Detayları Gör</button>
+            </div>
 
-                <div class="input-group">
-                    <input type="email" id="email" class="form-control" placeholder="E-posta Adresiniz" required>
-                    <i class="fas fa-envelope input-icon"></i>
-                </div>
-
-                <div class="input-group">
-                    <textarea id="message" class="form-control" rows="5" placeholder="Mesajınız..." required></textarea>
-                    <i class="fas fa-comment input-icon"></i>
-                </div>
-
-                <button type="submit" class="submit-btn" data-lang="send_btn">Gönder</button>
-            </form>
         </div>
+
+        <div class="section-title animate-item delay-3" data-lang="cat_apps">Uygulama Çevirileri</div>
+        <div class="grid-container animate-item delay-3">
+            
+            <div class="project-card">
+                <div class="card-header"><i class="fas fa-mobile-screen card-icon"></i> <h3>Quetta Browser</h3></div>
+                <p data-lang="desc_quetta">Quetta Browser uygulamasının resmi Türkçe çevirisi.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header"><i class="fab fa-reddit card-icon"></i> <h3>Infinity for Reddit</h3></div>
+                <p data-lang="desc_infinity">Popüler Reddit istemcisi Infinity'nin resmi Türkçe çevirisi.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header"><i class="fas fa-closed-captioning card-icon"></i> <h3>Aegisub</h3></div>
+                <p data-lang="desc_aegisub">Altyazı düzenleme programı Aegisub'ın resmi Türkçe çevirisi.</p>
+                <a href="#" class="btn-small" data-lang="view_details">Detaylar</a>
+            </div>
+
+        </div>
+
+        <div class="section-title animate-item delay-3" data-lang="cat_web">Web & Platform Çevirileri</div>
+        <div class="grid-container animate-item delay-3">
+            
+            <div class="project-card">
+                <div class="card-header"><i class="fas fa-video card-icon"></i> <h3>PeerTube</h3></div>
+                <p data-lang="desc_peertube">Merkeziyetsiz video platformu PeerTube'un resmi Türkçe çevirisi.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header"><i class="fas fa-ban card-icon"></i> <h3>Popup Blocker</h3></div>
+                <p data-lang="desc_popup">Popup Blocker (strict) Chrome ve Firefox uzantısının resmi çevirisi.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header"><i class="fas fa-cloud card-icon"></i> <h3>Bluesky</h3></div>
+                <p data-lang="desc_bluesky">Sosyal medya platformu Bluesky'ın resmi Türkçe çevirisi.</p>
+            </div>
+
+        </div>
+
     </main>
 
     <footer>
@@ -318,6 +433,24 @@
         <p class="footer-copy">© <span id="year"></span> Kerim Demirkaynak. <span data-lang="rights">Tüm Hakları Saklıdır.</span></p>
     </footer>
 
+    <div class="modal-overlay" id="gameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-lang="game_title">Oyun Projeleri</h2>
+                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p data-lang="game_modal_desc">Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi:</p>
+                
+                <h3 data-lang="gameplay">Oynanış (Gameplay)</h3>
+                <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0003.png" alt="Gameplay">
+                
+                <h3 data-lang="settings">Ayarlar Menüsü</h3>
+                <img src="https://kerimdemirkaynak.github.io/resimler/screenshot0004.png" alt="Settings">
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Çeviri Verileri
@@ -328,13 +461,27 @@
                     contact: "İletişim",
                     rights: "Tüm Hakları Saklıdır.",
                     
-                    contact_title: "İletişim",
-                    contact_desc: "Projeleriniz, sorularınız veya sadece merhaba demek için bana ulaşabilirsiniz.",
+                    projects_title: "Projelerim",
+                    projects_desc: "Aktif olarak geliştirdiğim projeler ve katkıda bulunduğum çeviriler.",
                     
-                    name_ph: "Adınız Soyadınız",
-                    email_ph: "E-posta Adresiniz",
-                    msg_ph: "Mesajınız...",
-                    send_btn: "Gönder"
+                    cat_games: "Oyun Projeleri",
+                    cat_apps: "Uygulama Çevirileri",
+                    cat_web: "Web & Platform Çevirileri",
+                    
+                    view_details: "Detayları Gör",
+                    
+                    desc_icecream: "Ren'Py oyun motoru ile 2022'den beri geliştirdiğim, seçimlerinize göre şekillenen görsel roman projesi.",
+                    desc_quetta: "Quetta Browser uygulamasının resmi Türkçe çevirisi.",
+                    desc_infinity: "Popüler Reddit istemcisi Infinity'nin resmi Türkçe çevirisi.",
+                    desc_aegisub: "Altyazı düzenleme programı Aegisub'ın resmi Türkçe çevirisi.",
+                    desc_peertube: "Merkeziyetsiz video platformu PeerTube'un resmi Türkçe çevirisi.",
+                    desc_popup: "Popup Blocker (strict) Chrome ve Firefox uzantısının resmi çevirisi.",
+                    desc_bluesky: "Sosyal medya platformu Bluesky'ın resmi Türkçe çevirisi.",
+
+                    game_title: "Oyun Projeleri",
+                    game_modal_desc: "Ren'py kullanarak 2022'den beri geliştirdiğim bir görsel roman projesi:",
+                    gameplay: "Oynanış (Gameplay)",
+                    settings: "Ayarlar Menüsü"
                 },
                 en: {
                     home: "Home",
@@ -342,13 +489,27 @@
                     contact: "Contact",
                     rights: "All Rights Reserved.",
                     
-                    contact_title: "Contact",
-                    contact_desc: "Feel free to reach out for projects, questions, or just to say hello.",
+                    projects_title: "My Projects",
+                    projects_desc: "Projects I am actively developing and translations I have contributed to.",
                     
-                    name_ph: "Your Name",
-                    email_ph: "Your Email Address",
-                    msg_ph: "Your Message...",
-                    send_btn: "Send Message"
+                    cat_games: "Game Projects",
+                    cat_apps: "App Translations",
+                    cat_web: "Web & Platform Translations",
+                    
+                    view_details: "View Details",
+                    
+                    desc_icecream: "A visual novel project I've been developing with Ren'Py since 2022, shaped by your choices.",
+                    desc_quetta: "Official Turkish translation of Quetta Browser app.",
+                    desc_infinity: "Official Turkish translation of the popular Reddit client Infinity.",
+                    desc_aegisub: "Official Turkish translation of the subtitle editor Aegisub.",
+                    desc_peertube: "Official Turkish translation of the decentralized video platform PeerTube.",
+                    desc_popup: "Official translation of Popup Blocker (strict) Chrome and Firefox extension.",
+                    desc_bluesky: "Official Turkish translation of the social media platform Bluesky.",
+
+                    game_title: "Game Projects",
+                    game_modal_desc: "A visual novel project I have been developing using Ren'py since 2022:",
+                    gameplay: "Gameplay",
+                    settings: "Settings Menu"
                 }
             };
 
@@ -423,45 +584,34 @@
 
             function applyLang(lang) {
                 if(langBtn) langBtn.textContent = lang === 'tr' ? 'TR' : 'EN';
-                
-                // Textleri güncelle
                 document.querySelectorAll('[data-lang]').forEach(el => {
                     const key = el.getAttribute('data-lang');
                     if (translations[lang] && translations[lang][key]) {
                         el.textContent = translations[lang][key];
                     }
                 });
-
-                // Input Placeholderlarını güncelle
-                if (translations[lang]) {
-                    const nameInput = document.getElementById('name');
-                    const emailInput = document.getElementById('email');
-                    const msgInput = document.getElementById('message');
-
-                    if(nameInput) nameInput.placeholder = translations[lang].name_ph;
-                    if(emailInput) emailInput.placeholder = translations[lang].email_ph;
-                    if(msgInput) msgInput.placeholder = translations[lang].msg_ph;
-                }
             }
         });
 
-        // Mail Gönderme Fonksiyonu
-        function sendEmail(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+        // MODAL FONKSİYONLARI
+        const modal = document.getElementById('gameModal');
 
-            // Mailto linki oluştur
-            window.location.href = `mailto:aschannel111@gmail.com?subject=İletişim Formu: ${name}&body=Mesaj: ${message}%0D%0AE-posta: ${email}`;
-
-            // Formu temizle (Opsiyonel)
-            setTimeout(() => {
-                document.getElementById('name').value = '';
-                document.getElementById('email').value = '';
-                document.getElementById('message').value = '';
-            }, 1000);
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Arka plan kaydırmayı engelle
         }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Kaydırmayı aç
+        }
+
+        // Dışarı tıklayınca kapatma
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
