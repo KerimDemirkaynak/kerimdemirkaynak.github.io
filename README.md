@@ -1,4 +1,6 @@
-# Kerim Demirkaynak | Biyografi Web Sitesi    
+# Kerim Demirkaynak | Biyografi Web Sitesi
+
+![Arşivlenmiş site ekran görüntüsü](https://web.archive.org/web/20251125001054if_/http://web.archive.org/screenshot/https://kerimdemirkaynak.github.io/)
 
 [![Lisans](https://img.shields.io/badge/LİSANS-MIT-blue.svg?color=97CA01&logoColor=blue&style=for-the-badge)](https://opensource.org/license/mit/)
 [![GitHub Sürümü](https://img.shields.io/github/v/release/KerimDemirkaynak/kerimdemirkaynak.github.io?style=for-the-badge&color=8DDFCB&label=Sürüm)](https://github.com/KerimDemirkaynak/kerimdemirkaynak.github.io/releases)
