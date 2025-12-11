@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Card Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        /* Kontrol Paneli */
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3db4f2; /* Anilist Mavisi */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        button:hover { background-color: #3296cb; }
+
+        /* KART TASARIMI (Referans Görsele Göre) */
+        #capture-area {
+            width: 400px; /* Sabit Genişlik */
+            background: white;
+            border-radius: 0; /* Resimdeki gibi keskin veya hafif radius */
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .anime-image {
+            width: 100%;
+            height: 350px; /* Görsel yüksekliği */
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .info-container {
+            padding: 20px;
+            background: #fdfdfd;
+            border-top: 1px solid #eee;
+        }
+
+        .anime-title {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            line-height: 1;
+            color: #000;
+            /* Uzun isimler taşmasın */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .meta-row {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .meta-label {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .studio-row {
+            margin-top: 5px;
+            font-size: 16px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .score-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .star-icon {
+            color: #888; /* Resimdeki gri yıldız */
+            font-size: 20px;
+        }
+
+        /* İndir Butonu */
+        #download-btn {
+            margin-top: 20px;
+            background-color: #2ecc71;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Anime adı yazın (Örn: Bleach)..." onkeydown="if(event.key === 'Enter') fetchAnime()">
+        <button onclick="fetchAnime()">Getir</button>
+    </div>
+
+    <div id="capture-area">
+        <img id="poster" class="anime-image" src="https://via.placeholder.com/400x350?text=Anime+Poster" alt="Anime">
+        
+        <div class="info-container">
+            <h1 id="title" class="anime-title">ANIME NAME</h1>
+            
+            <div class="meta-row">
+                <span class="meta-label">Genre:</span> <span id="genres">Action, Adventure</span>
+            </div>
+            
+            <div class="studio-row">
+                <span class="meta-label">Studio:</span> <span id="studio">Studio Name</span>
+            </div>
+
+            <div class="footer-row">
+                <span id="season">SUMMER 2024</span>
+                <div class="score-box">
+                    <span class="star-icon">★</span>
+                    <span id="score">0.0/10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="download-btn" onclick="downloadCard()">Resmi İndir</button>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script>
+        // AniList GraphQL Sorgusu
+        const query = `
+        query ($search: String) {
+          Media (search: $search, type: ANIME, sort: SEARCH_MATCH) {
+            title {
+              romaji
+              english
+            }
+            coverImage {
+              extraLarge
+              large
+            }
+            bannerImage
+            genres
+            averageScore
+            season
+            seasonYear
+            studios(isMain: true) {
+              nodes {
+                name
+              }
+            }
+          }
+        }
+        `;
+
+        async function fetchAnime() {
+            const search = document.getElementById('searchInput').value;
+            if (!search) return alert("Lütfen bir isim yazın!");
+
+            const url = 'https://graphql.anilist.co';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: { search: search }
+                })
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const data = await response.json();
+                const anime = data.data.Media;
+
+                if (!anime) return alert("Anime bulunamadı!");
+
+                updateCard(anime);
+                document.getElementById('download-btn').style.display = 'block';
+
+            } catch (error) {
+                console.error(error);
+                alert("Bir hata oluştu.");
+            }
+        }
+
+        function updateCard(anime) {
+            // Görsel (Varsa extraLarge yoksa large)
+            const imgUrl = anime.coverImage.extraLarge || anime.coverImage.large;
+            // CORS sorununu aşmak için proxy kullanılabilir ama local testte direkt link bazen çalışır.
+            // Not: html2canvas cross-origin resimlerde sorun çıkarabilir.
+            // Bu örnekte img tag'ine crossOrigin ekledik.
+            const imgEl = document.getElementById('poster');
+            imgEl.crossOrigin = "Anonymous"; 
+            imgEl.src = imgUrl;
+
+            // Başlık (İngilizce varsa onu, yoksa Romaji)
+            const titleText = anime.title.english || anime.title.romaji;
+            document.getElementById('title').innerText = titleText;
+
+            // Türler (İlk 2 tanesini alalım sığması için)
+            document.getElementById('genres').innerText = anime.genres.slice(0, 2).join(', ');
+
+            // Stüdyo
+            const studioName = anime.studios.nodes.length > 0 ? anime.studios.nodes[0].name : 'Unknown';
+            document.getElementById('studio').innerText = studioName;
+
+            // Sezon
+            const season = anime.season ? anime.season : '';
+            const year = anime.seasonYear ? anime.seasonYear : '';
+            document.getElementById('season').innerText = `${season} ${year}`;
+
+            // Puan (AniList 100 üzerinden verir, 10'luk sisteme çeviriyoruz)
+            const score = anime.averageScore ? (anime.averageScore / 10).toFixed(1) : 'N/A';
+            document.getElementById('score').innerText = `${score}/10`;
+        }
+
+        function downloadCard() {
+            const element = document.getElementById('capture-area');
+            
+            // html2canvas ile div'i resme çevir
+            html2canvas(element, {
+                useCORS: true, // Uzak sunucudan (Anilist) resim çekmek için şart
+                scale: 2 // Daha yüksek kalite için
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `anime-card-${document.getElementById('title').innerText}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
