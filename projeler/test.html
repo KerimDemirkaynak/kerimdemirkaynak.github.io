@@ -37,43 +37,58 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             margin: 0;
             min-height: 100vh;
             transition: 0.3s;
         }
 
-        /* --- Üst Kısım --- */
-        .header-controls {
+        /* --- HEADER & CONTROLS --- */
+        .header-bar {
             display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
             gap: 15px;
-            margin-bottom: 30px;
         }
 
-        .mode-btn {
+        .control-group {
+            display: flex;
+            gap: 8px;
+            background: rgba(128,128,128,0.1);
+            padding: 5px;
+            border-radius: 30px;
+        }
+
+        .ctrl-btn {
             padding: 8px 16px;
             border-radius: 20px;
-            border: 2px solid transparent;
+            border: none;
             cursor: pointer;
-            font-weight: 700;
-            background: rgba(128,128,128,0.1);
+            font-weight: 600;
+            font-size: 13px;
+            background: transparent;
             color: var(--text-secondary);
             transition: 0.2s;
         }
 
-        .mode-btn.active {
-            background: var(--accent-color);
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        .ctrl-btn:hover { color: var(--text-primary); }
+
+        .ctrl-btn.active {
+            background: var(--card-bg);
+            color: var(--accent-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        /* --- Arama Kutusu ve Dropdown --- */
+        /* --- ARAMA ALANI --- */
         .search-container {
             position: relative;
             width: 100%;
             max-width: 450px;
-            margin-bottom: 40px;
-            z-index: 100; /* Dropdown üstte kalsın */
+            margin-bottom: 30px;
+            z-index: 100;
         }
 
         .input-group {
@@ -105,7 +120,7 @@
             font-weight: 600;
         }
 
-        /* AÇILIR LİSTE (Dropdown) */
+        /* DROPDOWN LİSTE */
         .search-results {
             position: absolute;
             top: 110%;
@@ -116,7 +131,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             max-height: 300px;
             overflow-y: auto;
-            display: none; /* Başlangıçta gizli */
+            display: none;
         }
 
         .result-item {
@@ -128,31 +143,21 @@
             gap: 10px;
             transition: 0.2s;
         }
-
         .result-item:hover { background: rgba(128,128,128,0.05); }
         
-        .thumb {
-            width: 40px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-            background: #ddd;
-        }
-
+        .thumb { width: 40px; height: 50px; object-fit: cover; border-radius: 4px; background: #ddd; }
         .item-info { display: flex; flex-direction: column; }
         .item-title { font-weight: 600; font-size: 14px; }
         .item-year { font-size: 12px; color: var(--text-secondary); }
 
-        /* --- KART ALANI --- */
-        /* Başlangıçta gizli olacak */
+        /* --- KART TASARIMI --- */
         .card-wrapper {
-            display: none; 
+            display: none; /* Başlangıçta gizli */
             transform-origin: top center;
             box-shadow: var(--shadow-soft);
             border-radius: var(--border-radius);
         }
-
-        /* Görünür olduğunda animasyonla gelsin */
+        
         .card-wrapper.visible {
             display: block;
             animation: fadeIn 0.5s ease;
@@ -177,12 +182,7 @@
             background: #ddd;
         }
         
-        .anime-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-        }
+        .anime-image { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 
         .info-container {
             padding: 24px;
@@ -200,8 +200,7 @@
             font-weight: 900;
             margin: 0 0 10px 0;
             line-height: 1.1;
-            /* Sola hizalı */
-            text-align: left; 
+            text-align: left;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -209,7 +208,7 @@
         }
 
         .meta-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; }
-        .meta-value { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .meta-value { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); }
 
         .footer-row {
             grid-column: 1 / -1;
@@ -226,7 +225,6 @@
         .score-box { display: flex; gap: 5px; color: var(--text-primary); font-size: 20px; }
         .star-icon { color: #FFD700; }
 
-        /* İndir Butonu */
         #download-btn {
             margin-top: 30px;
             padding: 15px 40px;
@@ -236,26 +234,35 @@
             border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
-            display: none; /* Kart yoksa bu da yok */
+            display: none;
+            width: 100%;
+            max-width: 400px;
         }
 
         @media (max-width: 450px) {
+            .header-bar { justify-content: center; }
             .card-wrapper.visible { transform: scale(0.85); margin-bottom: -50px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-controls">
-        <button class="mode-btn active" onclick="setMode('ANIME')">Anime (AniList)</button>
-        <button class="mode-btn" onclick="setMode('DRAMA')">Drama (TVMaze)</button>
-        <button class="mode-btn" onclick="toggleTheme()">Theme</button>
+    <div class="header-bar">
+        <div class="control-group">
+            <button class="ctrl-btn active" id="btn-anime" onclick="setMode('ANIME')">Anime</button>
+            <button class="ctrl-btn" id="btn-drama" onclick="setMode('DRAMA')">Drama</button>
+        </div>
+        
+        <div class="control-group">
+            <button class="ctrl-btn" id="btn-lang" onclick="toggleLang()">EN</button>
+            <button class="ctrl-btn" id="btn-theme" onclick="toggleTheme()">Dark</button>
+        </div>
     </div>
 
     <div class="search-container">
         <div class="input-group">
             <input type="text" id="searchInput" placeholder="Anime adı yazın..." autocomplete="off">
-            <button id="search-btn" onclick="performSearch()">Ara</button>
+            <button id="search-btn" onclick="performSearch()">Search</button>
         </div>
         <div id="resultsList" class="search-results"></div>
     </div>
@@ -269,10 +276,10 @@
             <div class="info-container">
                 <h1 id="title" class="anime-title">TITLE</h1>
                 
-                <span class="meta-label" id="label-genre">Tür</span>
+                <span class="meta-label" id="label-genre">Genre</span>
                 <span class="meta-value" id="genres">-</span>
                 
-                <span class="meta-label" id="label-studio">Stüdyo / Kanal</span>
+                <span class="meta-label" id="label-studio">Studio</span>
                 <span class="meta-value" id="studio">-</span>
 
                 <div class="footer-row">
@@ -286,122 +293,183 @@
         </div>
     </div>
 
-    <button id="download-btn" onclick="downloadCard()">Resmi İndir</button>
+    <button id="download-btn" onclick="downloadCard()">Download Image</button>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <script>
-        // --- AYARLAR VE DURUM ---
-        let currentMode = 'ANIME'; // 'ANIME' veya 'DRAMA'
-        let currentLang = 'tr';
-        
-        // Çeviri Sözlüğü
+        // --- ÇEVİRİ VE AYARLAR ---
+        const dictionary = {
+            en: {
+                placeholderAnime: "Enter anime name...",
+                placeholderDrama: "Enter drama name...",
+                searchBtn: "Search",
+                downloadBtn: "Download Image",
+                labelGenre: "Genre",
+                labelStudio: "Studio",
+                errorNotFound: "Not found!",
+                btnDark: "Dark", btnLight: "Light",
+                seasons: { WINTER: "WINTER", SPRING: "SPRING", SUMMER: "SUMMER", FALL: "FALL" }
+            },
+            tr: {
+                placeholderAnime: "Anime adı yazın...",
+                placeholderDrama: "Dizi adı yazın...",
+                searchBtn: "Ara",
+                downloadBtn: "Resmi İndir",
+                labelGenre: "Tür",
+                labelStudio: "Stüdyo",
+                errorNotFound: "Bulunamadı!",
+                btnDark: "Koyu", btnLight: "Açık",
+                seasons: { WINTER: "KIŞ", SPRING: "İLKBAHAR", SUMMER: "YAZ", FALL: "SONBAHAR" }
+            }
+        };
+
         const genreMap = {
             'Action': 'Aksiyon', 'Adventure': 'Macera', 'Comedy': 'Komedi', 'Drama': 'Dram',
             'Fantasy': 'Fantastik', 'Horror': 'Korku', 'Romance': 'Romantizm', 'Sci-Fi': 'Bilim Kurgu',
-            'Mystery': 'Gizem', 'Crime': 'Suç', 'Thriller': 'Gerilim', 'Family': 'Aile'
+            'Mystery': 'Gizem', 'Crime': 'Suç', 'Thriller': 'Gerilim', 'Family': 'Aile',
+            'Music': 'Müzik', 'Sports': 'Spor', 'Supernatural': 'Doğaüstü'
         };
 
-        function setMode(mode) {
-            currentMode = mode;
-            // Butonları güncelle
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+        // Durum Değişkenleri
+        let state = {
+            mode: 'ANIME', // ANIME, DRAMA
+            lang: 'en',    // en, tr
+            theme: 'light',// light, dark
+            lastData: null // Dil değişince kartı güncellemek için veriyi tutuyoruz
+        };
+
+        // --- BAŞLANGIÇ: OTOMATİK ALGILAMA ---
+        function init() {
+            // 1. Dil Algılama
+            const browserLang = navigator.language || navigator.userLanguage; 
+            if (browserLang.startsWith('tr')) {
+                state.lang = 'tr';
+            }
+
+            // 2. Tema Algılama
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                state.theme = 'dark';
+                document.body.setAttribute('data-theme', 'dark');
+            }
+
+            updateUI();
+        }
+
+        // --- UI GÜNCELLEME ---
+        function updateUI() {
+            const t = dictionary[state.lang];
+
+            // Buton Yazıları
+            document.getElementById('btn-lang').innerText = state.lang.toUpperCase();
+            document.getElementById('btn-theme').innerText = state.theme === 'dark' ? t.btnDark : t.btnLight;
+            document.getElementById('search-btn').innerText = t.searchBtn;
+            document.getElementById('download-btn').innerText = t.downloadBtn;
             
-            // Placeholder güncelle
+            // Etiketler
+            document.getElementById('label-genre').innerText = t.labelGenre;
+            document.getElementById('label-studio').innerText = t.labelStudio;
+
+            // Placeholder
             const input = document.getElementById('searchInput');
-            input.placeholder = mode === 'ANIME' ? 'Anime adı yazın...' : 'Dizi adı yazın (K-Drama vb.)...';
-            input.value = '';
-            
-            // Listeyi ve kartı gizle
+            if (state.mode === 'ANIME') {
+                input.placeholder = t.placeholderAnime;
+                document.getElementById('btn-anime').classList.add('active');
+                document.getElementById('btn-drama').classList.remove('active');
+            } else {
+                input.placeholder = t.placeholderDrama;
+                document.getElementById('btn-drama').classList.add('active');
+                document.getElementById('btn-anime').classList.remove('active');
+            }
+
+            // Eğer ekranda zaten kart varsa, dil değişince kart metinlerini de güncelle
+            if (state.lastData) {
+                fillCard(state.lastData, state.mode);
+            }
+        }
+
+        // --- KONTROLLER ---
+        function setMode(mode) {
+            state.mode = mode;
+            // Mod değişince listeyi ve kartı temizle
             document.getElementById('resultsList').style.display = 'none';
             document.getElementById('cardWrapper').classList.remove('visible');
             document.getElementById('download-btn').style.display = 'none';
+            document.getElementById('searchInput').value = '';
+            state.lastData = null;
+            updateUI();
         }
 
-        // --- ARAMA FONKSİYONLARI ---
+        function toggleLang() {
+            state.lang = (state.lang === 'en') ? 'tr' : 'en';
+            updateUI();
+        }
+
+        function toggleTheme() {
+            state.theme = (state.theme === 'light') ? 'dark' : 'light';
+            if (state.theme === 'dark') document.body.setAttribute('data-theme', 'dark');
+            else document.body.removeAttribute('data-theme');
+            updateUI();
+        }
+
+        // --- ARAMA MOTORU ---
         async function performSearch() {
             const query = document.getElementById('searchInput').value;
             if (!query) return;
 
             const list = document.getElementById('resultsList');
-            list.innerHTML = '<div style="padding:15px; color:#666;">Aranıyor...</div>';
+            list.innerHTML = '<div style="padding:15px; color:#888;">...</div>';
             list.style.display = 'block';
 
-            if (currentMode === 'ANIME') {
-                await searchAniList(query);
-            } else {
-                await searchTVMaze(query);
-            }
+            if (state.mode === 'ANIME') await searchAniList(query);
+            else await searchTVMaze(query);
         }
 
-        // Enter tuşu desteği
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        // Enter Desteği
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') performSearch();
         });
+        // Dışarı tıklayınca kapat
+        document.addEventListener('click', (e) => {
+            if (!document.querySelector('.search-container').contains(e.target)) {
+                document.getElementById('resultsList').style.display = 'none';
+            }
+        });
 
-        // --- 1. ANILIST API (Anime) ---
+        // API 1: ANILIST
         async function searchAniList(search) {
-            const query = `
-            query ($search: String) {
-              Page(page: 1, perPage: 5) {
-                media(search: $search, type: ANIME, sort: SEARCH_MATCH) {
-                  id
-                  title { romaji english }
-                  coverImage { medium extraLarge }
-                  genres
-                  averageScore
-                  season
-                  seasonYear
-                  studios(isMain: true) { nodes { name } }
-                }
-              }
-            }
-            `;
-
+            const q = `query ($search: String) { Page(page: 1, perPage: 5) { media(search: $search, type: ANIME, sort: SEARCH_MATCH) { id title { romaji english } coverImage { extraLarge medium } genres averageScore season seasonYear studios(isMain: true) { nodes { name } } } } }`;
             try {
-                const response = await fetch('https://graphql.anilist.co', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: query, variables: { search: search } })
+                const res = await fetch('https://graphql.anilist.co', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: q, variables: { search: search } })
                 });
-                const data = await response.json();
+                const data = await res.json();
                 renderList(data.data.Page.media, 'ANIME');
-            } catch (e) {
-                console.error(e);
-                showError();
-            }
+            } catch (e) { console.error(e); }
         }
 
-        // --- 2. TVMAZE API (Drama / Asya Dizileri) ---
+        // API 2: TVMAZE
         async function searchTVMaze(search) {
             try {
-                const response = await fetch(`https://api.tvmaze.com/search/shows?q=${search}`);
-                const data = await response.json();
-                // TVMaze yapısı biraz farklı, array içinde { score, show } döner
-                const shows = data.map(item => item.show); 
+                const res = await fetch(`https://api.tvmaze.com/search/shows?q=${search}`);
+                const data = await res.json();
+                const shows = data.map(item => item.show);
                 renderList(shows, 'DRAMA');
-            } catch (e) {
-                console.error(e);
-                showError();
-            }
+            } catch (e) { console.error(e); }
         }
 
-        // --- LİSTELEME VE SEÇME ---
         function renderList(items, type) {
             const list = document.getElementById('resultsList');
             list.innerHTML = '';
-
-            if (items.length === 0) {
-                list.innerHTML = '<div style="padding:15px;">Sonuç bulunamadı.</div>';
+            if (!items || items.length === 0) {
+                list.innerHTML = `<div style="padding:15px;">${dictionary[state.lang].errorNotFound}</div>`;
                 return;
             }
-
             items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'result-item';
                 
-                // Veri normalizasyonu
                 let title, img, year;
                 if (type === 'ANIME') {
                     title = item.title.english || item.title.romaji;
@@ -413,20 +481,12 @@
                     year = item.premiered ? item.premiered.substring(0, 4) : '';
                 }
 
-                div.innerHTML = `
-                    <img src="${img}" class="thumb">
-                    <div class="item-info">
-                        <span class="item-title">${title}</span>
-                        <span class="item-year">${year}</span>
-                    </div>
-                `;
-                
-                // Tıklayınca kartı doldur
+                div.innerHTML = `<img src="${img}" class="thumb"><div class="item-info"><span class="item-title">${title}</span><span class="item-year">${year}</span></div>`;
                 div.onclick = () => {
+                    state.lastData = item; // Veriyi kaydet (dil değişince kullanmak için)
                     fillCard(item, type);
-                    list.style.display = 'none'; // Listeyi kapat
+                    list.style.display = 'none';
                 };
-                
                 list.appendChild(div);
             });
         }
@@ -434,99 +494,69 @@
         function fillCard(data, type) {
             const wrapper = document.getElementById('cardWrapper');
             const dlBtn = document.getElementById('download-btn');
-            
-            // Verileri doldur
+            const poster = document.getElementById('poster');
+            const t = dictionary[state.lang];
+
+            poster.crossOrigin = "Anonymous";
+
             if (type === 'ANIME') {
-                document.getElementById('poster').src = data.coverImage.extraLarge;
-                document.getElementById('poster').crossOrigin = "Anonymous";
-                
+                poster.src = data.coverImage.extraLarge;
                 document.getElementById('title').innerText = data.title.english || data.title.romaji;
                 
                 // Tür Çeviri
-                let gs = data.genres.slice(0, 2).map(g => genreMap[g] || g);
+                let gs = data.genres.slice(0, 2);
+                if (state.lang === 'tr') gs = gs.map(g => genreMap[g] || g);
                 document.getElementById('genres').innerText = gs.join(', ');
-                
+
                 document.getElementById('studio').innerText = data.studios.nodes[0]?.name || '-';
                 
-                const sYear = data.seasonYear || '';
-                const sName = data.season || ''; // WINTER, SUMMER vs.
-                document.getElementById('season').innerText = `${sName} ${sYear}`;
+                // Sezon Çeviri
+                const sName = data.season || '';
+                const sTrans = t.seasons[sName] || sName;
+                document.getElementById('season').innerText = `${sTrans} ${data.seasonYear || ''}`;
                 
                 const score = data.averageScore ? (data.averageScore / 10).toFixed(1) : 'N/A';
                 document.getElementById('score').innerText = `${score}/10`;
 
-            } else {
-                // TVMAZE VERİSİ
-                const imgUrl = data.image ? data.image.original : 'https://via.placeholder.com/400x350';
-                // TVMaze görselleri bazen CORS hatası verebilir, proxy gerekebilir ama genelde çalışır.
-                const poster = document.getElementById('poster');
-                poster.crossOrigin = "Anonymous";
-                poster.src = imgUrl;
-
+            } else { // DRAMA
+                poster.src = data.image ? data.image.original : 'https://via.placeholder.com/400x350';
                 document.getElementById('title').innerText = data.name;
                 
-                let gs = data.genres.slice(0, 2).map(g => genreMap[g] || g);
-                document.getElementById('genres').innerText = gs.length > 0 ? gs.join(', ') : 'Drama';
-                
-                // TVMaze stüdyo değil "Network" verir
+                let gs = data.genres.slice(0, 2);
+                if (state.lang === 'tr') gs = gs.map(g => genreMap[g] || g);
+                document.getElementById('genres').innerText = gs.length > 0 ? gs.join(', ') : (state.lang ==='tr' ? 'Dram' : 'Drama');
+
                 document.getElementById('studio').innerText = data.network ? data.network.name : (data.webChannel ? data.webChannel.name : '-');
-                
-                const pDate = data.premiered || '';
-                document.getElementById('season').innerText = pDate.substring(0, 4); // Sadece Yıl
-                
-                const score = data.rating.average ? data.rating.average : 'N/A';
-                document.getElementById('score').innerText = `${score}/10`;
+                document.getElementById('season').innerText = data.premiered ? data.premiered.substring(0, 4) : '';
+                document.getElementById('score').innerText = data.rating.average ? `${data.rating.average}/10` : 'N/A';
             }
 
-            // Kartı görünür yap
             wrapper.classList.add('visible');
             dlBtn.style.display = 'block';
         }
 
-        // --- İNDİRME VE DİĞERLERİ ---
         function downloadCard() {
             const element = document.getElementById('capture-area');
             const wrapper = document.querySelector('.card-wrapper');
             const dlBtn = document.getElementById('download-btn');
 
             dlBtn.style.display = 'none';
-            wrapper.style.transform = 'none'; 
-            wrapper.style.boxShadow = 'none';
-            element.style.borderRadius = '0'; 
+            wrapper.style.transform = 'none'; wrapper.style.boxShadow = 'none'; element.style.borderRadius = '0';
 
-            html2canvas(element, {
-                useCORS: true,
-                scale: 3,
-                backgroundColor: null
-            }).then(canvas => {
+            html2canvas(element, { useCORS: true, scale: 3, backgroundColor: null }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `card_${Date.now()}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-
+                
                 dlBtn.style.display = 'block';
-                wrapper.style.transform = ''; 
-                wrapper.style.boxShadow = '';
-                element.style.borderRadius = '';
+                wrapper.style.transform = ''; wrapper.style.boxShadow = ''; element.style.borderRadius = '';
             });
         }
 
-        function toggleTheme() {
-            const body = document.body;
-            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        }
+        // Başlat
+        init();
 
-        function showError() {
-            document.getElementById('resultsList').innerHTML = '<div style="color:red; padding:10px;">Hata oluştu.</div>';
-        }
-        
-        // Dışarı tıklayınca listeyi kapat
-        document.addEventListener('click', function(event) {
-            const container = document.querySelector('.search-container');
-            if (!container.contains(event.target)) {
-                document.getElementById('resultsList').style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
