@@ -1,348 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Özel Video Oynatıcı</title>
-    <link rel="icon" href="https://kerimdemirkaynak.github.io/resimler/favicon.png" type="image/png">
-    <meta property="og:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
-    <meta name="twitter:image" content="https://kerimdemirkaynak.github.io/resimler/20241121_055155.jpg">
-     <meta name="description" content="Özel Video Oynatıcı">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Video Oynatıcı Testi</title>
+    
+    <link rel="icon" type="image/png" href="https://kerimdemirkaynak.github.io/resimler/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 640px;
-            margin: 30px auto;
-            background: #000;
-            border: 5px solid;
-            border-image: linear-gradient(to right, #00bfff, #32cd32);
-            border-image-slice: 1;
-            box-shadow: 0px 0px 15px rgba(50, 205, 50, 0.5);
-            overflow: hidden;
-            border-radius: 10px;
-            transition: border 0.3s, box-shadow 0.3s;
-        }
-        .video-container.fullscreen {
-            border: none;
-            box-shadow: none;
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-        }
-        .video-container.fullscreen .logo {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            width: 150px;
-            max-width: 200px;
-            height: auto;
-            transform: translate(0, 0);
-            z-index: 10;
-        }
-        .video-container.fullscreen .gradient {
-            display: none;
-        }
-        .video-container.fullscreen video {
-             object-fit: contain;
-            width: 100%;
-            height: 100%;
-        }
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-         .controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
-            z-index: 1;
-            transition: opacity 0.3s ease;
-        }
-        .controls i {
-            color: #fff;
-            font-size: 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Gölge efekti */
-        }
-         .controls i:hover {
-            color: #00bfff;
-        }
-        .progress-bar {
-            flex-grow: 1;
-            height: 5px;
-            background: #ddd;
-            margin: 0 10px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .progress-bar div {
-            height: 100%;
-            background: #00bfff;
-        }
-        .volume-container {
-            position: relative;
-        }
-       .logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 80px;
-             max-width: 100px;
-            height: auto;
-            z-index: 2;
-            transition: transform 0.3s ease;
-        }
-        .hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .video-container.fullscreen .controls {
-           position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        /* TEMEL AYARLAR VE DEĞİŞKENLER */
+        :root {
+            /* Koyu Mavi'den Neon Yeşile Gradyen Arka Plan */
+            --bg-gradient: linear-gradient(135deg, #0a0a2a 0%, #00331a 50%, #00ff55 100%);
+            --bg-container: rgba(10, 20, 40, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0c0b0;
+            --border-color: rgba(57, 255, 20, 0.25);
+            --accent-color: #39ff14; /* Neon Yeşil */
+            --heading-font: 'Rajdhani', sans-serif;
+            --body-font: 'Exo 2', sans-serif;
         }
 
-        .center-controls {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        body {
+            font-family: var(--body-font);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 2;
+            flex-direction: column;
         }
-        .center-controls.visible {
-            opacity: 1;
+
+        /* Header */
+        header {
+            background: var(--bg-container);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 15px 0;
+            box-shadow: 0 2px 6px rgba(57, 255, 20, 0.15);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
         }
-        .center-controls i {
-             color: #fff;
-            font-size: 30px;
-            margin: 0 15px;
-            cursor: pointer;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Gölge efekti */
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-          .center-controls i:hover {
-            color: #00bfff;
+
+        .site-title {
+            font-family: var(--heading-font);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+        }
+
+        /* İçerik Alanı */
+        article {
+            background: var(--bg-container);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(57, 255, 20, 0.2);
+        }
+
+        h1 {
+            font-family: var(--heading-font);
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+        
+        h3 {
+             font-family: var(--heading-font);
+             color: var(--text-primary);
+             font-size: 1.4rem;
+             margin-top: 30px;
+             border-bottom: 1px solid var(--border-color);
+             display: inline-block;
+             padding-bottom: 5px;
+        }
+
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        a:hover {
+            color: #99ff99;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.8);
+        }
+
+        .meta span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        code {
+            background: rgba(57, 255, 20, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+        }
+
+        /* Video Kapsayıcı */
+        .wp-block-embed {
+            margin: 30px 0;
+        }
+        
+        .wp-block-embed iframe {
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.5) !important; 
+            border: 1px solid rgba(57, 255, 20, 0.4) !important;
+        }
+
+        /* FOOTER AYARLARI (GÜNCELLENDİ) */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #ffffff; /* Rengi beyaza çektik */
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            /* Siyah gölge ile kontur + Yeşil neon parıltısı */
+            text-shadow: 
+                2px 2px 4px #000000, 
+                -1px -1px 4px #000000, 
+                0 0 15px rgba(57, 255, 20, 0.8);
+            font-weight: 600; /* Biraz daha kalın */
+            opacity: 0.95;
+        }
+        
+        @media (max-width: 600px) {
+            article {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
-       <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Logo_Diputados_TV.png" alt="TV Logo" class="logo">
-        <video id="videoPlayer" muted poster="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Big.Buck.Bunny.-.Frank.Rinky.Gimera.png/640px-Big.Buck.Bunny.-.Frank.Rinky.Gimera.png">
-            <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4" type="video/mp4">
-            Tarayıcınız video etiketini desteklemiyor.
-        </video>
-         <div class="center-controls" id="centerControls">
-            <i class="fas fa-undo" id="rewindBtn"></i>
-            <i id="centerPlayPauseBtn" class="fas fa-pause"></i>
-             <i class="fas fa-redo" id="forwardBtn"></i>
+
+    <header>
+        <div class="container">
+            <a href="#" class="site-title">Kerimu Video Player</a>
         </div>
-        <div class="controls">
-            <i id="playPauseBtn" class="fas fa-pause"></i>
-            <div class="progress-bar" id="progressBar"><div id="progress" style="width: 0%;"></div></div>
-            <i id="muteBtn" class="fas fa-volume-up"></i>
-            <i id="downloadBtn" class="fas fa-download"></i>
-            <i id="fullScreenBtn" class="fas fa-expand"></i>
-        </div>
+    </header>
+
+    <div class="container main-content">
+        <article>
+            <header>
+                <h1>Video Oynatıcı Testi</h1>
+                <div class="meta">
+                    Yazar: <strong>Kerim</strong> | Tarih: 9 Ocak 2026 | Kategori: <span>Web Geliştirme</span>
+                </div>
+            </header>
+
+            <p>Bu bir HTML5 video oynatıcısının testidir. Bu oynatıcı, GitHub Pages üzerinde barındırılıyor ve iframe aracılığıyla herhangi bir web sayfasına kolayca entegre edilebiliyor.</p>
+
+            <p>Aşağıdaki örnekte, Big Buck Bunny videosunu özel oynatıcımız üzerinden izleyebilirsiniz. Oynatıcı; otomatik oynatma, resim içinde resim (PiP) ve tam ekran özelliklerini desteklemektedir.</p>
+
+            <div class="wp-block-embed">
+                <iframe 
+                    src="https://kerimdemirkaynak.github.io/Kerimu-HTML5-Player/player.html?src=https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4&poster=https://peach.blender.org/wp-content/uploads/bbb-splash.png" 
+                    style="width: 100%; aspect-ratio: 16/9; border: none; border-radius: 12px; overflow: hidden;" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    allowfullscreen 
+                    title="Kerimu Player">
+                </iframe>
+            </div>
+
+            <p>Gördüğünüz gibi, <code>aspect-ratio: 16/9</code> stili sayesinde oynatıcı her cihazda oranını koruyor. Kenar yuvarlatma (border-radius) ve gölge (box-shadow) efektleri ile modern bir görünüm sağlandı.</p>
+
+            <h3>Teknik Detaylar</h3>
+            <p>Bu proje açık kaynaklıdır ve geliştirilmeye devam etmektedir. Eğer bir hata bulursanız veya özellik öneriniz varsa <a href="https://github.com/KerimDemirkaynak/Kerimu-HTML5-Player">GitHub üzerinden</a> bana ulaşabilirsiniz.</p>
+        </article>
     </div>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> Kerimu Video Player. Tüm hakları saklıdır.</p>
+    </footer>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var video = document.getElementById("videoPlayer");
-            var playPauseBtn = document.getElementById("playPauseBtn");
-            var muteBtn = document.getElementById("muteBtn");
-            var fullScreenBtn = document.getElementById("fullScreenBtn");
-            var centerPlayPauseBtn = document.getElementById("centerPlayPauseBtn");
-            var downloadBtn = document.getElementById("downloadBtn");
-            var progress = document.getElementById("progress");
-            var progressBar = document.getElementById("progressBar");
-            var rewindBtn = document.getElementById("rewindBtn");
-            var forwardBtn = document.getElementById("forwardBtn");
-            var videoContainer = document.querySelector('.video-container');
-            var controls = document.querySelector('.controls');
-              var centerControls = document.getElementById('centerControls');
-            var logo = document.querySelector('.logo');
-            var isFullScreen = false;
-            var hideControlsTimeout;
-            var hideCenterControlsTimeout;
-
-             // Başlangıçta video ses açık olmalı
-            video.muted = false;
-
-             function togglePlayPause() {
-                if (video.paused) {
-                    video.play();
-                    playPauseBtn.classList.replace("fa-play", "fa-pause");
-                       centerPlayPauseBtn.classList.replace("fa-play", "fa-pause");
-                } else {
-                    video.pause();
-                    playPauseBtn.classList.replace("fa-pause", "fa-play");
-                       centerPlayPauseBtn.classList.replace("fa-pause", "fa-play");
-                }
-            }
-
-             playPauseBtn.addEventListener("click",togglePlayPause);
-              centerPlayPauseBtn.addEventListener("click",togglePlayPause);
-
-            muteBtn.addEventListener("click", function() {
-                video.muted = !video.muted;
-                if (video.muted) {
-                    muteBtn.classList.replace("fa-volume-up", "fa-volume-mute");
-                } else {
-                    muteBtn.classList.replace("fa-volume-mute", "fa-volume-up");
-                }
-            });
-
-            fullScreenBtn.addEventListener("click", function() {
-                if (!isFullScreen) {
-                    if (videoContainer.requestFullscreen) {
-                        videoContainer.requestFullscreen();
-                    } else if (videoContainer.mozRequestFullScreen) {
-                        videoContainer.mozRequestFullScreen();
-                    } else if (videoContainer.webkitRequestFullscreen) {
-                        videoContainer.webkitRequestFullscreen();
-                    } else if (videoContainer.msRequestFullscreen) {
-                        videoContainer.msRequestFullscreen();
-                    }
-                    isFullScreen = true;
-                    fullScreenBtn.classList.replace("fa-expand", "fa-compress");
-                     videoContainer.classList.add('fullscreen');
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    }
-                    isFullScreen = false;
-                    fullScreenBtn.classList.replace("fa-compress", "fa-expand");
-                      videoContainer.classList.remove('fullscreen');
-                }
-            });
-
-             downloadBtn.addEventListener("click", function() {
-                var link = document.createElement('a');
-                link.href = video.querySelector('source').src;
-                link.download = 'video.mp4';
-                link.click();
-            });
-
-            video.addEventListener("timeupdate", function() {
-                var progressPercentage = (video.currentTime / video.duration) * 100;
-                progress.style.width = progressPercentage + "%";
-            });
-
-            video.addEventListener("ended", function() {
-                playPauseBtn.classList.replace("fa-pause", "fa-play");
-                 centerPlayPauseBtn.classList.replace("fa-pause", "fa-play");
-            });
-
-            progressBar.addEventListener("click", function(e) {
-                var rect = progressBar.getBoundingClientRect();
-                var posX = e.clientX - rect.left;
-                video.currentTime = (posX / progressBar.offsetWidth) * video.duration;
-            });
-
-            rewindBtn.addEventListener("click", function(){
-                video.currentTime -= 10;
-            });
-
-            forwardBtn.addEventListener("click", function(){
-                 video.currentTime += 10;
-            });
-
-             videoContainer.addEventListener("mousemove", function() {
-                controls.classList.remove("hidden");
-                   centerControls.classList.add('visible');
-                document.body.style.cursor = "default";
-                clearTimeout(hideControlsTimeout);
-                clearTimeout(hideCenterControlsTimeout);
-
-                  hideCenterControlsTimeout = setTimeout(function() {
-                    centerControls.classList.remove('visible');
-                }, 3000);
-                hideControlsTimeout = setTimeout(function() {
-                    controls.classList.add("hidden");
-                    document.body.style.cursor = "none";
-                }, 3000);
-            });
-
-            videoContainer.addEventListener("mouseleave", function() {
-                controls.classList.add("hidden");
-                centerControls.classList.remove('visible');
-                  document.body.style.cursor = "none";
-            });
-
-            document.addEventListener("fullscreenchange", function() {
-                if (!document.fullscreenElement) {
-                     isFullScreen = false;
-                      fullScreenBtn.classList.replace("fa-compress", "fa-expand");
-                       videoContainer.classList.remove('fullscreen');
-                }
-            });
-             // Klavye Kısayolları
-            document.addEventListener('keydown', function(event) {
-                switch (event.code) {
-                    case 'Space':
-                        togglePlayPause();
-                        break;
-                   case 'KeyM':
-                         video.muted = !video.muted;
-                            if (video.muted) {
-                                muteBtn.classList.replace("fa-volume-up", "fa-volume-mute");
-                            } else {
-                                muteBtn.classList.replace("fa-volume-mute", "fa-volume-up");
-                            }
-                        break;
-                    case 'ArrowLeft':
-                        video.currentTime -= 5;
-                        break;
-                     case 'ArrowRight':
-                        video.currentTime += 5;
-                        break;
-                   case 'KeyF':
-                      if (!isFullScreen) {
-                           if (videoContainer.requestFullscreen) {
-                            videoContainer.requestFullscreen();
-                            } else if (videoContainer.mozRequestFullScreen) {
-                                videoContainer.mozRequestFullScreen();
-                            } else if (videoContainer.webkitRequestFullscreen) {
-                            videoContainer.webkitRequestFullscreen();
-                                 } else if (videoContainer.msRequestFullscreen) {
-                                    videoContainer.msRequestFullscreen();
-                                }
-                           isFullScreen = true;
-                            fullScreenBtn.classList.replace("fa-expand", "fa-compress");
-                                 videoContainer.classList.add('fullscreen');
-                           } else {
-                                if (document.exitFullscreen) {
-                                document.exitFullscreen();
-                                }
-                             isFullScreen = false;
-                            fullScreenBtn.classList.replace("fa-compress", "fa-expand");
-                                videoContainer.classList.remove('fullscreen');
-                            }
-                           break;
-                    // Ek kısayolları buraya ekleyebilirsiniz
-                }
-            });
-        });
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
+
 </body>
 </html>
