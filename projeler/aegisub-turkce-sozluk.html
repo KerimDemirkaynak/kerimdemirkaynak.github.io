@@ -17,93 +17,208 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://aegisub.org/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://aegisub.org/favicon-16x16.png">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Glassmorphism Button */
+        .glass-btn {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-200 min-h-screen flex flex-col">
+<body class="bg-slate-900 text-slate-200 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white relative">
 
-    <header class="w-full py-8 flex justify-center bg-slate-800 shadow-lg border-b border-slate-700">
-        <div class="container mx-auto px-4 text-center">
-            <img src="https://aegisub.org/img/logo-large.png" alt="Aegisub Logo" class="h-16 mx-auto mb-4 object-contain">
-            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Türkçe Sözlük Yaması</h1>
-            <p class="text-slate-400 mt-2">v1.0 | Aegisub 3.4+ Uyumlu</p>
+    <div class="fixed top-6 right-6 z-50">
+        <button onclick="toggleLanguage()" class="glass-btn border border-slate-700 hover:border-blue-500 text-slate-300 hover:text-white px-5 py-2.5 rounded-full transition-all duration-300 shadow-lg flex items-center gap-3 group">
+            <i class="fa-solid fa-globe text-lg group-hover:text-blue-400 transition-colors"></i>
+            <span id="current-lang" class="text-sm font-semibold tracking-wide">English</span>
+        </button>
+    </div>
+
+    <header class="w-full py-16 flex flex-col items-center bg-gradient-to-b from-slate-800 to-slate-900 border-b border-slate-700/50">
+        <div class="container mx-auto px-4 text-center fade-in">
+            <img src="https://aegisub.org/img/logo-large.png" alt="Aegisub Logo" class="h-24 mx-auto mb-8 drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400" id="title">
+                Türkçe Sözlük Yaması
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl font-light" id="subtitle">
+                Aegisub 3.4+ için Otomatik İmla Denetimi
+            </p>
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-12 max-w-3xl">
+    <main class="flex-grow container mx-auto px-4 py-16 max-w-5xl fade-in" style="animation-delay: 0.1s;">
         
-        <div class="bg-slate-800 rounded-2xl p-8 shadow-xl border border-slate-700 text-center mb-10">
-            <h2 class="text-xl font-semibold text-white mb-4">Otomatik Kurulum Dosyası</h2>
-            <p class="text-slate-300 mb-8">
-                Aegisub 3.4 ve sonraki sürümler için Türkçe imla denetimi sözlüğünü otomatik olarak kurar.
-            </p>
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
             
-            <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Language-Patch/releases/download/v2.3.0/Aegisub-3.4.2-dict-tr_TR.exe" 
-               class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30 group">
-                <svg class="w-6 h-6 mr-3 fill-current group-hover:animate-bounce" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                İndir
-            </a>
-            <p class="text-xs text-slate-500 mt-4 font-mono">Aegisub-3.4.2-dict-tr_TR.exe</p>
+            <div class="bg-slate-800 rounded-3xl p-8 shadow-2xl border border-slate-700 hover:border-blue-500/40 transition-all duration-300 group relative overflow-hidden" id="card-win">
+                <div class="absolute top-4 right-4 bg-blue-600/90 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-blue-900/50 hidden transform translate-y-[-10px] opacity-0 transition-all duration-500" id="badge-win">
+                    ÖNERİLEN
+                </div>
+
+                <div class="flex items-center mb-6">
+                    <div class="p-4 bg-blue-500/10 rounded-2xl mr-4 group-hover:bg-blue-500/20 transition-colors">
+                        <i class="fa-brands fa-windows text-3xl text-blue-500"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">Windows</h2>
+                </div>
+                
+                <p class="text-slate-400 text-sm mb-8 leading-relaxed h-12" id="desc-win">
+                    Otomatik kurulum sihirbazı (.exe). Aegisub klasörünü kendisi bulur ve kurulumu yapar.
+                </p>
+                
+                <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Dictionary/releases/latest/download/Aegisub-3.4.2-dict-tr_TR.exe" 
+                   class="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-1 gap-2">
+                    <i class="fa-brands fa-windows"></i>
+                    <span id="btn-win">İndir (.exe)</span>
+                </a>
+            </div>
+
+            <div class="bg-slate-800 rounded-3xl p-8 shadow-2xl border border-slate-700 hover:border-purple-500/40 transition-all duration-300 group relative" id="card-other">
+                <div class="absolute top-4 right-4 bg-purple-600/90 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-purple-900/50 hidden transform translate-y-[-10px] opacity-0 transition-all duration-500" id="badge-other">
+                    ÖNERİLEN
+                </div>
+
+                <div class="flex items-center mb-6">
+                    <div class="p-4 bg-purple-500/10 rounded-2xl mr-4 flex gap-3 group-hover:bg-purple-500/20 transition-colors">
+                        <i class="fa-brands fa-apple text-3xl text-slate-300"></i>
+                        <span class="text-slate-600 text-3xl font-light">|</span>
+                        <i class="fa-brands fa-linux text-3xl text-yellow-500"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">macOS / Linux</h2>
+                </div>
+                
+                <p class="text-slate-400 text-sm mb-8 leading-relaxed h-12" id="desc-mac">
+                    Taşınabilir ZIP paketi. İçinde Mac ve Linux için gerekli kurulum scriptleri bulunur.
+                </p>
+                
+                <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Dictionary/releases/latest/download/MAC-LINUX-PORTABLE.zip" 
+                   class="w-full inline-flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-6 rounded-xl transition-all border border-slate-600 hover:border-slate-500 hover:-translate-y-1 gap-2">
+                   <i class="fa-solid fa-file-zipper"></i>
+                    <span id="btn-mac">İndir (.zip)</span>
+                </a>
+            </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 mb-10">
-            <div class="bg-amber-900/30 border border-amber-700/50 p-6 rounded-xl">
-                <div class="flex items-start">
-                    <svg class="w-6 h-6 text-amber-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <div>
-                        <h3 class="text-amber-400 font-bold mb-2">Uyumluluk Uyarısı</h3>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Bu yama sadece <strong>Aegisub 3.4 ve üzeri</strong> sürümlerde çalışır.
-                            <br><br>
-                            Eski sürümlerdeki 32-bit desteği kesildiği için bu yama 64-bit dosya yollarını kullanır.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl">
-                <div class="flex items-start">
-                    <svg class="w-6 h-6 text-blue-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                    <div>
-                        <h3 class="text-blue-400 font-bold mb-2">Kurulum Yolu</h3>
-                        <p class="text-sm text-slate-300 mb-2">Sözlük dosyaları otomatik olarak şu dizine yüklenir:</p>
-                        <code class="block bg-slate-900 p-2 rounded text-xs font-mono text-slate-400 break-all border border-slate-700">
-                            C:\Program Files\Aegisub\dictionaries
-                        </code>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-            <h3 class="text-slate-400 text-sm uppercase tracking-wider font-bold mb-4 border-b border-slate-700 pb-2">Dosya Doğrulama (Hash)</h3>
-            
-            <div class="mb-4">
-                <span class="text-xs text-blue-400 font-bold">MD5</span>
-                <div class="font-mono text-xs bg-slate-900 p-3 rounded mt-1 break-all text-slate-400 select-all cursor-text hover:text-white transition-colors">
-                    EBC39BB2F16481BBE8B436B8C49C2FBE
-                </div>
-            </div>
-
-            <div>
-                <span class="text-xs text-blue-400 font-bold">SHA512</span>
-                <div class="font-mono text-xs bg-slate-900 p-3 rounded mt-1 break-all text-slate-400 select-all cursor-text hover:text-white transition-colors">
-                    961B3B01CB4CBFA935F7A53C09184365ECEFF05C4B4519766EA062FB167E7EBE9C5EE6DDE1F6672883FFE736D18FB3D9B2A03DA57B0DFAF17E198CD549B4272F
-                </div>
-            </div>
+        <div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-8 text-sm text-slate-400 backdrop-blur-sm">
+            <h3 class="text-white font-semibold mb-4 flex items-center text-lg gap-2">
+                <i class="fa-regular fa-lightbulb text-yellow-400 text-xl"></i> 
+                <span id="info-title">Nasıl Kurulur?</span>
+            </h3>
+            <ul class="space-y-3 ml-2" id="info-list">
+                <li class="flex items-start"><i class="fa-brands fa-windows text-blue-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Windows:</strong> İndirdiğiniz .exe dosyasını çalıştırın ve kurulumu tamamlayın.</span></li>
+                <li class="flex items-start"><i class="fa-brands fa-apple text-slate-300 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>macOS:</strong> ZIP'i açın, <code>install_mac.command</code> dosyasına <u>sağ tıklayıp</u> "Aç" deyin.</span></li>
+                <li class="flex items-start"><i class="fa-brands fa-linux text-yellow-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Linux:</strong> ZIP'i açın, terminalde <code>sh install_linux.sh</code> komutunu çalıştırın.</span></li>
+            </ul>
         </div>
 
     </main>
 
-    <footer class="bg-slate-900 py-6 text-center border-t border-slate-800 mt-auto">
-        <p class="text-slate-500 text-sm">
-            GitHub üzerinden <a href="https://github.com/KerimDemirkaynak" class="text-blue-500 hover:text-blue-400 underline">Kerim Demirkaynak</a> tarafından geliştirilmiştir.
+    <footer class="bg-slate-900 py-10 text-center border-t border-slate-800 mt-auto">
+        <p class="text-slate-500 text-sm mb-4">
+            Developed by <a href="https://github.com/KerimDemirkaynak" class="text-blue-500 hover:text-blue-400 font-medium transition-colors">Kerim Demirkaynak</a>
         </p>
+        <div class="flex justify-center gap-6 opacity-60 hover:opacity-100 transition-opacity">
+            <a href="https://github.com/KerimDemirkaynak/Aegisub-Turkish-Dictionary" class="text-slate-400 hover:text-white transition-colors" title="GitHub Repo">
+                <i class="fa-brands fa-github text-2xl"></i>
+            </a>
+        </div>
     </footer>
 
+    <script>
+        // Dil Verileri
+        const content = {
+            tr: {
+                title: "Türkçe Sözlük Yaması",
+                subtitle: "Aegisub 3.4+ için Otomatik İmla Denetimi",
+                winDesc: "Otomatik kurulum sihirbazı (.exe). Aegisub klasörünü kendisi bulur ve kurulumu yapar.",
+                winBtn: "İndir (.exe)",
+                macDesc: "Taşınabilir ZIP paketi. İçinde Mac ve Linux için gerekli kurulum scriptleri bulunur.",
+                macBtn: "İndir (.zip)",
+                infoTitle: "Nasıl Kurulur?",
+                infoList: `
+                    <li class="flex items-start"><i class="fa-brands fa-windows text-blue-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Windows:</strong> İndirdiğiniz .exe dosyasını çalıştırın ve kurulumu tamamlayın.</span></li>
+                    <li class="flex items-start"><i class="fa-brands fa-apple text-slate-300 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>macOS:</strong> ZIP'i açın, <code>install_mac.command</code> dosyasına <u>sağ tıklayıp</u> "Aç" deyin.</span></li>
+                    <li class="flex items-start"><i class="fa-brands fa-linux text-yellow-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Linux:</strong> ZIP'i açın, terminalde <code>sh install_linux.sh</code> komutunu çalıştırın.</span></li>
+                `,
+                langBtn: "English", // Sadece dil adı
+                winBadge: "ÖNERİLEN",
+                macBadge: "ÖNERİLEN"
+            },
+            en: {
+                title: "Turkish Dictionary Patch",
+                subtitle: "Automated Spell Checker for Aegisub 3.4+",
+                winDesc: "Automated installer (.exe). Automatically detects and installs to the Aegisub directory.",
+                winBtn: "Download (.exe)",
+                macDesc: "Portable ZIP package. Includes installation scripts for both macOS and Linux.",
+                macBtn: "Download (.zip)",
+                infoTitle: "How to Install?",
+                infoList: `
+                    <li class="flex items-start"><i class="fa-brands fa-windows text-blue-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Windows:</strong> Run the .exe file and follow the setup wizard.</span></li>
+                    <li class="flex items-start"><i class="fa-brands fa-apple text-slate-300 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>macOS:</strong> Extract ZIP, right-click <code>install_mac.command</code> and select "Open".</span></li>
+                    <li class="flex items-start"><i class="fa-brands fa-linux text-yellow-500 mr-3 mt-1 text-base w-4 text-center"></i> <span><strong>Linux:</strong> Extract ZIP, run <code>sh install_linux.sh</code> in terminal.</span></li>
+                `,
+                langBtn: "Türkçe", // Sadece dil adı
+                winBadge: "RECOMMENDED",
+                macBadge: "RECOMMENDED"
+            }
+        };
+
+        let currentLang = 'tr';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            updateContent();
+        }
+
+        function updateContent() {
+            const t = content[currentLang];
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('desc-win').innerText = t.winDesc;
+            document.getElementById('btn-win').innerText = t.winBtn; // İkon etkilenmez, span değişir
+            document.getElementById('desc-mac').innerText = t.macDesc;
+            document.getElementById('btn-mac').innerText = t.macBtn; // İkon etkilenmez, span değişir
+            document.getElementById('info-title').innerText = t.infoTitle;
+            document.getElementById('info-list').innerHTML = t.infoList;
+            document.getElementById('current-lang').innerText = t.langBtn;
+            
+            document.getElementById('badge-win').innerText = t.winBadge;
+            document.getElementById('badge-other').innerText = t.macBadge;
+            
+            document.documentElement.lang = currentLang;
+        }
+
+        // Platform Algılama ve Badge Gösterimi
+        document.addEventListener('DOMContentLoaded', () => {
+            const platform = navigator.platform.toLowerCase();
+            const winBadge = document.getElementById('badge-win');
+            const otherBadge = document.getElementById('badge-other');
+            
+            const showBadge = (element) => {
+                element.classList.remove('hidden');
+                setTimeout(() => {
+                    element.classList.remove('translate-y-[-10px]', 'opacity-0');
+                }, 100);
+            };
+
+            if (platform.includes('win')) {
+                showBadge(winBadge);
+                document.getElementById('card-win').classList.add('border-blue-500', 'bg-slate-800/90', 'scale-[1.02]');
+            } else if (platform.includes('mac') || platform.includes('linux')) {
+                showBadge(otherBadge);
+                document.getElementById('card-other').classList.add('border-purple-500', 'bg-slate-800/90', 'scale-[1.02]');
+            }
+        });
+    </script>
 </body>
 </html>
