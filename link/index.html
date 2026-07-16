@@ -52,7 +52,8 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 2rem 1rem;
             min-height: 100vh;
         }
@@ -69,7 +70,7 @@
             width: 100%;
         }
 
-        /* Profil Kartı (Sadece Bu Kart Geniş Kalmalı) */
+        /* Profil Kartı */
         .profile-card {
             grid-column: span 4;
             background-color: var(--card-bg);
@@ -79,7 +80,6 @@
             display: flex;
             align-items: center;
             gap: 2rem;
-            margin-bottom: 0.5rem;
         }
 
         .avatar {
@@ -103,6 +103,72 @@
             font-size: 1rem;
         }
 
+        /* YENİ: Hap Şeklinde Bitişik Dil Seçici */
+        .lang-switcher {
+            display: inline-flex;
+            background-color: #0a0a0a; /* Karttan biraz daha koyu bir zemin */
+            border: 1px solid var(--border-color);
+            border-radius: 50px; /* Hap görünümü için tam yuvarlak köşeler */
+            overflow: hidden; /* Köşelerden taşmayı engeller */
+            margin-top: 1rem; /* Bio yazısı ile arasına boşluk */
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-right: 1px solid var(--border-color); /* Butonları ayırmak için araya çizgi */
+            padding: 6px 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:last-child {
+            border-right: none; /* Son butonun sağında çizgi olmasın */
+        }
+
+        .lang-btn:hover {
+            background-color: #1a1a1a;
+            color: var(--text-main);
+        }
+
+        .lang-btn.active {
+            background-color: #333333; /* Aktif olanı belirginleştir */
+            color: var(--text-main);
+        }
+
+        /* İletişim Kartı */
+        .contact-card {
+            grid-column: span 4;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--hover-border);
+            transform: translateY(-4px);
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-card i {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
         /* Kare Kutu Tasarımı */
         .card {
             background-color: var(--card-bg);
@@ -117,7 +183,7 @@
             text-decoration: none;
             color: var(--text-main);
             transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-            aspect-ratio: 1 / 1; /* Kusursuz kare olmasını sağlar */
+            aspect-ratio: 1 / 1;
         }
 
         .card:hover {
@@ -164,13 +230,15 @@
         /* MOBİL ÖLÇEKLENDİRME */
         @media (max-width: 768px) {
             .bento-grid {
-                /* Mobilde tam "ikişerli" kareler */
                 grid-template-columns: repeat(2, 1fr); 
                 gap: 12px;
             }
             
+            .profile-card, .contact-card {
+                grid-column: span 2;
+            }
+
             .profile-card {
-                grid-column: span 2; /* Mobilde profil satırı tam kaplar */
                 flex-direction: column;
                 text-align: center;
                 gap: 1rem;
@@ -201,19 +269,32 @@
             <img src="https://ugc.production.linktr.ee/CbyeqwRuuug66sHUFx2g_AEwsteiHY6emk34s?io=true&size=avatar-v3_0" alt="Kerim Demirkaynak" class="avatar">
             <div class="profile-info">
                 <h1>Kerim Demirkaynak</h1>
-                <p>Düzceliyim. Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum.</p>
+                <p id="desc-text">Düzceliyim. Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum.</p>
+                
+                <!-- Hap Şeklinde Dil Seçici (Bio Altına Taşındı) -->
+                <div class="lang-switcher">
+                    <button id="btn-tr" class="lang-btn" onclick="changeLang('tr')">TR</button>
+                    <button id="btn-en" class="lang-btn" onclick="changeLang('en')">EN</button>
+                    <button id="btn-zh" class="lang-btn" onclick="changeLang('zh')">ZH</button>
+                </div>
             </div>
         </div>
+
+        <!-- Tekil İletişim Kutusu -->
+        <a href="https://kerimdemirkaynak.github.io/iletisim" class="contact-card" target="_blank">
+            <i class="fa-solid fa-envelope"></i>
+            <span id="contact-text">İletişim</span>
+        </a>
 
         <!-- Tüm Bağlantılar (Kare Kutular) -->
         <a href="https://kerimdemirkaynak.github.io/" class="card globe" target="_blank">
             <i class="fa-solid fa-globe"></i>
-            <span>Web Sitem</span>
+            <span id="website-text">Web Sitem</span>
         </a>
 
         <a href="https://kerimdemirkaynak.github.io/blog" class="card blog" target="_blank">
             <i class="fa-solid fa-blog"></i>
-            <span>Blog</span>
+            <span id="blog-text">Blog</span>
         </a>
 
         <a href="https://github.com/KerimDemirkaynak" class="card github" target="_blank">
@@ -251,9 +332,9 @@
             <span>MyAnimeList</span>
         </a>
 
-        <a href="#" class="card crunchyroll" target="_blank">
+        <a href="https://mydramalist.com/profile/KerimDemirkaynak" class="card crunchyroll" target="_blank">
             <i class="fa-solid fa-play"></i>
-            <span>Crunchyroll</span>
+            <span>MyDramaList</span>
         </a>
 
         <a href="https://steamcommunity.com/search/users/#text=Kerim+Demirkaynak" class="card steam" target="_blank">
@@ -303,10 +384,67 @@
 
         <a href="https://tr.m.wikipedia.org/wiki/Kullan%C4%B1c%C4%B1:Kerim_Demirkaynak" class="card globe" target="_blank">
             <i class="fa-brands fa-wikipedia-w"></i>
-            <span>Vikipedi</span>
+            <span id="wiki-text">Vikipedi</span>
         </a>
 
     </div>
+
+    <!-- Çoklu Dil Scripti -->
+    <script>
+        const translations = {
+            tr: {
+                desc: "Düzceliyim. Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum.",
+                contact: "İletişim",
+                website: "Web Sitem",
+                blog: "Blog",
+                wiki: "Vikipedi"
+            },
+            en: {
+                desc: "I'm from Düzce. I'm interested in Wikipedia, animation, writing, and video editing.",
+                contact: "Contact",
+                website: "My Website",
+                blog: "Blog",
+                wiki: "Wikipedia"
+            },
+            zh: {
+                desc: "我来自迪兹杰。我对维基百科、动画、写作和视频剪辑很感兴趣。",
+                contact: "联系我",
+                website: "我的网站",
+                blog: "博客",
+                wiki: "维基百科"
+            }
+        };
+
+        function changeLang(lang) {
+            // Eğer dil sözlükte yoksa İngilizceye düş
+            if (!translations[lang]) lang = 'en';
+
+            // Metinleri Güncelle
+            document.getElementById('desc-text').innerText = translations[lang].desc;
+            document.getElementById('contact-text').innerText = translations[lang].contact;
+            document.getElementById('website-text').innerText = translations[lang].website;
+            document.getElementById('blog-text').innerText = translations[lang].blog;
+            document.getElementById('wiki-text').innerText = translations[lang].wiki;
+
+            // Buton Stillerini Güncelle
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+
+        // Tarayıcı dilini otomatik algılama
+        document.addEventListener('DOMContentLoaded', () => {
+            const userLang = navigator.language || navigator.userLanguage;
+            let defaultLang = 'tr';
+            
+            if (userLang.toLowerCase().startsWith('en')) {
+                defaultLang = 'en';
+            } else if (userLang.toLowerCase().startsWith('zh')) {
+                defaultLang = 'zh';
+            }
+
+            changeLang(defaultLang);
+        });
+    </script>
 
 </body>
 </html>
