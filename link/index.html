@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Temel Meta Etiketleri -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerim Demirkaynak | Bağlantılarım</title>
+    <meta name="description" content="Kerim Demirkaynak'ın resmi bağlantı sayfası. Vikipedi, animasyon, yazarlık, web geliştirme ve video kurgusu alanlarındaki çalışmalarıma, sosyal medya ve portfolyo adreslerime buradan ulaşabilirsiniz.">
+    <meta name="keywords" content="Kerim Demirkaynak, Vikipedi, Animasyon, Yazarlık, Video Kurgu, Web Geliştirme, GitHub, Düzce, Portfolyo, Blog">
+    <meta name="author" content="Kerim Demirkaynak">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn Önizlemeleri İçin) -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Kerim Demirkaynak | Tüm Bağlantılar">
+    <meta property="og:description" content="Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum. Tüm sosyal medya ve portfolyo bağlantılarıma göz atın.">
+    <meta property="og:url" content="https://kerimdemirkaynak.github.io/">
+    <meta property="og:image" content="https://ugc.production.linktr.ee/CbyeqwRuuug66sHUFx2g_AEwsteiHY6emk34s?io=true&size=avatar-v3_0">
+    <meta property="og:site_name" content="Kerim Demirkaynak">
+
+    <!-- Twitter Card (X'te Paylaşıldığında Görünecek Kart İçin) -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@KDxOFFICIAL">
+    <meta name="twitter:title" content="Kerim Demirkaynak">
+    <meta name="twitter:description" content="Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum. Tüm bağlantılarım burada.">
+    <meta name="twitter:image" content="https://ugc.production.linktr.ee/CbyeqwRuuug66sHUFx2g_AEwsteiHY6emk34s?io=true&size=avatar-v3_0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/resimler/favicon.png">
+
+    <!-- İkonlar için Güncel FontAwesome (6.5.2) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #000000; /* OLED Gerçek Siyah */
+            --card-bg: #121212;
+            --border-color: #2a2a2a;
+            --hover-border: #666666;
+            --text-main: #ffffff;
+            --text-muted: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        /* 
+         * Tam Kare Grid Yapısı 
+         * Masaüstünde 4 sütun, aralarda 16px boşluk.
+         */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Profil Kartı (Sadece Bu Kart Geniş Kalmalı) */
+        .profile-card {
+            grid-column: span 4;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #333;
+            flex-shrink: 0;
+        }
+
+        .profile-info h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-info p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Kare Kutu Tasarımı */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            aspect-ratio: 1 / 1; /* Kusursuz kare olmasını sağlar */
+        }
+
+        .card:hover {
+            border-color: var(--hover-border);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+        }
+
+        /* İkon ve Metin Stilleri */
+        .card i {
+            font-size: 2.5rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .card span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        /* Üzerine Gelince Çıkan Marka Renkleri */
+        .github:hover i { color: #ffffff; }
+        .youtube:hover i { color: #ff0000; }
+        .twitter:hover i { color: #ffffff; }
+        .spotify:hover i { color: #1db954; }
+        .mal:hover i { color: #2e51a2; }
+        .steam:hover i { color: #66c0f4; }
+        .linkedin:hover i { color: #0a66c2; }
+        .twitch:hover i { color: #9146ff; }
+        .instagram:hover i { color: #e1306c; }
+        .crunchyroll:hover i { color: #f47521; }
+        .bluesky:hover i { color: #0085ff; }
+        .threads:hover i { color: #ffffff; }
+        .facebook:hover i { color: #1877f2; }
+        .pinterest:hover i { color: #e60023; }
+        .tumblr:hover i { color: #36465d; }
+        .mastodon:hover i { color: #5c4bdf; }
+        .wattpad:hover i { color: #ff500a; }
+        .globe:hover i { color: #3b82f6; }
+        .blog:hover i { color: #f59e0b; }
+
+        /* MOBİL ÖLÇEKLENDİRME */
+        @media (max-width: 768px) {
+            .bento-grid {
+                /* Mobilde tam "ikişerli" kareler */
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 12px;
+            }
+            
+            .profile-card {
+                grid-column: span 2; /* Mobilde profil satırı tam kaplar */
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-info h1 {
+                font-size: 1.5rem;
+            }
+
+            .card i {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bento-grid">
+        
+        <!-- Profil (Üst Alan) -->
+        <div class="profile-card">
+            <img src="https://ugc.production.linktr.ee/CbyeqwRuuug66sHUFx2g_AEwsteiHY6emk34s?io=true&size=avatar-v3_0" alt="Kerim Demirkaynak" class="avatar">
+            <div class="profile-info">
+                <h1>Kerim Demirkaynak</h1>
+                <p>Düzceliyim. Vikipedi, animasyon, yazarlık ve video kurgusu ile ilgileniyorum.</p>
+            </div>
+        </div>
+
+        <!-- Tüm Bağlantılar (Kare Kutular) -->
+        <a href="https://kerimdemirkaynak.github.io/" class="card globe" target="_blank">
+            <i class="fa-solid fa-globe"></i>
+            <span>Web Sitem</span>
+        </a>
+
+        <a href="https://kerimdemirkaynak.github.io/blog" class="card blog" target="_blank">
+            <i class="fa-solid fa-blog"></i>
+            <span>Blog</span>
+        </a>
+
+        <a href="https://github.com/KerimDemirkaynak" class="card github" target="_blank">
+            <i class="fa-brands fa-github"></i>
+            <span>GitHub</span>
+        </a>
+
+        <a href="http://x.com/KDxOFFICIAL" class="card twitter" target="_blank">
+            <i class="fa-brands fa-x-twitter"></i>
+            <span>X</span>
+        </a>
+
+        <a href="https://bsky.app/profile/kerim.qzz.io" class="card bluesky" target="_blank">
+            <i class="fa-brands fa-bluesky"></i>
+            <span>Bluesky</span>
+        </a>
+
+        <a href="https://www.threads.net/@kerimdemirkaynak" class="card threads" target="_blank">
+            <i class="fa-brands fa-threads"></i>
+            <span>Threads</span>
+        </a>
+
+        <a href="https://youtube.com/@KerimDemirkaynak?sub_confirmation=1" class="card youtube" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+            <span>YouTube</span>
+        </a>
+
+        <a href="https://twitch.tv/kerimdemirkaynak" class="card twitch" target="_blank">
+            <i class="fa-brands fa-twitch"></i>
+            <span>Twitch</span>
+        </a>
+
+        <a href="https://myanimelist.net/profile/KerimDemirkaynak" class="card mal" target="_blank">
+            <i class="fa-solid fa-list"></i>
+            <span>MyAnimeList</span>
+        </a>
+
+        <a href="#" class="card crunchyroll" target="_blank">
+            <i class="fa-solid fa-play"></i>
+            <span>Crunchyroll</span>
+        </a>
+
+        <a href="https://steamcommunity.com/search/users/#text=Kerim+Demirkaynak" class="card steam" target="_blank">
+            <i class="fa-brands fa-steam"></i>
+            <span>Steam</span>
+        </a>
+
+        <a href="https://spotify.link/kYZWFQmjDyb" class="card spotify" target="_blank">
+            <i class="fa-brands fa-spotify"></i>
+            <span>Spotify</span>
+        </a>
+
+        <a href="https://instagram.com/kerimdemirkaynak" class="card instagram" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+
+        <a href="https://tr.linkedin.com/in/kerim-demirkaynak-617989176" class="card linkedin" target="_blank">
+            <i class="fa-brands fa-linkedin"></i>
+            <span>LinkedIn</span>
+        </a>
+
+        <a href="https://mastodon.social/@Kerm" class="card mastodon" target="_blank">
+            <i class="fa-brands fa-mastodon"></i>
+            <span>Mastodon</span>
+        </a>
+
+        <a href="https://www.facebook.com/xDemirkaynak" class="card facebook" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+            <span>Facebook</span>
+        </a>
+
+        <a href="https://tr.pinterest.com/KerimDemirkaynak/" class="card pinterest" target="_blank">
+            <i class="fa-brands fa-pinterest"></i>
+            <span>Pinterest</span>
+        </a>
+
+        <a href="https://www.tumblr.com/kerimdemirkaynak" class="card tumblr" target="_blank">
+            <i class="fa-brands fa-tumblr"></i>
+            <span>Tumblr</span>
+        </a>
+
+        <a href="https://www.wattpad.com/user/KerimDemirkaynak" class="card wattpad" target="_blank">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Wattpad</span>
+        </a>
+
+        <a href="https://tr.m.wikipedia.org/wiki/Kullan%C4%B1c%C4%B1:Kerim_Demirkaynak" class="card globe" target="_blank">
+            <i class="fa-brands fa-wikipedia-w"></i>
+            <span>Vikipedi</span>
+        </a>
+
+    </div>
+
+</body>
+</html>
