@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TürkAnime — WordPress Anime Teması</title>
+  <meta name="description" content="TürkAnime, WordPress üzerinde anime ve dizi arşivi oluşturmak için geliştirilmiş modern ve kapsamlı bir WordPress temasıdır.">
+  <meta name="keywords" content="TürkAnime, WordPress anime teması, anime sitesi, WordPress tema, anime arşivi, AniList">
+  <meta name="author" content="Kerim Demirkaynak">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b0d12">
+  <link rel="canonical" href="https://kerimdemirkaynak.github.io/TurkAnime-WP/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TürkAnime — WordPress Anime Teması">
+  <meta property="og:description" content="WordPress üzerinde anime ve dizi arşivi oluşturmak için geliştirilmiş modern anime teması.">
+  <meta property="og:url" content="https://kerimdemirkaynak.github.io/TurkAnime-WP/">
+  <meta property="og:image" content="https://github.com/user-attachments/assets/0ef83a74-2740-42a1-aa63-4283a30d4c78">
+  <meta property="og:image:alt" content="TürkAnime WordPress Teması">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TürkAnime — WordPress Anime Teması">
+  <meta name="twitter:description" content="WordPress için anime ve dizi arşivi teması.">
+  <meta name="twitter:image" content="https://github.com/user-attachments/assets/0ef83a74-2740-42a1-aa63-4283a30d4c78">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --bg2: #0e1118;
+      --card: rgba(20,24,34,.72);
+      --card-solid: #121620;
+      --text: #f5f7fb;
+      --muted: #a5adbd;
+      --line: rgba(255,255,255,.09);
+      --accent: #8b5cf6;
+      --accent2: #6366f1;
+      --green: #22c55e;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% -10%, rgba(124,58,237,.22), transparent 34%),
+        radial-gradient(circle at 90% 15%, rgba(37,99,235,.14), transparent 30%),
+        var(--bg);
+      font-family: Inter, system-ui, sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1160px, calc(100% - 36px)); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(9,11,16,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    nav { height: 72px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:11px; font-family:"Space Grotesk"; font-weight:700; font-size:19px; }
+    .brand-mark {
+      width:36px; height:36px; border-radius:11px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg,var(--accent),#3b82f6);
+      box-shadow: 0 8px 28px rgba(99,102,241,.35);
+      font-weight:800;
+    }
+    .navlinks { display:flex; gap:25px; color:var(--muted); font-size:14px; }
+    .navlinks a:hover { color:white; }
+    .navbtn {
+      padding:10px 15px; border:1px solid var(--line); border-radius:12px;
+      background:rgba(255,255,255,.04); font-size:14px;
+    }
+    .hero { padding:105px 0 78px; text-align:center; }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px; padding:7px 12px;
+      border:1px solid rgba(139,92,246,.3); border-radius:999px;
+      background:rgba(139,92,246,.1); color:#c4b5fd; font-size:13px; font-weight:600;
+    }
+    .dot { width:7px; height:7px; border-radius:50%; background:#a78bfa; box-shadow:0 0 12px #a78bfa; }
+    h1 {
+      max-width:900px; margin:24px auto 20px;
+      font:700 clamp(42px,7vw,76px)/1.02 "Space Grotesk";
+      letter-spacing:-.055em;
+    }
+    .gradient { background:linear-gradient(100deg,#fff 20%,#c4b5fd 55%,#818cf8); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero p { max-width:720px; margin:0 auto 31px; color:var(--muted); font-size:18px; }
+    .actions { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+    .btn { padding:13px 19px; border-radius:13px; font-weight:700; font-size:14px; transition:.2s; }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 12px 30px rgba(99,102,241,.24); }
+    .btn-secondary { border:1px solid var(--line); background:rgba(255,255,255,.04); }
+    .btn:hover { transform:translateY(-2px); }
+    .hero-image {
+      margin:65px auto 0; border:1px solid var(--line); border-radius:18px; overflow:hidden;
+      box-shadow:var(--shadow); background:#10131a;
+    }
+    .hero-image img { display:block; width:100%; height:auto; }
+    section { padding:75px 0; }
+    .section-head { margin-bottom:32px; }
+    .eyebrow { color:#a78bfa; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:12px; }
+    h2 { font:700 clamp(30px,4vw,44px)/1.1 "Space Grotesk"; letter-spacing:-.035em; margin:8px 0 10px; }
+    .section-head p { color:var(--muted); max-width:680px; margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card {
+      padding:24px; border:1px solid var(--line); border-radius:var(--radius);
+      background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+      box-shadow:0 10px 40px rgba(0,0,0,.12);
+    }
+    .icon { width:42px; height:42px; border-radius:13px; display:grid; place-items:center; background:rgba(139,92,246,.13); color:#c4b5fd; font-size:20px; margin-bottom:17px; }
+    h3 { margin:0 0 8px; font:600 19px "Space Grotesk"; }
+    .card p { color:var(--muted); font-size:14px; margin:0; }
+    .showcase {
+      display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center;
+      padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--card);
+    }
+    .showcase img { width:100%; border-radius:14px; display:block; border:1px solid var(--line); }
+    ul { padding-left:20px; color:var(--muted); }
+    li { margin:7px 0; }
+    code { color:#ddd6fe; background:rgba(139,92,246,.1); border:1px solid rgba(139,92,246,.18); padding:2px 6px; border-radius:6px; }
+    .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+    .tag { font-size:12px; padding:6px 9px; border-radius:8px; background:rgba(255,255,255,.055); color:#cbd5e1; border:1px solid var(--line); }
+    .install { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .steps { counter-reset:steps; }
+    .step { display:flex; gap:14px; margin:18px 0; }
+    .num { flex:none; width:30px; height:30px; border-radius:9px; display:grid; place-items:center; background:rgba(139,92,246,.14); color:#c4b5fd; font-weight:700; font-size:13px; }
+    .step strong { display:block; margin-bottom:2px; }
+    .step span { color:var(--muted); font-size:14px; }
+    .quote { border-left:3px solid var(--accent); padding:6px 0 6px 18px; color:#cbd5e1; }
+    .license { text-align:center; padding:60px 0 80px; }
+    footer { border-top:1px solid var(--line); padding:28px 0; color:#7f8797; font-size:13px; }
+    footer .container { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+    @media(max-width:850px) {
+      .grid { grid-template-columns:1fr 1fr; }
+      .showcase,.install { grid-template-columns:1fr; }
+      .navlinks { display:none; }
+    }
+    @media(max-width:560px) {
+      .container { width:min(100% - 24px,1160px); }
+      .hero { padding-top:70px; }
+      .grid { grid-template-columns:1fr; }
+      .hero p { font-size:16px; }
+      section { padding:55px 0; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a class="brand" href="#">
+        <span class="brand-mark">T</span>
+        <span>TürkAnime <small style="color:#8b93a4;font-weight:500">WP</small></span>
+      </a>
+      <div class="navlinks">
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#video">Video</a>
+        <a href="#kurulum">Kurulum</a>
+        <a href="#esinlenme">TürkAnime</a>
+      </div>
+      <a class="navbtn" href="https://github.com/KerimDemirkaynak/TurkAnime-WP" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="badge"><span class="dot"></span> WordPress Anime Teması</span>
+      <h1>WordPress'i <span class="gradient">modern bir anime arşivine</span> dönüştür.</h1>
+      <p>Anime, bölüm, video kaynağı ve kullanıcı özelliklerini tek bir sistemde yönetmek için geliştirilmiş Türkçe odaklı WordPress teması.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/KerimDemirkaynak/TurkAnime-WP/releases/download/2.5.4/TurkAnime-WP.zip">Temayı İndir</a>
+        <a class="btn btn-secondary" href="https://github.com/KerimDemirkaynak/TurkAnime-WP" target="_blank" rel="noopener">GitHub Deposunu Gör</a>
+      </div>
+      <div class="hero-image">
+        <img src="https://github.com/user-attachments/assets/0ef83a74-2740-42a1-aa63-4283a30d4c78" alt="TürkAnime WordPress teması ana sayfa görünümü" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <section id="ozellikler">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Özellikler</span>
+        <h2>Anime sitesi için gereken yapı.</h2>
+        <p>Klasik bir WordPress blogundan farklı olarak anime, bölüm, video ve kullanıcı verilerini ayrı şekilde yönetmeye odaklanır.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="icon">▦</div><h3>Anime & Bölüm Sistemi</h3><p>Özel içerik türleriyle anime ve bölümleri ayrı yönetin. Bölümleri ilgili animeyle ilişkilendirin.</p></article>
+        <article class="card"><div class="icon">▶</div><h3>Çoklu Video Kaynağı</h3><p>HLS, MP4, WebM, iframe ve embed kaynaklarını tek bölüm altında yönetin.</p></article>
+        <article class="card"><div class="icon">A</div><h3>AniList Entegrasyonu</h3><p>Kapak, banner, puan, bölüm, yıl, stüdyo ve tür bilgilerini AniList üzerinden çekin.</p></article>
+        <article class="card"><div class="icon">♡</div><h3>Kullanıcı Özellikleri</h3><p>Favoriler, listeler, beğeniler, izleme geçmişi ve kaldığın yerden devam özellikleri.</p></article>
+        <article class="card"><div class="icon">＋</div><h3>Toplu Bölüm Ekleme</h3><p>1–100 gibi geniş bölüm aralıklarını tek işlemle oluşturun ve isim şablonlarını otomatik kullanın.</p></article>
+        <article class="card"><div class="icon">!</div><h3>Video Hata Bildirimi</h3><p>Ziyaretçiler çalışmayan videoları bildirebilir, yöneticiler bildirimleri panelden takip edebilir.</p></article>
+        <article class="card"><div class="icon">↻</div><h3>Bakım & Onarım</h3><p>Anime ve bölüm ilişkilerindeki olası bozulmaları mevcut bilgiler üzerinden yeniden kurmayı deneyin.</p></article>
+        <article class="card"><div class="icon">⌁</div><h3>Performans & SEO</h3><p>Gereksiz sorguları azaltmaya, AJAX sayaçlarına, önbelleğe ve temiz HTML yapısına odaklanır.</p></article>
+        <article class="card"><div class="icon">☾</div><h3>Koyu & Açık Tema</h3><p>WordPress özelleştiricisi üzerinden görünüm ayarlarını ve renk modlarını düzenleyin.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="video">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Video Oynatıcı</span>
+        <h2>Bir bölüm, birden fazla kaynak.</h2>
+        <p>Video kaynaklarını sürükle-bırak ile sıralayın ve ziyaretçiye farklı sunucu seçenekleri sunun.</p>
+      </div>
+      <div class="showcase">
+        <img src="https://github.com/user-attachments/assets/1d76d33a-07f7-4d37-953e-9f537100094f" alt="TürkAnime video oynatıcı ve sunucu seçenekleri" loading="lazy">
+        <div>
+          <h3>Esnek video altyapısı</h3>
+          <ul>
+            <li>HLS (<code>.m3u8</code>)</li>
+            <li>MP4 ve WebM</li>
+            <li>Iframe ve embed kodları</li>
+            <li>Sınırsız video kaynağı</li>
+            <li>Sonraki bölüme otomatik geçiş</li>
+            <li>Sinema modu ve sunucu seçimi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="install">
+        <div>
+          <span class="eyebrow">Kurulum</span>
+          <h2>Kur ve kullan.</h2>
+          <p style="color:var(--muted)">Tema, standart WordPress tema kurulumu üzerinden birkaç adımda etkinleştirilebilir.</p>
+          <div class="tags">
+            <span class="tag">WordPress 5.8+</span>
+            <span class="tag">PHP 7.4+</span>
+            <span class="tag">GPL-2.0+</span>
+          </div>
+        </div>
+        <div class="card steps">
+          <div class="step"><div class="num">1</div><div><strong>ZIP dosyasını indir</strong><span>GitHub Releases üzerinden temayı alın.</span></div></div>
+          <div class="step"><div class="num">2</div><div><strong>Yeni tema yükle</strong><span>Görünüm → Temalar → Yeni Ekle → Tema Yükle.</span></div></div>
+          <div class="step"><div class="num">3</div><div><strong>ZIP dosyasını seç</strong><span>İndirdiğiniz TurkAnime-WP.zip dosyasını yükleyin.</span></div></div>
+          <div class="step"><div class="num">4</div><div><strong>Etkinleştir</strong><span>Kurulum tamamlandığında temayı etkinleştirin.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="esinlenme">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Proje hakkında</span>
+        <h2>TürkAnime'den esinlenildi.</h2>
+      </div>
+      <div class="card">
+        <p class="quote">Bu temanın arayüz tasarımında ve bazı kullanıcı deneyimi kararlarında, artık aktif olmayan <strong>TürkAnime</strong> sitesinden önemli ölçüde esinlenilmiştir.</p>
+        <p style="color:var(--muted)">Anime listeleme biçimi, anime detay sayfaları, bölüm düzeni ve genel site kullanımı referans alınan başlıca noktalardır. Ancak proje eski sitenin dosyalarının veya altyapısının doğrudan devamı değildir; WordPress için sıfırdan geliştirilen, farklı özellikler ve ayrı veri yapısı kullanan bağımsız bir temadır.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="license">
+    <div class="container">
+      <span class="eyebrow">Açık kaynak</span>
+      <h2>GPL-2.0+ lisanslı.</h2>
+      <p style="color:var(--muted);max-width:650px;margin:0 auto 25px">Temayı kişisel veya ticari projelerinizde kullanabilir, değiştirebilir ve geliştirebilirsiniz.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/KerimDemirkaynak/TurkAnime-WP/releases/download/2.5.4/TurkAnime-WP.zip">v2.5.4 İndir</a>
+        <a class="btn btn-secondary" href="https://github.com/KerimDemirkaynak/TurkAnime-WP" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 TürkAnime WP</span>
+    <span>WordPress Anime Teması · GPL-2.0+</span>
+  </div>
+</footer>
+</body>
+</html>
