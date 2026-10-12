@@ -253,6 +253,19 @@ let notes = {};        // id -> { content, timestamp, createdAt }
 let currentId = MAIN;
 let dirty = false, timer = null, unsub = null, loaded = false;
 
+// Notlara içerikten bağımsız, rastgele "kimlik" adları verilir (ana not her zaman Alfa)
+const NAME_POOL = ['Beta', 'Gama', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Teta', 'Iota', 'Kappa', 'Lambda', 'Mu', 'Nu', 'Ksi', 'Omikron', 'Pi', 'Ro', 'Sigma', 'Tau', 'Upsilon', 'Fi', 'Ki', 'Psi', 'Omega'];
+function pickName() {
+  const used = new Set(Object.values(notes).map(n => n?.name));
+  const free = NAME_POOL.filter(n => !used.has(n));
+  if (free.length) return free[Math.floor(Math.random() * free.length)];
+  let k = 2;
+  while (used.has(`Alfa ${k}`)) k++;
+  return `Alfa ${k}`;
+}
+const nameOf = (id, i = 0) => id === MAIN ? 'Alfa' : (notes[id]?.name || String(i + 1));
+const labelOf = id => 'Not ' + nameOf(id, orderedIds().indexOf(id));
+
 function orderedIds() {
   const rest = Object.keys(notes).filter(id => id !== MAIN).sort((a, b) => (notes[a].createdAt || 0) - (notes[b].createdAt || 0));
   return [MAIN, ...rest];
@@ -264,7 +277,7 @@ function renderTabs() {
   ids.forEach((id, i) => {
     const b = document.createElement('button');
     b.className = 'tab' + (id === currentId ? ' active' : '');
-    b.textContent = firstLine(notes[id]?.content) || (id === MAIN ? 'Not' : `Not ${i + 1}`);
+    b.textContent = 'Not ' + nameOf(id, i);
     b.onclick = () => switchTo(id);
     tabsEl.appendChild(b);
   });
@@ -288,7 +301,8 @@ function showCurrent() {
 
 async function switchTo(id) {
   if (id === currentId) return;
-  if (dirty) await save();
+  if (!confirmDiscard()) return;
+  dirty = false;
   currentId = id;
   try { localStorage.setItem('lastNote', id); } catch {}
   showCurrent();
@@ -307,7 +321,7 @@ async function save() {
   setStatus('Kaydediliyor…');
   try {
     if (id === MAIN) await update(rootRef, { content, timestamp: ts });
-    else await set(refFor(id), { content, timestamp: ts, createdAt: notes[id]?.createdAt || ts });
+    else await set(refFor(id), { content, timestamp: ts, createdAt: notes[id]?.createdAt || ts, name: notes[id]?.name || pickName() });
     notes[id] = { ...(notes[id] || {}), content, timestamp: ts };
     if (id === currentId && !dirty) {
       setStatus('Kaydedildi ✓', 'ok');
@@ -322,35 +336,31 @@ async function save() {
 note.addEventListener('input', () => {
   updateCounts();
   dirty = true;
-  notes[currentId] = { ...(notes[currentId] || {}), content: note.value };
-  setStatus('Yazılıyor…');
-  clearTimeout(timer);
-  timer = setTimeout(save, 800);
-  // Sekme başlığı yazarken güncellensin
-  const active = tabsEl.querySelector('.active');
-  if (active) active.textContent = firstLine(note.value) || (currentId === MAIN ? 'Not' : 'Yeni not');
+  setStatus('Kaydedilmemiş değişiklik var');
 });
 $('saveBtn').onclick = () => save();
 addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); } });
-document.addEventListener('visibilitychange', () => { if (document.hidden && dirty) save(); });
-addEventListener('pagehide', () => { if (dirty) save(); });
+addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+const confirmDiscard = () => !dirty || confirm('Kaydedilmemiş değişiklikler var. Kaydetmeden devam edilsin mi?');
 
 // ---------- Not ekle / sil ----------
 async function createNote() {
-  if (dirty) await save();
+  if (!confirmDiscard()) return;
+  dirty = false;
   const r = push(ref(db, `${ROOT}/notes`));
   const ts = Date.now();
-  notes[r.key] = { content: '', timestamp: 0, createdAt: ts };
+  const name = pickName();
+  notes[r.key] = { content: '', timestamp: 0, createdAt: ts, name };
   currentId = r.key;
   showCurrent();
   note.focus();
-  try { await set(r, { content: '', timestamp: ts, createdAt: ts }); }
+  try { await set(r, { content: '', timestamp: ts, createdAt: ts, name }); }
   catch (e) { console.error(e); toast('Not oluşturulamadı'); delete notes[r.key]; currentId = MAIN; showCurrent(); }
 }
 
 $('deleteBtn').onclick = async () => {
   const id = currentId;
-  const backup = (notes[id]?.content) ?? note.value;
+  const backup = note.value;
   if (id === MAIN) {
     if (!note.value) return;
     note.value = ''; updateCounts();
@@ -359,13 +369,14 @@ $('deleteBtn').onclick = async () => {
     return;
   }
   const createdAt = notes[id]?.createdAt || Date.now();
+  const savedName = notes[id]?.name;
   clearTimeout(timer); dirty = false;
   try { await remove(refFor(id)); } catch (e) { console.error(e); return toast('Silinemedi'); }
   delete notes[id];
   currentId = MAIN;
   showCurrent();
   toast('Not silindi', 'Geri al', async () => {
-    await set(refFor(id), { content: backup, timestamp: Date.now(), createdAt });
+    await set(refFor(id), { content: backup, timestamp: Date.now(), createdAt, name: savedName || 'Beta' });
     currentId = id;
   });
 };
@@ -377,7 +388,7 @@ $('copyBtn').onclick = async () => {
 };
 $('shareBtn').onclick = async () => {
   if (navigator.share) {
-    try { await navigator.share({ title: firstLine(note.value) || 'Notlarım', text: note.value }); }
+    try { await navigator.share({ title: labelOf(currentId), text: note.value }); }
     catch (e) { if (e.name !== 'AbortError') console.error(e); }
   } else {
     try { await navigator.clipboard.writeText(note.value); toast('Not metni kopyalandı'); } catch { toast('Paylaşım desteklenmiyor'); }
@@ -385,7 +396,7 @@ $('shareBtn').onclick = async () => {
 };
 $('downloadBtn').onclick = () => {
   if (!note.value) return toast('İndirilecek bir şey yok');
-  const name = (firstLine(note.value).slice(0, 40).replace(/[\\/:*?"<>|]+/g, '').trim() || 'not');
+  const name = labelOf(currentId);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([note.value], { type: 'text/plain;charset=utf-8' }));
   a.download = name + '.txt';
@@ -413,9 +424,7 @@ function listen() {
     }
 
     // Yazmakta olduğun notu ezme; diğerlerini güncelle
-    const mine = notes[currentId];
     notes = incoming;
-    if (dirty && mine) notes[currentId] = { ...(notes[currentId] || {}), content: mine.content };
 
     if (!notes[currentId]) { currentId = MAIN; dirty = false; showCurrent(); return; }
     if (!dirty && notes[currentId].content !== note.value) {
@@ -455,7 +464,7 @@ $('loginBtn').onclick = async () => {
     }
   }
 };
-$('logoutBtn').onclick = async () => { if (dirty) await save(); signOut(auth); };
+$('logoutBtn').onclick = () => { if (confirmDiscard()) signOut(auth); };
 </script>
 </body>
 </html>
